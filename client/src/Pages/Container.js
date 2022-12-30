@@ -5,11 +5,11 @@ import Navbar from './Auth/Navbar';
 export default function Container() {
   return (
     <div className='container'>
-        <Router>
-            <Routes>
-                <Route exact path='/' element={<Navbar/>} />
-            </Routes>
-        </Router>
+      <Router>
+        <Routes>
+          <Route exact path='/' element={<Navbar/>} />
+        </Routes>
+      </Router>
     </div>
   )
 }
