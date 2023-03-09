@@ -1,22 +1,218 @@
-$navbar-color: #A81B1B;
+$navbar-color: #b81d1d;
 $font-color: #FFFFFF;
+$icon-color: #A6A3A3;
 .navbar{
     background-color: $navbar-color;
     color: $font-color;
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: space-between;
-    // width: 70%;
-    margin: 1.2rem 0;
-    @media(max-width: 1000px){
-        background-color: aqua;
+    width: 100%;
+    .navbarCon{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        .Logo{
+            width: 120px;
+            cursor: pointer;
+        }
+        .SearchCon{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 50%;
+            background-color: $font-color;
+            padding: 0 0.5rem;
+            border-radius: 1rem;
+            .input{
+                width: 85%;
+                padding: 0.5rem;
+                border-radius: 1rem;
+                background-color: $font-color;
+                border: none;
+                font-size: 16px;
+            }
+            .input:focus{
+                outline: none;
+            }
+            .searchBtn{
+                cursor: pointer;
+                color: $icon-color;
+                background-color: transparent;
+                padding-left: 1rem;
+                border: none;
+                .icon{
+                    font-size: 23px;
+                    margin-right: 0.5rem;
+                }
+            }
+        }
+        .BtnCon{
+            width: 25%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            .btn{
+                background-color: transparent;
+                border: none;
+                color: $font-color;
+                font-size: 20px;
+                cursor: pointer;
+                border-radius: 5px;
+                padding: 0.5rem 1rem;
+            }
+            .btn:hover{
+                background-color: rgba($color: black, $alpha: 0.1);
+            }
+            .search{
+                display: none;
+            }
+        }
+    }
+    .mobileSearch{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 90%;
+        background-color: $font-color;
+        padding: 0 0.5rem;
+        border-radius: 1rem;
+        display: none;
+        .input{
+            width: 85%;
+            padding: 0.5rem;
+            border-radius: 1rem;
+            background-color: $font-color;
+            border: none;
+            font-size: 16px;
+        }
+        .input:focus{
+            outline: none;
+        }
+        .searchBtn{
+            cursor: pointer;
+            color: $icon-color;
+            background-color: transparent;
+            padding-left: 1rem;
+            border: none;
+            .icon{
+                font-size: 23px;
+                margin-right: 0.5rem;
+            }
+        }
+    }
+    @media(max-width: 900px){
+        .navbarCon{
+            .Logo{
+                width: 100px;
+            }
+        }
+    }
+    @media(max-width: 750px){
+        .navbarCon{
+            .BtnCon{
+                width: 30%;
+            }
+        }
+    }
+    @media(max-width: 600px){
+        .navbarCon{
+            .SearchCon{
+                width: 40%;
+                font-size: 14px;
+            }
+            .BtnCon{
+                width: 40%;
+            }
+        }
+    }
+    @media(max-width: 500px){
+        padding-bottom: 0.6rem;
+        .navbarCon{
+            .SearchCon{
+                display: none;
+            }
+            .BtnCon{
+                width: 60%;
+                .search{
+                    display: unset;
+                }
+            }
+        }
+        .mobile{
+            display: flex;
+        }
     }
     @media(max-width: 400px){
-        background-color: pink;
+        .navbarCon{
+            .Logo{
+                width: 90px;
+            }
+            .BtnCon{
+                width: 80%;
+                .btn{
+                    font-size: 18px;
+                }
+            }
+        }
     }
 }
-// @media(max-width: 1000px){
-//     .navbar{
-//         background-color: aqua;
-//     }
-// }
+.loggedInNavbar{
+    .navbarCon{
+        .BtnCon{
+            justify-content: flex-end;
+            .ProfileLogo{
+                height: 45px;
+                width: 45px;
+                object-fit: cover;
+                border-radius: 50%;
+                margin-right: 2rem;
+                cursor: pointer;
+            }
+            .editMenu{
+                position: absolute;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                background-color: $font-color;
+                z-index: 1;
+                border-radius: 10px;
+                top: 10%;
+                width: 12%;
+                right: 1%;
+                .editBtn{
+                    padding: 0.7rem 0;
+                    width: 100%;
+                    border-radius: 10px;
+                    background-color: $font-color;
+                    border: none;
+                    font-size: 16px;
+                    font-weight: 500;
+                    cursor: pointer;
+                }
+                .editBtn:hover{
+                    background-color: rgba($icon-color, 0.2);
+                }
+            }
+            @media(max-width: 700px){
+                .editMenu{
+                    width: 20%;
+                }
+            }
+            @media(max-width: 500px){
+                .editMenu{
+                    top: 8%;
+                    width: 30%;
+                }
+            }
+            @media(max-width: 400px){
+                .editMenu{
+                    width: 35%;
+                }
+            }
+        }
+    }
+}
