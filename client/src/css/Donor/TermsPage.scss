@@ -1,0 +1,270 @@
+$navbar-color: #b81d1d;
+$font-color: #FFFFFF;
+$icon-color: #A6A3A3;
+$check-color: #077861;
+.terms{
+    height: 100vh;
+    width: 100%;
+    .backBtn{
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        margin-top: 2rem;
+        margin-left: 1rem;
+        .icon{
+            font-size: 30px;
+        }
+    }
+    .termsContent{
+        .conditions{
+            margin-top: 2rem;
+            margin-left: 6rem;
+            .heading{
+                font-size: 20px;
+                font-weight: bold;
+            }
+            .options{
+                margin-top: 2rem;
+                .fieldCon{
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    margin: 2rem 0;
+                    .icon{
+                        font-size: 35px;
+                        margin-right: 1rem;
+                    }
+                    .detail{
+                        font-size: 18px;
+                        width: 80%;
+                    }
+                }
+                .Btn{
+                    margin-top: 1rem;
+                    padding: 1rem 0.7rem;
+                    width: 15%;
+                }
+            }
+        }
+    }
+    @media(max-width: 680px){
+        .termsContent{
+            .conditions{
+                margin-left: 3rem;
+                .options{
+                    .Btn{
+                        width: 25%;
+                    }
+                }
+            }
+        }
+    }
+    @media(max-width: 550px){
+        .termsContent{
+            .conditions{
+                margin-left: 3rem;
+                .heading{
+                    width: 90%;
+                    font-size: 18px;
+                }
+                .options{
+                    .fieldCon{
+                        .icon{
+                            font-size: 25px;
+                        }
+                        .detail{
+                            width: 80%;
+                            font-size: 16px;
+                        }
+                    }
+                    .Btn{
+                        width: 45%;
+                    }
+                }
+            }
+        }
+    }
+    @media(max-width: 400px){
+        height: unset;
+        .termsContent{
+            margin-bottom: 2rem;
+            .conditions{
+                margin-top: 1rem;
+                margin-left: 1rem;
+            }
+        }
+    }
+}
+.donorRegistration{
+    margin-bottom: 2rem;
+    .backBtn{
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        margin-top: 1rem;
+        margin-left: 1rem;
+        .icon{
+            font-size: 30px;
+        }
+    }
+    .mainHeading{
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        font-size: 25px;
+    }
+    .headingCon{
+        width: 100%;
+        padding: 2rem 0;
+        border-bottom: 1px solid gray;
+        .header{
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .details{
+            font-size: 18px;
+            text-align: center;
+            margin: 0.5rem 0;
+        }
+    }
+    .mainContent{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 85%;
+        margin-left: 6rem;
+        .Btn{
+            margin: 2rem 0;
+            width: 30%;
+        }
+    }
+    @media(max-width: 780px){
+        .mainContent{
+            margin-left: 3rem;
+            .ImageField{
+                .upload-img{
+                    width: 150px;
+                    height: 150px;
+                }
+            }
+            .Btn{
+                width: 50%;
+            }
+        }
+    }
+    @media(max-width: 500px){
+        .mainContent{
+            margin-left: 2rem;
+            .fieldsDiv{
+                flex-direction: column;
+                align-items: flex-start;
+                .fieldCon{
+                    width: 90%;
+                }
+            }
+            .ImageField{
+                .upload-img{
+                    width: 150px;
+                    height: 150px;
+                }
+            }
+            .Btn{
+                width: 50%;
+            }
+        }
+    }
+}
+
+.thanksPage{
+    width: 100%;
+    .MainContent{
+        width: 100%;
+        .MainPicture{
+            width: 100%;
+            height: 91vh;
+            object-fit: cover;
+            opacity: 0.7;
+            position: relative;
+        }
+        .FormContent{
+            position: absolute;
+            top: 23%;
+            left: 35%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background-color: $font-color;
+            border-radius: 10px;
+            padding: 4rem 3rem;
+            .icon{
+                font-size: 70px;
+                color: $check-color;
+            }
+            .Msg{
+                font-size: 36px;
+                color: $check-color;
+                margin: 0.5rem 0;
+                font-weight: bold;
+            }
+            .details{
+                font-size: 24px;
+                margin-bottom: 0.2rem;
+                font-weight: bold;
+            }
+            .more{
+                font-size: 16px;
+                color: blue;
+            }
+            .Btn{
+                padding: 0.7rem 1rem;
+                margin-top: 1rem;
+            }
+        }
+    }
+    @media(max-width: 1000px){
+        .MainContent{
+            .FormContent{
+                left: 30%;
+            }
+        }
+    }
+    @media(max-width: 750px){
+        .MainContent{
+            .FormContent{
+                left: 20%;
+            }
+        }
+    }
+    @media(max-width: 600px){
+        .MainContent{
+            .FormContent{
+                padding: 2rem;
+                .icon{
+                    font-size: 60px;
+                }
+                .Msg{
+                    font-size: 30px;
+                }
+                .details{
+                    font-size: 20px;
+                }
+                .more{
+                    font-size: 15px;
+                }
+            }
+        }
+    }
+    @media(max-width: 400px){
+        .MainContent{
+            .MainPicture{
+                height: 70vh;
+            }
+            .FormContent{
+                left: 5%;
+            }
+        }
+    }
+}

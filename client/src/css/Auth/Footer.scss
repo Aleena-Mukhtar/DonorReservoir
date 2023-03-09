@@ -1,3 +1,73 @@
+$navbar-color: #b81d1d;
+$font-color: #FFFFFF;
+$icon-color: #A6A3A3;
 .Footer{
-    
+    background-color: $navbar-color;
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .footerContent{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        border-bottom: 1px solid $font-color;
+        color: $font-color;
+        width: 95%;
+        height: 40vh;
+        font-size: 18px;
+        .detail{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            width: 25%;
+            .link{
+                text-decoration: none;
+                color: $font-color;
+            }
+        }
+    }
+    .DetailCon{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 95%;
+        margin-top: 1rem;
+        .con1{
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            .year{
+                color: $font-color;
+            }
+            .link{
+                text-decoration: none;
+                color: $font-color;
+                margin-left: 1rem;
+            }
+        }
+        .socialCon{
+            .social{
+                text-decoration: none;
+                color: $font-color;
+                margin-right: 1rem;
+                .icon{
+                    font-size: 25px;
+                }
+            }
+        }
+    }
+    .link:hover{
+        border-bottom: 1px solid $font-color;
+    }
+    @media(max-width: 500px){
+        .footerContent{
+            .detail{
+                width: 40%;
+            }
+        }
+    }
 }

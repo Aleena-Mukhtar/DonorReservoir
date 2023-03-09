@@ -1,3 +1,83 @@
 @import-normalize;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
 @import "./Auth/Navbar.scss";
 @import "./Auth/Footer.scss";
+@import "./Auth/Homepage.scss";
+@import "./Auth/LoginPage.scss";
+@import "./Auth/EditProfile.scss";
+@import "./Donor/TermsPage.scss";
+@import "./Blood Bank/BankSignup.scss";
+@import "./Admin/AdminDashboard.scss";
+$navbar-color: #b81d1d;
+$font-color: #FFFFFF;
+$icon-color: #A6A3A3;
+body::-webkit-scrollbar-track
+{
+    background-color: $font-color;
+    border-radius: 5px;
+}
+body::-webkit-scrollbar
+{
+    width: 8px;
+    background-color: $icon-color;
+    border-radius: 5px;
+}
+body::-webkit-scrollbar-thumb
+{
+    background-color: $navbar-color;
+    border-radius: 5px;
+}
+body{
+    background-color: #E8E8E8;
+    font-family: 'Roboto', sans-serif;
+    .Btn{
+        padding: 1rem;
+        background-color: $navbar-color;
+        border: none;
+        border-radius: 5px;
+        color: $font-color;
+        font-size: 18px;
+        cursor: pointer;
+    }
+    .checkbox{
+        margin-right: 2rem;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+    .fieldsDiv{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        .fieldCon{
+            width: 43%;
+            margin: 1rem 0;
+            .field{
+                font-size: 16px;
+                margin-bottom: 0.5rem;
+            }
+            .input{
+                width: 100%;
+                background-color: $font-color;
+                border: none;
+                border-radius: 6px;
+                padding: 0.8rem;
+            }
+            .input:focus{
+                outline: none;
+            }
+        }
+    }
+    .ImageField{
+        .upload-img{
+            margin: 1rem 0;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid gray;
+            object-fit: fill;
+        }
+    }
+}
