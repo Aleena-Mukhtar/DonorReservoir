@@ -1,0 +1,386 @@
+$navbar-color: #b81d1d;
+$font-color: #FFFFFF;
+$icon-color: #A6A3A3;
+$check-color: #077861;
+$header-color: #D6D5D5;
+.eachPatientRequest{
+    padding-left: 2rem;
+    padding-bottom: 2rem;
+    position: relative;
+    .backBtn{
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        margin-top: 2rem;
+        .icon{
+            font-size: 30px;
+        }
+    }
+    .heading{       
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        padding: 1rem 0;
+    }
+    .BtnCon{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 90%;
+        margin: 2rem 0;
+        button{
+            padding: 0.5rem;
+            background: transparent;
+            border: none;
+            border: 1px solid $navbar-color;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: $font-color;
+            .icon{
+                font-size: 25px;
+                color: $navbar-color;
+            }
+        }
+    }
+    .imgDiv{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 1rem;
+        .patient-img{
+            width: 170px;
+            height: 170px;
+            border: 1px solid $navbar-color;
+            border-radius: 50%;
+        }
+    }
+    .DetailCon{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin: 1rem 0;
+        .header{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .text{
+            margin-left: 1rem;
+            font-size: 18px;
+        }
+        .Dstatus{
+            color: $navbar-color;
+            font-weight: bold;
+        }
+        .Astatus{
+            color: $check-color;
+            font-weight: bold;
+        }
+    }
+    .BtnCon1{
+        button{
+            width: 25%;
+            font-size: 18px;
+            background-color: $navbar-color;
+            color: $font-color;
+            padding: 0.8rem 0;
+            font-weight: bold;
+        }
+        .denyBtn{
+            background-color: $font-color;
+            color: $navbar-color;
+        }
+    }
+    @media(max-width: 500px){
+        .imgDiv{
+            .patient-img{
+                width: 150px;
+                height: 150px;
+            }
+        }
+        .BtnCon1{
+            button{
+                width: 35%;
+            }
+        }
+    }
+    @media(max-width: 400px){
+        .imgDiv{
+            .patient-img{
+                width: 130px;
+                height: 130px;
+            }
+        }
+        .DetailCon{
+            .header{
+                font-size: 18px;
+            }
+            .text{
+                font-size: 16px;
+            }
+        }
+        .BtnCon1{
+            button{
+                width: 40%;
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+.eachBankReply{
+    padding-left: 2rem;
+    padding-bottom: 2rem;
+    position: relative;
+    .backBtn{
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        margin-top: 2rem;
+        .icon{
+            font-size: 30px;
+        }
+    }
+    .heading{       
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        padding: 1rem 0;
+    }
+    .BtnCon{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 90%;
+        margin: 2rem 0;
+        button{
+            padding: 0.5rem;
+            background: transparent;
+            border: none;
+            border: 1px solid $navbar-color;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: $font-color;
+            .icon{
+                font-size: 25px;
+                color: $navbar-color;
+            }
+        }
+    }
+    .imgDiv{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 1rem;
+        .patient-img{
+            width: 170px;
+            height: 170px;
+            border: 1px solid $navbar-color;
+            border-radius: 50%;
+        }
+    }
+    .DetailCon{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin: 1rem 0;
+        .header{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .text{
+            margin-left: 1rem;
+            font-size: 18px;
+        }
+        .Dstatus{
+            color: $navbar-color;
+            font-weight: bold;
+        }
+        .Astatus{
+            color: $check-color;
+            font-weight: bold;
+        }
+    }
+    .tableCon{
+        .table{
+            width: 90%;
+            .tableHeader{
+                background-color: $navbar-color;
+                .headText{
+                    color: $font-color;
+                    padding: 0.9rem 0;
+                    font-size: 18px;
+                    font-weight: lighter;
+                }
+            }
+            .tableBody{
+                background-color: $header-color;
+                .eachRow{
+                    .rowText{
+                        padding: 0.9rem 0;
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    }
+    .billDetails{
+        margin: 1rem 0;
+        width: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        .details{
+            width: 25%;
+            .eachDetail{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 1rem 0;
+                font-size: 18px;
+                .header{
+                    font-weight: bold;
+                }
+            }
+            .total{
+                border-top: 2px solid black;
+            }
+        }
+    }
+    .btnCon1{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 90%;
+        margin: 2rem 0;
+        button{
+            padding: 0.8rem;
+            width: 25%;
+            font-size: 18px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .RBtn{
+            border: 1px solid $navbar-color;
+            background-color: $font-color;
+            color: $navbar-color;
+            font-weight: bold;
+        }
+        .ABtn{
+            border: 1px solid $font-color;
+            background-color: $navbar-color;
+            color: $font-color;
+            font-weight: bold;
+        }
+    }
+    @media(max-width: 550px){
+        .imgDiv{
+           .patient-img{
+                width: 130px;
+                height: 130px;
+            }
+        }
+        .DetailCon{
+            .header{
+                font-size: 18px;
+            }
+            .text{
+                font-size: 16px;
+            }
+        }
+        .tableCon{
+            overflow-x: scroll;
+            overflow-y: hidden;
+            .table{
+                width: 500px;
+                .tableHeader{
+                    .headText{
+                        font-size: 16px;
+                    }
+                }
+                .tableBody{
+                    .eachRow{
+                        .rowText{
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+        }
+        .billDetails{
+            .details{
+                width: 55%;
+                .eachDetail{
+                    font-size: 16px;
+                }
+            }
+        }
+        .btnCon1{
+            button{
+                width: 40%;
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+.bottleDetails{
+    padding-left: 2rem;
+    padding-bottom: 2rem;
+    .backBtn{
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        margin-top: 2rem;
+        .icon{
+            font-size: 30px;
+        }
+    }
+    .heading{       
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        padding: 1rem 0;
+    }
+    .tableCon{
+        // overflow-y: scroll;
+        // overflow-x: hidden;
+        width: 97%;
+        .table{
+            width: 100%;
+            .tableHeader{
+                background-color: $navbar-color;
+                .headText{
+                    color: $font-color;
+                    padding: 0.9rem 0;
+                    font-size: 18px;
+                    font-weight: lighter;
+                }
+            }
+            .tableBody{
+                background-color: $font-color;
+                .eachRow{
+                    .rowText{
+                        padding: 0.9rem 0;
+                        font-size: 16px;
+                    }
+                }
+                .eachRow:hover{
+                    background-color: rgba($color: $header-color, $alpha: 0.4);
+                }
+            }
+        }
+    }
+    @media(max-width: 550px){
+        padding-left: 1rem;
+        .tableCon{
+            overflow-y: hidden;
+            overflow-x: scroll;
+            .table{
+                width: 550px;
+            }
+        }
+    }
+}
