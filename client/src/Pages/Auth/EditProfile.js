@@ -5,8 +5,10 @@ import { MdDelete, MdModeEditOutline } from 'react-icons/md';
 
 export default function EditProfile() {
     const [showModal, setShowModal] = useState(false);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [file, setFile] = useState(null);
     function handleChange(e) {
+        setShowModal(true);
         console.log(e.target.files);
         setFile(URL.createObjectURL(e.target.files[0]));
     }
@@ -20,7 +22,7 @@ export default function EditProfile() {
                     <div className='label'>User Info</div>
                 </div>
             </div>
-            <button className='logoutBtn'>
+            <button className='logoutBtn' onClick={(e) => setShowLogoutModal(!showLogoutModal)}>
                 <AiOutlineLogout className='icon'/>
                 <div className='label'>Log Out</div>
             </button>
@@ -133,17 +135,23 @@ export default function EditProfile() {
                 <div className='heading'>Profile picture</div>
                 <div className='subHeading'>A picture helps people recognize you</div>
                 <div className='imgDiv'>
+                    {file ? (
+                        <img src={file} alt="logo" className="upload-img" />
+                        ) : (
+                            <img
+                                src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
+                                alt="logo"
+                                className="upload-img"
+                            />
+                        )
+                    }
+                </div>
+                <div className='BtnDiv'>
                     <label htmlFor="image">
-                        {file ? (
-                            <img src={file} alt="logo" className="upload-img" />
-                            ) : (
-                                <img
-                                    src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
-                                    alt="logo"
-                                    className="upload-img"
-                                />
-                            )
-                        }
+                        <div className='modelBtn'>
+                            <MdModeEditOutline className='icon'/>
+                            <div className='label'>Change</div>
+                        </div>
                     </label>
                     <input
                         type="file"
@@ -153,19 +161,6 @@ export default function EditProfile() {
                         onChange={handleChange}
                         style={{ display: "none" }}
                     />
-                </div>
-                {/* <div className='imgDiv'>
-                    <img
-                        src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
-                        alt="logo"
-                        className="upload-img"
-                    />
-                </div> */}
-                <div className='BtnDiv'>
-                    <button className='modelBtn'>
-                        <MdModeEditOutline className='icon'/>
-                        <div className='label'>Change</div>
-                    </button>
                     <button className='modelBtn'>
                         <MdDelete className='icon'/>
                         <div className='label'>Remove</div>
@@ -173,6 +168,16 @@ export default function EditProfile() {
                 </div>
             </div>
         </div>
+        <div className='logoutModal' style={{display: showLogoutModal ? 'flex' : 'none'}} onClick={(e) => setShowLogoutModal(false)}>
+        <div className='logout'>
+          <div className='modalHeading'>Confirm Logout</div>
+          <div className='innerHeading'>Are you sure you want to logout?</div>
+          <div className='btnCon'>
+            <button className='cancelBtn' onClick={(e) => setShowLogoutModal(false)}>Cancel</button>
+            <button className='okBtn'>OK</button>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

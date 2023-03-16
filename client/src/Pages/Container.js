@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminDashboard from './Admin/AdminDashboard';
+import BottleDetails from './Admin/BottleDetails';
+import EachBankReply from './Admin/EachBankReply';
+import EachPatientRequest from './Admin/EachPatientRequest';
 import EditProfile from './Auth/EditProfile';
 import Footer from './Auth/Footer';
 import Homepage from './Auth/Homepage';
@@ -9,6 +12,7 @@ import LoginPage from './Auth/LoginPage';
 import Navbar from './Auth/Navbar';
 import Register from './Auth/Register';
 import BlooBankContainer from './Blood Bank/BlooBankContainer';
+import BloodBankDashboard from './Blood Bank/BloodBankDashboard';
 import DonorContainer from './Donor/DonorContainer';
 
 export default function Container() {
@@ -25,6 +29,10 @@ export default function Container() {
           <Route exact path='/bankSignup' element={<BlooBankContainer/>} />
           <Route exact path='/editProfile' element={<EditProfile/>} />
           <Route exact path='/adminDashboard' element={<AdminDashboard/>} />
+          <Route exact path='/eachPatient' element={<EachPatientRequest/>} />
+          <Route exact path='/eachBank' element={<EachBankReply/>} />
+          <Route exact path='/bottlesStock' element={<BottleDetails/>} />
+          <Route exact path='/bloodBankDashboard' element={<BloodBankDashboard/>} />
         </Routes>
         <Footer/>
       </Router>
