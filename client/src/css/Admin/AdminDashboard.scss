@@ -5,11 +5,12 @@ $check-color: #077861;
 $header-color: #D6D5D5;
 .adminDashboard{
     width: 100%;
+    position: relative;
     .heading{       
         text-align: center;
         font-size: 28px;
         font-weight: bold;
-        margin: 1rem 0;
+        padding: 1rem 0;
     }
     .mainContent{
         display: flex;
@@ -113,11 +114,13 @@ $header-color: #D6D5D5;
                     width: 100%;
                     border-radius: 8px;
                     .tableHeader{
+                        width: 100%;
                         background-color: $header-color;
                         border-radius: 8px;
                         .headText{
                             padding: 0.9rem 0;
                             font-size: 17px;
+                            padding-left: 1rem;
                         }
                     }
                     .tableBody{
@@ -125,8 +128,18 @@ $header-color: #D6D5D5;
                         .eachRow{
                             cursor: pointer;
                             .rowText{
-                                padding: 0.8rem 0;
+                                padding: 0.8rem;
                                 font-size: 16px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                .detailsCon{
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: space-between;
+                                    width: 20%;
+                                    font-size: 14px;
+                                }
                             }
                         }
                         .eachRow:hover{
@@ -188,6 +201,19 @@ $header-color: #D6D5D5;
             .rightPanel{
                 width: 100%;
                 align-items: center;
+                .tableCon{
+                    .table{
+                        .tableBody{
+                            .eachRow{
+                                .rowText{
+                                    .detailsCon{
+                                        width: 30%;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -212,7 +238,7 @@ $header-color: #D6D5D5;
                     margin: 0 0.7rem;
                     overflow: scroll;
                     .table{
-                        width: 700px;
+                        width: 650px;
                     }
                 }
             }
