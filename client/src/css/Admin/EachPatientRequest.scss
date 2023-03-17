@@ -21,108 +21,162 @@ $header-color: #D6D5D5;
         font-size: 28px;
         font-weight: bold;
         padding: 1rem 0;
+        margin-bottom: 2rem;
     }
-    .BtnCon{
+    .MainContent{
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
-        width: 90%;
-        margin: 2rem 0;
-        button{
-            padding: 0.5rem;
-            background: transparent;
-            border: none;
-            border: 1px solid $navbar-color;
-            border-radius: 10px;
-            cursor: pointer;
-            background-color: $font-color;
-            .icon{
-                font-size: 25px;
-                color: $navbar-color;
+        .leftPanel{
+            width: 30%;
+            border-right: 1px solid $navbar-color;
+            height: 75vh;
+            .imgDiv{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                margin-bottom: 1rem;
+                .patient-img{
+                    width: 170px;
+                    height: 170px;
+                    border: 1px solid $navbar-color;
+                    border-radius: 50%;
+                }
+            }
+            .BtnCon{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                width: 95%;
+                margin-top: 3rem;
+                margin-bottom: 1rem;
+                button{
+                    margin-top: 0.8rem;
+                    margin-right: 0.2rem;
+                }
+                .btn{
+                    padding: 0.5rem;
+                    background: transparent;
+                    border: none;
+                    border: 1px solid $navbar-color;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    background-color: $font-color;
+                    .icon{
+                        font-size: 25px;
+                        color: $navbar-color;
+                    }
+                }
+                .btn1{
+                    border: none;
+                    border-radius: 10px;
+                    width: 30%;
+                    font-size: 17px;
+                    cursor: pointer;
+                    background-color: $navbar-color;
+                    color: $font-color;
+                    padding: 0.8rem 0;
+                    font-weight: bold;
+                }
+                .denyBtn{
+                    background-color: $font-color;
+                    color: $navbar-color;
+                    border: 1px solid $navbar-color;
+                }
+            }
+        }
+        .rightPanel{
+            width: 65%;
+            .DetailCon{
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                margin: 1rem 0;
+                .header{
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+                .text{
+                    margin-left: 1rem;
+                    font-size: 18px;
+                }
+                .Dstatus{
+                    color: $navbar-color;
+                    font-weight: bold;
+                }
+                .Astatus{
+                    color: $check-color;
+                    font-weight: bold;
+                }
             }
         }
     }
-    .imgDiv{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        margin-bottom: 1rem;
-        .patient-img{
-            width: 170px;
-            height: 170px;
-            border: 1px solid $navbar-color;
-            border-radius: 50%;
-        }
-    }
-    .DetailCon{
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        margin: 1rem 0;
-        .header{
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .text{
-            margin-left: 1rem;
-            font-size: 18px;
-        }
-        .Dstatus{
-            color: $navbar-color;
-            font-weight: bold;
-        }
-        .Astatus{
-            color: $check-color;
-            font-weight: bold;
-        }
-    }
-    .BtnCon1{
-        button{
-            width: 25%;
-            font-size: 18px;
-            background-color: $navbar-color;
-            color: $font-color;
-            padding: 0.8rem 0;
-            font-weight: bold;
-        }
-        .denyBtn{
-            background-color: $font-color;
-            color: $navbar-color;
-        }
-    }
-    @media(max-width: 500px){
-        .imgDiv{
-            .patient-img{
-                width: 150px;
-                height: 150px;
+    @media(max-width: 950px){
+        .MainContent{
+            .leftPanel{
+                .BtnCon{
+                    .btn1{
+                        width: 90px;
+                    }
+                }
             }
         }
-        .BtnCon1{
-            button{
-                width: 35%;
+    }
+    @media(max-width: 700px){
+        .MainContent{
+            .leftPanel{
+                width: 40%;
+            }
+            .rightPanel{
+                width: 55%;
+            }
+        }
+    }
+    @media(max-width: 550px){
+        .MainContent{
+            .leftPanel{
+                .imgDiv{
+                    .patient-img{
+                        width: 130px;
+                        height: 130px;
+                    }
+                }
+            }
+            .rightPanel{
+                .DetailCon{
+                    .header{
+                        font-size: 18px;
+                    }
+                    .text{
+                        font-size: 16px;
+                    }
+                }
             }
         }
     }
     @media(max-width: 400px){
-        .imgDiv{
-            .patient-img{
-                width: 130px;
-                height: 130px;
+        .MainContent{
+            flex-direction: column;
+            .leftPanel{
+                border-right: none;
+                border-bottom: 1px solid $navbar-color;
+                height: unset;
+                width: 95%;
+                .BtnCon{
+                    margin-top: 1rem;
+                    align-items: flex-start;
+                }
+                .imgDiv{
+                    .patient-img{
+                        width: 130px;
+                        height: 130px;
+                    }
+                }
             }
-        }
-        .DetailCon{
-            .header{
-                font-size: 18px;
-            }
-            .text{
-                font-size: 16px;
-            }
-        }
-        .BtnCon1{
-            button{
-                width: 40%;
-                font-size: 16px;
+            .rightPanel{
+                width: 97%;
             }
         }
     }
@@ -132,76 +186,6 @@ $header-color: #D6D5D5;
     padding-left: 2rem;
     padding-bottom: 2rem;
     position: relative;
-    .backBtn{
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        margin-top: 2rem;
-        .icon{
-            font-size: 30px;
-        }
-    }
-    .heading{       
-        text-align: center;
-        font-size: 28px;
-        font-weight: bold;
-        padding: 1rem 0;
-    }
-    .BtnCon{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 90%;
-        margin: 2rem 0;
-        button{
-            padding: 0.5rem;
-            background: transparent;
-            border: none;
-            border: 1px solid $navbar-color;
-            border-radius: 10px;
-            cursor: pointer;
-            background-color: $font-color;
-            .icon{
-                font-size: 25px;
-                color: $navbar-color;
-            }
-        }
-    }
-    .imgDiv{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        margin-bottom: 1rem;
-        .patient-img{
-            width: 170px;
-            height: 170px;
-            border: 1px solid $navbar-color;
-            border-radius: 50%;
-        }
-    }
-    .DetailCon{
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        margin: 1rem 0;
-        .header{
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .text{
-            margin-left: 1rem;
-            font-size: 18px;
-        }
-        .Dstatus{
-            color: $navbar-color;
-            font-weight: bold;
-        }
-        .Astatus{
-            color: $check-color;
-            font-weight: bold;
-        }
-    }
     .tableCon{
         .table{
             width: 90%;
@@ -248,48 +232,7 @@ $header-color: #D6D5D5;
             }
         }
     }
-    .btnCon1{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 90%;
-        margin: 2rem 0;
-        button{
-            padding: 0.8rem;
-            width: 25%;
-            font-size: 18px;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-        }
-        .RBtn{
-            border: 1px solid $navbar-color;
-            background-color: $font-color;
-            color: $navbar-color;
-            font-weight: bold;
-        }
-        .ABtn{
-            border: 1px solid $font-color;
-            background-color: $navbar-color;
-            color: $font-color;
-            font-weight: bold;
-        }
-    }
     @media(max-width: 550px){
-        .imgDiv{
-           .patient-img{
-                width: 130px;
-                height: 130px;
-            }
-        }
-        .DetailCon{
-            .header{
-                font-size: 18px;
-            }
-            .text{
-                font-size: 16px;
-            }
-        }
         .tableCon{
             overflow-x: scroll;
             overflow-y: hidden;
@@ -311,16 +254,10 @@ $header-color: #D6D5D5;
         }
         .billDetails{
             .details{
-                width: 55%;
+                width: 60%;
                 .eachDetail{
                     font-size: 16px;
                 }
-            }
-        }
-        .btnCon1{
-            button{
-                width: 40%;
-                font-size: 16px;
             }
         }
     }
