@@ -31,7 +31,7 @@ export default function Wizard3() {
   };
 
   const handleSubmit = () => {
-    axios.post("/bloodBank").then((res) => {
+    axios.post("/bloodBank", data).then((res) => {
       console.log(res);
       if (!res.err) {
         console.log(res.err);

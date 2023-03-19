@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineLogout } from "react-icons/ai";
 
@@ -6,6 +6,11 @@ export default function BloodBankDashboard() {
   const navigate = useNavigate();
   const [btnClick, setBtnClick] = useState(1);
   const [showModal, setShowModal] = useState(false);
+  const [Notifications, setNotifications] = useState([1, 2, 3, 4, 5]); //isko empty array krna ha example k liy 123 likha ha
+  const [history, setHistory] = useState([1, 2, 3, 5, 6, 7]); //isko empty array krna ha example k liy 123 likha ha
+  useEffect(() => {
+    // get data
+  }, []);
   const navigateToEachPatientPage = () => {
     navigate(`/eachPatient`);
   };
@@ -52,96 +57,17 @@ export default function BloodBankDashboard() {
                   </th>
                 </thead>
                 <tbody className="tableBody">
-                  <tr className="eachRow">
-                    <td className="rowText" align="center">
-                      <div>Hospital name request for A+ Blood Bottles</div>
-                      <div className="detailsCon">
-                        <div className="date">20 December, 2022</div>
-                        <div className="time">8:50 pm</div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr className="eachRow">
-                    <td className="rowText" align="center">
-                      <div>Hospital name request for A+ Blood Bottles</div>
-                      <div className="detailsCon">
-                        <div className="date">20 December, 2022</div>
-                        <div className="time">8:50 pm</div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr className="eachRow">
-                    <td className="rowText" align="center">
-                      <div>Hospital name request for A+ Blood Bottles</div>
-                      <div className="detailsCon">
-                        <div className="date">20 December, 2022</div>
-                        <div className="time">8:50 pm</div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr className="eachRow">
-                    <td className="rowText" align="center">
-                      <div>Hospital name request for A+ Blood Bottles</div>
-                      <div className="detailsCon">
-                        <div className="date">20 December, 2022</div>
-                        <div className="time">8:50 pm</div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr className="eachRow">
-                    <td className="rowText" align="center">
-                      <div>Hospital name request for A+ Blood Bottles</div>
-                      <div className="detailsCon">
-                        <div className="date">20 December, 2022</div>
-                        <div className="time">8:50 pm</div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr className="eachRow">
-                    <td className="rowText" align="center">
-                      <div>Hospital name request for A+ Blood Bottles</div>
-                      <div className="detailsCon">
-                        <div className="date">20 December, 2022</div>
-                        <div className="time">8:50 pm</div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr className="eachRow">
-                    <td className="rowText" align="center">
-                      <div>Hospital name request for A+ Blood Bottles</div>
-                      <div className="detailsCon">
-                        <div className="date">20 December, 2022</div>
-                        <div className="time">8:50 pm</div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr className="eachRow">
-                    <td className="rowText" align="center">
-                      <div>Hospital name request for A+ Blood Bottles</div>
-                      <div className="detailsCon">
-                        <div className="date">20 December, 2022</div>
-                        <div className="time">8:50 pm</div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr className="eachRow">
-                    <td className="rowText" align="center">
-                      <div>Hospital name request for A+ Blood Bottles</div>
-                      <div className="detailsCon">
-                        <div className="date">20 December, 2022</div>
-                        <div className="time">8:50 pm</div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr className="eachRow">
-                    <td className="rowText" align="center">
-                      <div>Hospital name request for A+ Blood Bottles</div>
-                      <div className="detailsCon">
-                        <div className="date">20 December, 2022</div>
-                        <div className="time">8:50 pm</div>
-                      </div>
-                    </td>
-                  </tr>
+                  {Notifications.map((el) => (
+                    <tr className="eachRow">
+                      <td className="rowText" align="center">
+                        <div>Hospital name request for A+ Blood Bottles</div>
+                        <div className="detailsCon">
+                          <div className="date">20 December, 2022</div>
+                          <div className="time">8:50 pm</div>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             ) : (
@@ -167,206 +93,28 @@ export default function BloodBankDashboard() {
                   </th>
                 </thead>
                 <tbody className="tableBody">
-                  <tr className="eachRow1">
-                    <td className="rowText" align="center">
-                      National Hospital
-                    </td>
-                    <td className="rowText" align="center">
-                      B+
-                    </td>
-                    <td className="rowText" align="center">
-                      5
-                    </td>
-                    <td className="rowText" align="center">
-                      22 December, 2022
-                    </td>
-                    <td className="rowText" align="center">
-                      8:50 pm
-                    </td>
-                    <td className="rowText" align="center">
-                      600
-                    </td>
-                  </tr>
-                  <tr className="eachRow1">
-                    <td className="rowText" align="center">
-                      National Hospital
-                    </td>
-                    <td className="rowText" align="center">
-                      B+
-                    </td>
-                    <td className="rowText" align="center">
-                      5
-                    </td>
-                    <td className="rowText" align="center">
-                      22 December, 2022
-                    </td>
-                    <td className="rowText" align="center">
-                      8:50 pm
-                    </td>
-                    <td className="rowText" align="center">
-                      600
-                    </td>
-                  </tr>
-                  <tr className="eachRow1">
-                    <td className="rowText" align="center">
-                      National Hospital
-                    </td>
-                    <td className="rowText" align="center">
-                      B+
-                    </td>
-                    <td className="rowText" align="center">
-                      5
-                    </td>
-                    <td className="rowText" align="center">
-                      22 December, 2022
-                    </td>
-                    <td className="rowText" align="center">
-                      8:50 pm
-                    </td>
-                    <td className="rowText" align="center">
-                      600
-                    </td>
-                  </tr>
-                  <tr className="eachRow1">
-                    <td className="rowText" align="center">
-                      National Hospital
-                    </td>
-                    <td className="rowText" align="center">
-                      B+
-                    </td>
-                    <td className="rowText" align="center">
-                      5
-                    </td>
-                    <td className="rowText" align="center">
-                      22 December, 2022
-                    </td>
-                    <td className="rowText" align="center">
-                      8:50 pm
-                    </td>
-                    <td className="rowText" align="center">
-                      600
-                    </td>
-                  </tr>
-                  <tr className="eachRow1">
-                    <td className="rowText" align="center">
-                      National Hospital
-                    </td>
-                    <td className="rowText" align="center">
-                      B+
-                    </td>
-                    <td className="rowText" align="center">
-                      5
-                    </td>
-                    <td className="rowText" align="center">
-                      22 December, 2022
-                    </td>
-                    <td className="rowText" align="center">
-                      8:50 pm
-                    </td>
-                    <td className="rowText" align="center">
-                      600
-                    </td>
-                  </tr>
-                  <tr className="eachRow1">
-                    <td className="rowText" align="center">
-                      National Hospital
-                    </td>
-                    <td className="rowText" align="center">
-                      B+
-                    </td>
-                    <td className="rowText" align="center">
-                      5
-                    </td>
-                    <td className="rowText" align="center">
-                      22 December, 2022
-                    </td>
-                    <td className="rowText" align="center">
-                      8:50 pm
-                    </td>
-                    <td className="rowText" align="center">
-                      600
-                    </td>
-                  </tr>
-                  <tr className="eachRow1">
-                    <td className="rowText" align="center">
-                      National Hospital
-                    </td>
-                    <td className="rowText" align="center">
-                      B+
-                    </td>
-                    <td className="rowText" align="center">
-                      5
-                    </td>
-                    <td className="rowText" align="center">
-                      22 December, 2022
-                    </td>
-                    <td className="rowText" align="center">
-                      8:50 pm
-                    </td>
-                    <td className="rowText" align="center">
-                      600
-                    </td>
-                  </tr>
-                  <tr className="eachRow1">
-                    <td className="rowText" align="center">
-                      National Hospital
-                    </td>
-                    <td className="rowText" align="center">
-                      B+
-                    </td>
-                    <td className="rowText" align="center">
-                      5
-                    </td>
-                    <td className="rowText" align="center">
-                      22 December, 2022
-                    </td>
-                    <td className="rowText" align="center">
-                      8:50 pm
-                    </td>
-                    <td className="rowText" align="center">
-                      600
-                    </td>
-                  </tr>
-                  <tr className="eachRow1">
-                    <td className="rowText" align="center">
-                      National Hospital
-                    </td>
-                    <td className="rowText" align="center">
-                      B+
-                    </td>
-                    <td className="rowText" align="center">
-                      5
-                    </td>
-                    <td className="rowText" align="center">
-                      22 December, 2022
-                    </td>
-                    <td className="rowText" align="center">
-                      8:50 pm
-                    </td>
-                    <td className="rowText" align="center">
-                      600
-                    </td>
-                  </tr>
-                  <tr className="eachRow1">
-                    <td className="rowText" align="center">
-                      National Hospital
-                    </td>
-                    <td className="rowText" align="center">
-                      B+
-                    </td>
-                    <td className="rowText" align="center">
-                      5
-                    </td>
-                    <td className="rowText" align="center">
-                      22 December, 2022
-                    </td>
-                    <td className="rowText" align="center">
-                      8:50 pm
-                    </td>
-                    <td className="rowText" align="center">
-                      600
-                    </td>
-                  </tr>
+                  {history.map((el) => (
+                    <tr className="eachRow1">
+                      <td className="rowText" align="center">
+                        National Hospital
+                      </td>
+                      <td className="rowText" align="center">
+                        B+
+                      </td>
+                      <td className="rowText" align="center">
+                        5
+                      </td>
+                      <td className="rowText" align="center">
+                        22 December, 2022
+                      </td>
+                      <td className="rowText" align="center">
+                        8:50 pm
+                      </td>
+                      <td className="rowText" align="center">
+                        600
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             )}
