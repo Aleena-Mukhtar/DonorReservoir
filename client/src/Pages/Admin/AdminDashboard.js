@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
 export default function AdminDashboard() {
   const [btnClick, setBtnClick] = useState(2);
   const [showModal, setShowModal] = useState(false);
+  const [requests, setRequests] = useState([1, 2, 3]); //isko empty array krna ha example k liy 123 likha ha
+  const [Notifications, setNotifications] = useState([1, 2, 3]); //isko empty array krna ha example k liy 123 likha ha
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // get data
+  }, []);
   const navigateToEachPatientPage = () => {
     navigate(`/eachPatient`);
   };
@@ -71,86 +77,37 @@ export default function AdminDashboard() {
                 </th>
               </thead>
               <tbody className="tableBody">
-                <tr
-                  className="eachRow"
-                  onClick={
-                    btnClick === 2
-                      ? navigateToEachPatientPage
-                      : navigateToEachBankPage
-                  }
-                >
-                  <td className="rowText" align="center">
-                    <div>
-                      {btnClick === 2
-                        ? "Patient with ID 123456 Requested for Blood Bottle(s)"
-                        : "You got a reply From Aleena Donations Bank"}
-                    </div>
-                    <div className="detailsCon">
-                      <div className="date">20 December, 2022</div>
-                      <div className="time">8:50 pm</div>
-                    </div>
-                  </td>
-                </tr>
-                <tr
-                  className="eachRow"
-                  onClick={
-                    btnClick === 2
-                      ? navigateToEachPatientPage
-                      : navigateToEachBankPage
-                  }
-                >
-                  <td className="rowText" align="center">
-                    <div>
-                      {btnClick === 2
-                        ? "Patient with ID 123456 Requested for Blood Bottle(s)"
-                        : "You got a reply From Aleena Donations Bank"}
-                    </div>
-                    <div className="detailsCon">
-                      <div className="date">20 December, 2022</div>
-                      <div className="time">8:50 pm</div>
-                    </div>
-                  </td>
-                </tr>
-                <tr
-                  className="eachRow"
-                  onClick={
-                    btnClick === 2
-                      ? navigateToEachPatientPage
-                      : navigateToEachBankPage
-                  }
-                >
-                  <td className="rowText" align="center">
-                    <div>
-                      {btnClick === 2
-                        ? "Patient with ID 123456 Requested for Blood Bottle(s)"
-                        : "You got a reply From Aleena Donations Bank"}
-                    </div>
-                    <div className="detailsCon">
-                      <div className="date">20 December, 2022</div>
-                      <div className="time">8:50 pm</div>
-                    </div>
-                  </td>
-                </tr>
-                <tr
-                  className="eachRow"
-                  onClick={
-                    btnClick === 2
-                      ? navigateToEachPatientPage
-                      : navigateToEachBankPage
-                  }
-                >
-                  <td className="rowText" align="center">
-                    <div>
-                      {btnClick === 2
-                        ? "Patient with ID 123456 Requested for Blood Bottle(s)"
-                        : "You got a reply From Aleena Donations Bank"}
-                    </div>
-                    <div className="detailsCon">
-                      <div className="date">20 December, 2022</div>
-                      <div className="time">8:50 pm</div>
-                    </div>
-                  </td>
-                </tr>
+                {btnClick === 2
+                  ? requests.map((el) => (
+                      <tr
+                        className="eachRow"
+                        onClick={navigateToEachPatientPage}
+                      >
+                        <td className="rowText" align="center">
+                          <div>
+                            "Patient with ID 123456 Requested for Blood
+                            Bottle(s)"
+                          </div>
+                          <div className="detailsCon">
+                            <div className="date">20 December, 2022</div>
+                            <div className="time">8:50 pm</div>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  : Notifications.map((el) => (
+                      <tr className="eachRow" onClick={navigateToEachBankPage}>
+                        <td className="rowText" align="center">
+                          <div>
+                            "You got a reply From Aleena Donations Bank"
+                          </div>
+                          <div className="detailsCon">
+                            <div className="date">20 December, 2022</div>
+                            <div className="time">8:50 pm</div>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
               </tbody>
             </table>
           </div>
