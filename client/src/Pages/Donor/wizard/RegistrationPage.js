@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { requestContext } from "./DonorContainer";
+import toast from 'react-hot-toast';
+import axios from "axios";
 
 export default function RegistrationPage() {
   const { setTab, handleChange, setData, data } = useContext(requestContext);
@@ -9,6 +11,30 @@ export default function RegistrationPage() {
   function handleChangeImg(e) {
     console.log(e.target.files);
     setData({ ...data, img: URL.createObjectURL(e.target.files[0]) });
+  }
+  const handleRegistration = (e) => {
+    e.preventDefault();
+    if(data.img === "" || data.fname === "" || data.lname === "" || data.address === "" || data.email === "" || data.phone === "" || data.phone2 === "" || data.CNIC === "" || data.bloodType === "")
+    {
+      toast.error("Please fill all fields");
+    }
+    axios({
+      url: "/donor/donor",
+      method: "POST",
+      data: JSON.stringify(data),
+      headers: {
+        "content-type": "application/json"
+      }
+    }).then(res => {
+      if (res.data.success) {
+        toast.success("Registered Successfully");
+        setTab(2);
+      }
+      else {
+        console.log(res)
+        toast.error(res.data.message);
+      }
+    })
   }
   return (
     <div className="donorRegistration">
@@ -108,17 +134,25 @@ export default function RegistrationPage() {
             />
           </div>
         </div>
-        {/* you should put dropdown here tho */}
         <div className="fieldsDiv">
           <div className="fieldCon">
-            <div className="field">Blood Type</div>
-            <input
-              className="input"
+            <div className="field">Your Blood Type</div>
+            <select 
+              className="select input"
               onChange={(e) => handleChange(e)}
               value={data.bloodType}
               name="bloodType"
-              type="text"
-            />
+            >
+              <option>Choose BloodType</option>
+              <option value='AB+' className="option">AB+</option>
+              <option value='AB-' >AB-</option>
+              <option value='A+' >A+</option>
+              <option value='A-' >A-</option>
+              <option value='B+' >B+</option>
+              <option value='B-' >B-</option>
+              <option value='O+' >O+</option>
+              <option value='O-' >O-</option>
+            </select>
           </div>
           <div className="fieldCon">
             <div className="field">CNIC</div>
@@ -131,7 +165,7 @@ export default function RegistrationPage() {
             />
           </div>
         </div>
-        <button className="Btn" onClick={() => setTab(2)}>
+        <button className="Btn" onClick={handleRegistration}>
           Register Yourself
         </button>
       </div>
