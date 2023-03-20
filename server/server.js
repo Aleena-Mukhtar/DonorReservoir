@@ -16,6 +16,7 @@ const corsOptions = {
 const db = require("./config/config").get(process.env.NODE_ENV);
 
 const _class = require("./routes/class");
+const donor = require("./routes/Donor");
 
 const app = express();
 
@@ -50,15 +51,7 @@ mongoose.connect(
   }
 );
 
-app.use("/class", _class);
-
-// app.use("/", (req, res) => {
-//   const d =
-//     '%7B"occupation"%3A%5B%5D%2C"earning"%3A0%2C"classesId"%3A%5B%5D%2C"response_rate"%3A0%2C"delivery_time"%3A0%2C"order_completion"%3A0%2C"is_active"%3Atrue%2C"is_email_verified"%3Afalse%2C"is_phone_verified"%3Afalse%2C"is_profile_completed"%3Afalse%2C"is_payment_verified"%3Afalse%2C"_id"%3A"633dc2bb467f1f0d804827a9"%2C"first_name"%3A"Ben"%2C"last_name"%3A"Dunk"%2C"google_oauth_id"%3A"112069601084137864513"%2C"img"%3A"https%3A%2F%2Flh3.googleusercontent.com%2Fa%2FALm5wu2Mq7b80Cvld1403-EkwtajhIt3atHlOXBhfYTR%3Ds96-c"%2C"email"%3A"bdunk1122%40gmail.com"%2C"skills"%3A%5B%5D%2C"education"%3A%5B%5D%2C"certification"%3A%5B%5D%2C"goals"%3A%5B%5D%2C"createdAt"%3A"2022-10-05T17%3A45%3A31.691Z"%2C"updatedAt"%3A"2022-10-05T17%3A45%3A31.691Z"%2C"__v"%3A0%7D';
-//   const data = decodeURIComponent(d);
-//   console.log(data);
-//   console.log(JSON.parse(data));
-// });
+app.use("/donor", donor);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
@@ -69,6 +62,10 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+
+
+
+// to run server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("App running on port " + PORT);

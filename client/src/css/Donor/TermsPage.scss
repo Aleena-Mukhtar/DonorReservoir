@@ -135,6 +135,22 @@ $check-color: #077861;
         justify-content: flex-start;
         width: 85%;
         margin-left: 6rem;
+        .fieldsDiv{
+            .fieldCon{
+                .select{
+                    width: 106%;
+                    background-color: $font-color;
+                    border: none;
+                    border-radius: 6px;
+                    padding: 0.8rem;
+                    font-size: 15px;
+                    background-color: $font-color;
+                }
+                .select:focus{
+                    outline: none;
+                }
+            }
+        }
         .Btn{
             margin: 2rem 0;
             width: 30%;
