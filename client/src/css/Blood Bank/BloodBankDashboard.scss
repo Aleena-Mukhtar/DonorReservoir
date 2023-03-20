@@ -5,20 +5,25 @@ $check-color: #077861;
 $header-color: #D6D5D5;
 .bloodBankDashboard{
     .heading{
-        margin: 2rem 0;
+        margin: 1.5rem 0;
     }
-    .tableCon{
-        .table{
-            .tableBody{
-                .eachRow1{
-                    cursor: pointer;
-                    .rowText{
-                        padding: 0.8rem 0;
-                        font-size: 16px;
+    .mainContent{
+        .rightPanel{
+            .tableCon{
+                height: 90vh;
+                .table{
+                    .tableBody{
+                        .eachRow1{
+                            cursor: pointer;
+                            .rowText{
+                                padding: 0.8rem 0;
+                                font-size: 16px;
+                            }
+                        }
+                        .eachRow1:hover{
+                            background-color: rgba($color: $header-color, $alpha: 0.3);
+                        }
                     }
-                }
-                .eachRow1:hover{
-                    background-color: rgba($color: $header-color, $alpha: 0.3);
                 }
             }
         }

@@ -12,7 +12,7 @@ const initialObj = {
   email: "",
   phone: "",
   phone2: "",
-  bloodTypes: "",
+  bloodType: "",
   CNIC: "",
 };
 export default function DonorContainer() {
