@@ -142,7 +142,14 @@ $header-color: #D6D5D5;
                                 }
                             }
                         }
-                        .eachRow:hover{
+                        .eachRow1{
+                            cursor: pointer;
+                            .rowText{
+                                padding: 0.8rem;
+                                font-size: 16px;
+                            }
+                        }
+                        .eachRow:hover, .eachRow1:hover{
                             background-color: rgba($color: $header-color, $alpha: 0.3);
                         }
                     }
@@ -187,9 +194,10 @@ $header-color: #D6D5D5;
                 align-items: center;
                 .BtnDiv{
                     flex-direction: row;
+                    flex-wrap: wrap;
                     .btn{
                         width: 45%;
-                        margin: 1rem;
+                        margin: 0.5rem;
                         font-size: 16px;
                         padding: 1rem 0.7rem;
                     }

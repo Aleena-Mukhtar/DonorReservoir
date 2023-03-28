@@ -6,6 +6,9 @@ const router = require("express").Router();
 const cors = require("cors");
 const session = require("express-session");
 const passport = require("passport");
+const db = require("./config/config").get(process.env.NODE_ENV);
+const _class = require("./routes/class");
+const donor = require("./routes/Donor");
 
 const corsOptions = {
   origin: "*",
@@ -13,15 +16,8 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
-const db = require("./config/config").get(process.env.NODE_ENV);
-
-const _class = require("./routes/class");
-const donor = require("./routes/Donor");
-
 const app = express();
-
 app.use(logger("dev"));
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -33,13 +29,12 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-
 const directory = path.join(__dirname, "/uploads");
 app.use("/uploads", express.static(directory));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
-
 app.use(cors(corsOptions));
+app.use("/donor", donor);
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
@@ -51,8 +46,6 @@ mongoose.connect(
   }
 );
 
-app.use("/donor", donor);
-
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
   app.get("*", (req, res) => {
@@ -61,9 +54,6 @@ if (process.env.NODE_ENV === "production") {
     );
   });
 }
-
-
-
 
 // to run server
 const PORT = process.env.PORT || 5000;
