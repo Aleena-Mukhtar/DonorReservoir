@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { HiOutlineArrowNarrowLeft } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
-import { MdDelete } from 'react-icons/md';
-import { BsFillStarFill } from 'react-icons/bs';
+import { HiOutlineArrowNarrowLeft, HiIdentification } from 'react-icons/hi';
+import { FaUserCheck, FaAddressBook, FaPrescriptionBottleAlt } from 'react-icons/fa';
+import { BsCalendar2DateFill, BsTelephoneOutboundFill, BsFillBookmarkStarFill } from 'react-icons/bs';
+import { MdOutlineAccessTimeFilled, MdEmail, MdBloodtype, MdDelete } from 'react-icons/md';
+import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
 
 export default function EachPatientRequest() {
     const navigate = useNavigate();
@@ -11,23 +13,28 @@ export default function EachPatientRequest() {
     const [starred, setStarred] = useState(false);
     const [status, setStatus] = useState('notSet');
   return (
-    <div className='eachPatientRequest'>
-        <button className='backBtn' onClick={() => navigate(-1)}>
-            <HiOutlineArrowNarrowLeft className='icon'/>
-        </button>
-        <div className='heading'>Patient Details</div>
+    <div className='eachDonor eachPatientRequest'>
+        <div className='topDiv'>
+            <button className='backBtn' onClick={() => navigate(-1)}>
+                <HiOutlineArrowNarrowLeft className='icon'/>
+            </button>
+            <div className='imgDiv'>
+                <img
+                    src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
+                    alt="logo"
+                    className="donor-img"
+                />
+            </div>
+        </div>
         <div className='MainContent'>
-            <div className='leftPanel'>
-                <div className='imgDiv'>
-                    <img
-                        src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
-                        alt="logo"
-                        className="patient-img"
-                    />
-                </div>
+            <div className='nameDiv'>
+                <div className='name'>Patient Name</div>
                 <div className='BtnCon'>
-                    <button className='starBtn btn' style={{backgroundColor: starred ? '#b81d1d' : '#FFFFFF'}} onClick={(e) => setStarred(!starred)}>
-                        <BsFillStarFill className='icon' style={{color: starred ? '#FFFFFF' : '#b81d1d'}}/>
+                    <button className='starBtn btn' onClick={(e) => setStarred(!starred)}>
+                        {
+                            starred ? 
+                            <AiFillStar className='icon'/> : <AiOutlineStar className='icon'/>
+                        }
                     </button>
                     <button className='deleteBtn btn' onClick={(e) => setShowDeleteModal(!showDeleteModal)}>
                         <MdDelete className='icon'/>
@@ -43,61 +50,75 @@ export default function EachPatientRequest() {
             </div>
             <div className='rightPanel'>
                 <div className='DetailCon'>
-                    <div className='header'>Patient ID:</div>
-                    <div className='text'>123456</div>
+                    <div className='header'>
+                        <FaUserCheck className='icon colorIcon'/>
+                    </div>
+                    <div className='text'>123456789101112</div>
                 </div>
                 <div className='DetailCon'>
-                    <div className='header'>Date:</div>
-                    <div className='text'>22 December, 2023</div>
+                    <div className='header'>
+                        <BsCalendar2DateFill className='icon'/>
+                    </div>
+                    <div className='text'>December 23, 2023</div>
                 </div>
                 <div className='DetailCon'>
-                    <div className='header'>Time:</div>
-                    <div className='text'>8:50 pm</div>
+                    <div className='header'>
+                        <MdOutlineAccessTimeFilled className='icon colorIcon'/>
+                    </div>
+                    <div className='text'>8:15 pm</div>
                 </div>
                 <div className='DetailCon'>
-                    <div className='header'>Patient Name:</div>
-                    <div className='text'>First Last Name</div>
-                </div>
-                <div className='DetailCon'>
-                    <div className='header'>Address:</div>
+                    <div className='header'>
+                        <FaAddressBook className='icon'/>
+                    </div>
                     <div className='text'>House # 12, Street # 34 Block A Lahore Punjab</div>
                 </div>
                 <div className='DetailCon'>
-                    <div className='header'>CNIC:</div>
+                    <div className='header'>
+                        <HiIdentification className='icon colorIcon'/>
+                    </div>
                     <div className='text'>35202-1234567-0</div>
                 </div>
                 <div className='DetailCon'>
-                    <div className='header'>Phone Number 1: </div>
+                    <div className='header'>
+                        <BsTelephoneOutboundFill className='icon'/>
+                    </div>
                     <div className='text'>12345678910</div>
                 </div>
                 <div className='DetailCon'>
-                    <div className='header'>Phone Number 2: </div>
+                    <div className='header'>
+                        <BsTelephoneOutboundFill className='icon colorIcon'/>
+                    </div>
                     <div className='text'>12345678910</div>
                 </div>
                 <div className='DetailCon'>
-                    <div className='header'>Email: </div>
+                    <div className='header'>
+                        <MdEmail className='icon'/>
+                    </div>
                     <div className='text'>patient@gmail.com</div>
                 </div>
                 <div className='DetailCon'>
-                    <div className='header'>Blood Type:</div>
+                    <div className='header'>
+                        <MdBloodtype className='icon colorIcon'/>
+                    </div>
                     <div className='text'>B+</div>
                 </div>
                 <div className='DetailCon'>
-                    <div className='header'>Blood Bottles Count: </div>
+                    <div className='header'>
+                        <FaPrescriptionBottleAlt className='icon'/>
+                    </div>
                     <div className='text'>3</div>
                 </div>
-                {
-                    status === 'deny' ? 
-                    <div className='DetailCon'>
-                        <div className='header'>Request Status: </div>
-                        <div className='text Dstatus'>Denied</div>
-                    </div> :
-                    status === 'approve' ? 
-                    <div className='DetailCon'>
-                        <div className='header'>Request Status: </div>
-                        <div className='text Astatus'>Approved</div>
-                    </div> : null
-                }
+                <div className='DetailCon'>
+                    <div className='header'>
+                        <BsFillBookmarkStarFill className='icon colorIcon'/>
+                    </div>
+                    <div className={status === 'approve' ? 'text Astatus' : 'text Dstatus'}>
+                        {
+                            status === 'deny' ? 'Denied' : status === 'approve' ? 'Approved' : 'Pending'
+                        }
+                    </div>
+                </div>
             </div>
         </div>
         <div className='logoutModal' style={{display: showDeleteModal ? 'flex' : 'none'}} onClick={(e) => setShowDeleteModal(false)}>

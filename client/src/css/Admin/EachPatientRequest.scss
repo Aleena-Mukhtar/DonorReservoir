@@ -4,259 +4,145 @@ $icon-color: #A6A3A3;
 $check-color: #077861;
 $header-color: #D6D5D5;
 .eachPatientRequest{
-    padding-left: 2rem;
-    padding-bottom: 2rem;
-    position: relative;
-    .backBtn{
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        margin-top: 2rem;
-        .icon{
-            font-size: 30px;
-        }
-    }
-    .heading{       
-        text-align: center;
-        font-size: 28px;
-        font-weight: bold;
-        padding: 1rem 0;
-        margin-bottom: 2rem;
-    }
     .MainContent{
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        .leftPanel{
-            width: 30%;
-            border-right: 1px solid $navbar-color;
-            height: 75vh;
-            .imgDiv{
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 100%;
-                margin-bottom: 1rem;
-                .patient-img{
-                    width: 170px;
-                    height: 170px;
-                    border: 1px solid $navbar-color;
-                    border-radius: 50%;
-                }
-            }
+        .nameDiv{
             .BtnCon{
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                flex-wrap: wrap;
-                width: 95%;
-                margin-top: 3rem;
-                margin-bottom: 1rem;
-                button{
-                    margin-top: 0.8rem;
-                    margin-right: 0.2rem;
-                }
-                .btn{
-                    padding: 0.5rem;
-                    background: transparent;
-                    border: none;
-                    border: 1px solid $navbar-color;
-                    border-radius: 10px;
-                    cursor: pointer;
-                    background-color: $font-color;
-                    .icon{
-                        font-size: 25px;
-                        color: $navbar-color;
-                    }
-                }
                 .btn1{
-                    border: none;
-                    border-radius: 10px;
-                    width: 30%;
-                    font-size: 17px;
+                    margin-right: 1rem;
+                    padding: 0.5rem;
                     cursor: pointer;
-                    background-color: $navbar-color;
-                    color: $font-color;
-                    padding: 0.8rem 0;
-                    font-weight: bold;
+                    font-size: 16px;
+                    border-radius: 5px;
+                    font-weight: 550;
                 }
                 .denyBtn{
+                    border: none;
+                    border: 1px solid $navbar-color;
                     background-color: $font-color;
                     color: $navbar-color;
+                }
+                .approveBtn{
+                    border: none;
                     border: 1px solid $navbar-color;
-                }
-            }
-        }
-        .rightPanel{
-            width: 65%;
-            .DetailCon{
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                margin: 1rem 0;
-                .header{
-                    font-size: 20px;
-                    font-weight: bold;
-                }
-                .text{
-                    margin-left: 1rem;
-                    font-size: 18px;
-                }
-                .Dstatus{
-                    color: $navbar-color;
-                    font-weight: bold;
-                }
-                .Astatus{
-                    color: $check-color;
-                    font-weight: bold;
+                    background-color: $navbar-color;
+                    color: $font-color;
                 }
             }
         }
     }
-    @media(max-width: 950px){
+    .rightPanel{
+        .DetailCon{
+            .Astatus{
+                color: $check-color;
+                font-weight: bold;
+            }
+            .Dstatus{
+                color: $navbar-color;
+                font-weight: bold;
+            }
+        }
+    }
+    @media(max-width: 500px){
         .MainContent{
-            .leftPanel{
+            .nameDiv{
+                flex-wrap: wrap;
                 .BtnCon{
-                    .btn1{
-                        width: 90px;
-                    }
-                }
-            }
-        }
-    }
-    @media(max-width: 700px){
-        .MainContent{
-            .leftPanel{
-                width: 40%;
-            }
-            .rightPanel{
-                width: 55%;
-            }
-        }
-    }
-    @media(max-width: 550px){
-        .MainContent{
-            .leftPanel{
-                .imgDiv{
-                    .patient-img{
-                        width: 130px;
-                        height: 130px;
-                    }
-                }
-            }
-            .rightPanel{
-                .DetailCon{
-                    .header{
-                        font-size: 18px;
-                    }
-                    .text{
-                        font-size: 16px;
-                    }
-                }
-            }
-        }
-    }
-    @media(max-width: 400px){
-        .MainContent{
-            flex-direction: column;
-            .leftPanel{
-                border-right: none;
-                border-bottom: 1px solid $navbar-color;
-                height: unset;
-                width: 95%;
-                .BtnCon{
+                    width: 100%;
+                    justify-content: flex-end;
                     margin-top: 1rem;
-                    align-items: flex-start;
                 }
-                .imgDiv{
-                    .patient-img{
-                        width: 130px;
-                        height: 130px;
-                    }
-                }
-            }
-            .rightPanel{
-                width: 97%;
             }
         }
     }
 }
 
 .eachBankReply{
-    padding-left: 2rem;
-    padding-bottom: 2rem;
-    position: relative;
-    .tableCon{
-        .table{
-            width: 90%;
-            .tableHeader{
-                background-color: $navbar-color;
-                .headText{
-                    color: $font-color;
-                    padding: 0.9rem 0;
-                    font-size: 18px;
-                    font-weight: lighter;
-                }
+    .MainContent{
+        .rightPanel{
+            .heading{
+                text-align: center;
+                font-size: 25px;
+                font-weight: bold;
+                margin-top: 2rem;
+                margin-bottom: 1rem;
             }
-            .tableBody{
-                background-color: $header-color;
-                .eachRow{
-                    .rowText{
-                        padding: 0.9rem 0;
-                        font-size: 16px;
+            .tableCon{
+                .table{
+                    width: 100%;
+                    .tableHeader{
+                        background-color: $navbar-color;
+                        .headText{
+                            color: $font-color;
+                            padding: 0.9rem 0;
+                            font-size: 18px;
+                            font-weight: lighter;
+                        }
                     }
-                }
-            }
-        }
-    }
-    .billDetails{
-        margin: 1rem 0;
-        width: 90%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        .details{
-            width: 25%;
-            .eachDetail{
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 1rem 0;
-                font-size: 18px;
-                .header{
-                    font-weight: bold;
-                }
-            }
-            .total{
-                border-top: 2px solid black;
-            }
-        }
-    }
-    @media(max-width: 550px){
-        .tableCon{
-            overflow-x: scroll;
-            overflow-y: hidden;
-            .table{
-                width: 500px;
-                .tableHeader{
-                    .headText{
-                        font-size: 16px;
-                    }
-                }
-                .tableBody{
-                    .eachRow{
-                        .rowText{
-                            font-size: 14px;
+                    .tableBody{
+                        background-color: $header-color;
+                        .eachRow{
+                            .rowText{
+                                padding: 0.9rem 0;
+                                font-size: 16px;
+                            }
                         }
                     }
                 }
             }
+            .billDetails{
+                margin: 1rem 0;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                .details{
+                    width: 25%;
+                    .eachDetail{
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 1rem 0;
+                        font-size: 18px;
+                        .header{
+                            font-weight: bold;
+                        }
+                    }
+                    .total{
+                        border-top: 2px solid black;
+                    }
+                }
+            }
         }
-        .billDetails{
-            .details{
-                width: 60%;
-                .eachDetail{
-                    font-size: 16px;
+    }
+    @media(max-width: 550px){
+        .MainContent{
+            .rightPanel{
+                .tableCon{
+                    overflow-x: scroll;
+                    overflow-y: hidden;
+                    .table{
+                        width: 500px;
+                        .tableHeader{
+                            .headText{
+                                font-size: 16px;
+                            }
+                        }
+                        .tableBody{
+                            .eachRow{
+                                .rowText{
+                                    font-size: 14px;
+                                }
+                            }
+                        }
+                    }
+                }
+                .billDetails{
+                    .details{
+                        width: 60%;
+                        .eachDetail{
+                            font-size: 16px;
+                        }
+                    }
                 }
             }
         }
@@ -266,6 +152,7 @@ $header-color: #D6D5D5;
 .bottleDetails{
     padding-left: 2rem;
     padding-bottom: 2rem;
+    height: 100vh;
     .backBtn{
         background-color: transparent;
         border: none;
@@ -282,8 +169,6 @@ $header-color: #D6D5D5;
         padding: 1rem 0;
     }
     .tableCon{
-        // overflow-y: scroll;
-        // overflow-x: hidden;
         width: 97%;
         .table{
             width: 100%;
@@ -312,6 +197,7 @@ $header-color: #D6D5D5;
     }
     @media(max-width: 550px){
         padding-left: 1rem;
+        height: unset;
         .tableCon{
             overflow-y: hidden;
             overflow-x: scroll;
