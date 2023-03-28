@@ -2,39 +2,88 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { requestContext } from "./DonorContainer";
-import toast from 'react-hot-toast';
 import axios from "axios";
 
 export default function RegistrationPage() {
   const { setTab, handleChange, setData, data } = useContext(requestContext);
   const navigate = useNavigate();
-  function handleChangeImg(e) {
-    console.log(e.target.files);
-    setData({ ...data, img: URL.createObjectURL(e.target.files[0]) });
+
+  async function uploadImg(e) {
+    let file = e.target.files[0];
+    var formdata = new FormData();
+    formdata.append("file", file);
+    let res = await Singleupload(formdata);
+    if (res.success) {
+      console.log(res.url);
+      setData({ ...data, img: res.url });
+    } else {
+    }
   }
+
+  const Singleupload = async (formdata) => {
+    var myHeaders = new Headers();
+    myHeaders.append(
+      "Authorization",
+      `Bearer ${localStorage.getItem("token")}`
+    );
+
+    var requestOptions = {
+      method: "POST",
+      body: formdata,
+      headers: myHeaders,
+    };
+    const response = await fetch("/donor/upload", requestOptions);
+    const data = await response.json();
+    return data;
+  };
+
+  const isValid = () => {
+    const isEmpty = [
+      data.img, 
+      data.fname, 
+      data.lname, 
+      data.address, 
+      data.email, 
+      data.phone, 
+      data.phone2, 
+      data.CNIC, 
+      data.bloodType].every( key => data[key] !== "")
+    return !isEmpty;
+  }
+
+  // function handleChangeImg(e) {
+  //   console.log(e.target.files);
+  //   setData({ ...data, img: URL.createObjectURL(e.target.files[0]) });
+  // }
+  
   const handleRegistration = (e) => {
     e.preventDefault();
-    if(data.img === "" || data.fname === "" || data.lname === "" || data.address === "" || data.email === "" || data.phone === "" || data.phone2 === "" || data.CNIC === "" || data.bloodType === "")
-    {
-      toast.error("Please fill all fields");
-    }
-    axios({
-      url: "/donor/donor",
-      method: "POST",
-      data: JSON.stringify(data),
-      headers: {
-        "content-type": "application/json"
+    // if(data.img === "" || data.fname === "" || data.lname === "" || data.address === "" || data.email === "" || data.phone === "" || data.phone2 === "" || data.CNIC === "" || data.bloodType === "")
+    // {
+    //   alert("Please fill all fields");
+    // }
+    var config = {
+      url: 'http://localhost:5000/donor/donor',
+      method: 'POST',
+      data : JSON.stringify(data),
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+    };
+
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      if(response.data.error){
+        alert(response.data.message);
       }
-    }).then(res => {
-      if (res.data.success) {
-        toast.success("Registered Successfully");
+      else{
         setTab(2);
       }
-      else {
-        console.log(res)
-        toast.error(res.data.message);
-      }
     })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
   return (
     <div className="donorRegistration">
@@ -44,7 +93,7 @@ export default function RegistrationPage() {
       <div className="mainHeading">Blood Reservoir</div>
       <div className="headingCon">
         <div className="header">Register Yourself as Donor</div>
-        <div className="details">Save someone’s life in time of need</div>
+        <div className="details" style={{color: 'red'}}>Save someone’s life in time of need</div>
       </div>
       <div className="mainContent">
         <div className="ImageField">
@@ -64,7 +113,7 @@ export default function RegistrationPage() {
             id="image"
             accept=".png, .jpg, .jpeg"
             name="img"
-            onChange={handleChangeImg}
+            onChange={(e) => uploadImg(e)}
             style={{ display: "none" }}
           />
         </div>
@@ -165,7 +214,7 @@ export default function RegistrationPage() {
             />
           </div>
         </div>
-        <button className="Btn" onClick={handleRegistration}>
+        <button className="Btn" onClick={handleRegistration} disabled={isValid} style={{ opacity: isValid ? "0.8" : "1" }}>
           Register Yourself
         </button>
       </div>

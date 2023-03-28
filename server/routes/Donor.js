@@ -2,8 +2,31 @@ const router = require("express").Router();
 const Donor = require("./../models/Donor");
 const upload = require("./upload");
 
-router.post("/donor", (req, res) => {
+// router.post("/donor", (req, res) => {
+//   const newitem = new Donor(req.body);
+//   newitem.save((err, obj) => {
+//     if (err) {
+//       console.log(err);
+//       return res.status(400).json({ message: "Error", error: err });
+//     }
+//     res.status(200).json({
+//       message: "Donor registered successfully!",
+//       data: obj,
+//       error: false,
+//     });
+//   });
+// });
+router.post("/donor", async (req, res) => {
   const newitem = new Donor(req.body);
+  const _email = req.body.email
+  const isDonorExist = await Donor.findOne({ email: _email });
+  if(isDonorExist){
+    return res.status(200).json({
+      message: "Email Already Exist, Please sign in or use differnet email",
+      error: true,
+      data: null,
+    });
+  }
   newitem.save((err, obj) => {
     if (err) {
       console.log(err);
@@ -17,37 +40,90 @@ router.post("/donor", (req, res) => {
   });
 });
 
-// router.get("/getAll", ({}, res) => {
-//   Class.find({}, (err, obj) => {
-//     if (err) {
-//       console.log(err);
-//       return res
-//         .status(400)
-//         .json({ message: "Failed to get class", success: false });
-//     }
+router.get("/getAll",(req,res)=>{
+  Donor.find({},(err,doc)=>{
+    if(err) {
+      console.log(err);
+      return res.status(400).json({ success : false,error:err,message:"Error failed"});
+    }    
+    res.status(200).json({
+      success:true,
+      data : doc
+    });
+  });
+});
 
-//     res.status(200).json({
-//       success: true,
-//       data: obj,
-//     });
-//   }).populate("teacher_id");
-// });
+router.get("/get/:id",(req,res)=>{
+  Donor.find({_id:req.params.id},(err,doc)=>{
+    if(err) {
+      console.log(err);
+      return res.status(400).json({ success : false, error:err, message:"Error failed"});
+    }
+    res.status(200).json({
+      success:true,
+      data : doc
+    });
+  });
+});
 
-// router.get("/get/:id", (req, res) => {
-//   Class.findOne({ _id: req.params.id }, (err, obj) => {
-//     if (err) {
-//       console.log(err);
-//       return res
-//         .status(400)
-//         .json({ message: "Failed to get class", success: false });
-//     }
+router.post("/upload", (req, res) => {
+  const singleUpload = upload.single("file");
+  singleUpload(req, res, function (err, doc) {
+    if (err) {
+      return res.status(201).json({
+        success: false,
+        errors: {
+          title: "Image Upload Error",
+          detail: err.message,
+          error: err,
+        },
+      });
+    }
+    const url = req.protocol + "://" + req.get("host");
 
-//     res.status(200).json({
-//       success: true,
-//       data: obj,
-//     });
-//   }).populate("teacher_id");
-// });
+    const x = url + "/uploads/" + req.file.filename;
+    res.status(200).json({
+      success: true,
+      url: x,
+    });
+  });
+});
+
+router.delete("/delete/:id", (req, res) => {
+  Donor.deleteOne({ _id: req.params.id }, (err, obj) => {
+    if (err) {
+      return res
+        .status(400)
+        .json({ message: "Failed to delete", success: false, err: err });
+    }
+    res.status(200).json({
+      success: true,
+      data: obj,
+      message: "Donor Deleted succesfully",
+    });
+  });
+});
+
+router.put("/starDonor/:id", (req, res) => {
+  Donor.findByIdAndUpdate(
+    { _id: req.params.id },
+    { star: req.body.star },
+    { new: true },
+    (err, obj) => {
+      if (err) {
+        console.log(err);
+        return res
+          .status(400)
+          .json({ message: "Failed to update ", success: false });
+      }
+      res.status(200).json({
+        success: true,
+        message: "Donor starred successfully!",
+        data: obj,
+      });
+    }
+  );
+});
 
 // router.get("/getbyteacher/:id", (req, res) => {
 //   Class.find({ teacher_id: req.params.id }, (err, obj) => {
@@ -81,45 +157,10 @@ router.post("/donor", (req, res) => {
 //   });
 // });
 
-// router.delete("/delete/:id", (req, res) => {
-//   Class.deleteOne({ _id: req.params.id }, (err, obj) => {
-//     if (err) {
-//       return res
-//         .status(400)
-//         .json({ message: "Failed to delete", success: false, err: err });
-//     }
-//     res.status(200).json({
-//       success: true,
-//       data: obj,
-//       message: "class Deleted succesfully",
-//     });
-//   });
-// });
-
 // router.put("/edit/:id", (req, res) => {
 //   Class.findByIdAndUpdate(
 //     { _id: req.params.id },
 //     req.body,
-//     { new: true },
-//     (err, obj) => {
-//       if (err) {
-//         console.log(err);
-//         return res
-//           .status(400)
-//           .json({ message: "Failed to update ", success: false });
-//       }
-//       res.status(200).json({
-//         success: true,
-//         message: "Class updated successfully!",
-//         data: obj,
-//       });
-//     }
-//   );
-// });
-// router.put("/updateStatus/:id", (req, res) => {
-//   Class.findByIdAndUpdate(
-//     { _id: req.params.id },
-//     { is_active: req.body.check },
 //     { new: true },
 //     (err, obj) => {
 //       if (err) {
