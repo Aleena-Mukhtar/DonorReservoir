@@ -195,13 +195,14 @@ $check-color: #077861;
 
 .thanksPage{
     width: 100%;
+    height: 100vh;
     .MainContent{
         width: 100%;
         .MainPicture{
             width: 100%;
-            height: 91vh;
+            height: 100vh;
             object-fit: cover;
-            opacity: 0.7;
+            opacity: 0.8;
             position: relative;
         }
         .FormContent{

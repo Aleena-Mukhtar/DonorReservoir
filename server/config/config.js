@@ -5,7 +5,8 @@ const config = {
   },
   default: {
     SECRET: "mysecretkey",
-    DATABASE: "mongodb://localhost/fyp",
+    // DATABASE: "mongodb://localhost/bloodReservior",
+    DATABASE: "mongodb+srv://aleenamukhtar15:aJ2QAkVzFJ2hFLGC@cluster0.eh02z7t.mongodb.net/bloodReservior?retryWrites=true&w=majority",
   },
 };
 

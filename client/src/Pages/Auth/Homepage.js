@@ -1,6 +1,7 @@
 import React from 'react';
 import { BsArrowRight } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 
 export default function Homepage() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ export default function Homepage() {
   };
   return (
     <div className='homepage'>
+      <Navbar/>
       <div className='MainCon'>
         <img className="MainPicture" src={process.env.PUBLIC_URL + '/MainImage.jpg'} alt="logo" />
         <div className='DetailDiv'>

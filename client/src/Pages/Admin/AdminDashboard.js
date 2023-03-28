@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import AllDonors from "./AllDonors";
+import BankReplies from "./BankReplies";
+import PatientRequests from "./PatientRequests";
 
 export default function AdminDashboard() {
-  const [btnClick, setBtnClick] = useState(2);
+  const [btnClick, setBtnClick] = useState(1);
   const [showModal, setShowModal] = useState(false);
-  const [requests, setRequests] = useState([1, 2, 3]); //isko empty array krna ha example k liy 123 likha ha
-  const [Notifications, setNotifications] = useState([1, 2, 3]); //isko empty array krna ha example k liy 123 likha ha
+  const [check, setCheck] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     // get data
   }, []);
-  const navigateToEachPatientPage = () => {
-    navigate(`/eachPatient`);
-  };
-  const navigateToEachBankPage = () => {
-    navigate(`/eachBank`);
-  };
   const navigateToBottleStockPage = () => {
     navigate(`/bottlesStock`);
   };
@@ -28,22 +24,28 @@ export default function AdminDashboard() {
         <div className="leftPanel">
           <div className="BtnDiv">
             <button
-              className={btnClick === 1 ? "btn click" : "btn"}
+              className={btnClick === 0 ? "btn click" : "btn"}
               onClick={navigateToBottleStockPage}
             >
-              Details of Bottles
+              Bottles Stock
+            </button>
+            <button
+              className={btnClick === 1 ? "btn click" : "btn"}
+              onClick={(e) => setBtnClick(1)}
+            >
+              Patient Requests
             </button>
             <button
               className={btnClick === 2 ? "btn click" : "btn"}
               onClick={(e) => setBtnClick(2)}
             >
-              Patient Requests
+              Blood Bank
             </button>
             <button
               className={btnClick === 3 ? "btn click" : "btn"}
               onClick={(e) => setBtnClick(3)}
             >
-              Blood Bank
+              Donors
             </button>
           </div>
           <button
@@ -58,66 +60,31 @@ export default function AdminDashboard() {
           <div className="upperCon">
             <div className="starBtn">
               <div className="text">Starred</div>
-              <input className="checkbox" type="checkbox"></input>
+              <input className="checkbox" type="checkbox" onChange={(e) => setCheck(!check)}></input>
             </div>
-            <select className="select">
-              <option>All</option>
-              <option>Pending</option>
-              <option>Rejected</option>
-              <option>Approved</option>
-            </select>
+            {
+              btnClick === 3 ? null :
+              <select className="select">
+                <option>All</option>
+                <option>Pending</option>
+                <option>Rejected</option>
+                <option>Approved</option>
+              </select>
+            }
           </div>
           <div className="tableCon">
-            <table className="table">
-              <thead className="tableHeader">
-                <th className="headText" align="left">
-                  {btnClick === 2
-                    ? "Patient Blood Requests"
-                    : "Blood Bank Notifications"}
-                </th>
-              </thead>
-              <tbody className="tableBody">
-                {btnClick === 2
-                  ? requests.map((el) => (
-                      <tr
-                        className="eachRow"
-                        onClick={navigateToEachPatientPage}
-                      >
-                        <td className="rowText" align="center">
-                          <div>
-                            "Patient with ID 123456 Requested for Blood
-                            Bottle(s)"
-                          </div>
-                          <div className="detailsCon">
-                            <div className="date">20 December, 2022</div>
-                            <div className="time">8:50 pm</div>
-                          </div>
-                        </td>
-                      </tr>
-                    ))
-                  : Notifications.map((el) => (
-                      <tr className="eachRow" onClick={navigateToEachBankPage}>
-                        <td className="rowText" align="center">
-                          <div>
-                            "You got a reply From Aleena Donations Bank"
-                          </div>
-                          <div className="detailsCon">
-                            <div className="date">20 December, 2022</div>
-                            <div className="time">8:50 pm</div>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-              </tbody>
-            </table>
+            {
+              btnClick === 1 ? 
+              <PatientRequests/> : 
+              btnClick === 2 ?
+              <BankReplies/> : 
+              btnClick === 3 ? 
+              <AllDonors Check = {check}/> : null
+            }
           </div>
         </div>
       </div>
-      <div
-        className="logoutModal"
-        style={{ display: showModal ? "flex" : "none" }}
-        onClick={(e) => setShowModal(false)}
-      >
+      <div className="logoutModal" style={{ display: showModal ? "flex" : "none" }} onClick={(e) => setShowModal(false)}>
         <div className="logout">
           <div className="modalHeading">Confirm Logout</div>
           <div className="innerHeading">Are you sure you want to logout?</div>
