@@ -9,8 +9,8 @@ export default function RegistrationPage() {
   const navigate = useNavigate();
 
   async function uploadImg(e) {
-    let file = e.target.files[0];
-    var formdata = new FormData();
+    const file = e.target.files[0];
+    const formdata = new FormData();
     formdata.append("file", file);
     let res = await Singleupload(formdata);
     if (res.success) {
@@ -21,13 +21,13 @@ export default function RegistrationPage() {
   }
 
   const Singleupload = async (formdata) => {
-    var myHeaders = new Headers();
+    const myHeaders = new Headers();
     myHeaders.append(
       "Authorization",
       `Bearer ${localStorage.getItem("token")}`
     );
 
-    var requestOptions = {
+    const requestOptions = {
       method: "POST",
       body: formdata,
       headers: myHeaders,
@@ -39,52 +39,50 @@ export default function RegistrationPage() {
 
   const isValid = () => {
     const isEmpty = [
-      data.img, 
-      data.fname, 
-      data.lname, 
-      data.address, 
-      data.email, 
-      data.phone, 
-      data.phone2, 
-      data.CNIC, 
-      data.bloodType].every( key => data[key] !== "")
+      "img",
+      "fname",
+      "lname",
+      "address",
+      "email",
+      "phone",
+      "phone2",
+      "CNIC",
+      "bloodType",
+    ].every((key) => data[key] !== "");
+
     return !isEmpty;
-  }
+  };
 
   // function handleChangeImg(e) {
   //   console.log(e.target.files);
   //   setData({ ...data, img: URL.createObjectURL(e.target.files[0]) });
   // }
-  
+
   const handleRegistration = (e) => {
     e.preventDefault();
-    // if(data.img === "" || data.fname === "" || data.lname === "" || data.address === "" || data.email === "" || data.phone === "" || data.phone2 === "" || data.CNIC === "" || data.bloodType === "")
-    // {
-    //   alert("Please fill all fields");
-    // }
-    var config = {
-      url: 'http://localhost:5000/donor/donor',
-      method: 'POST',
-      data : JSON.stringify(data),
-      headers: { 
-        'Content-Type': 'application/json'
+
+    const config = {
+      url: "http://localhost:5000/donor/donor",
+      method: "POST",
+      data: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
       },
     };
 
     axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
-      if(response.data.error){
-        alert(response.data.message);
-      }
-      else{
-        setTab(2);
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        if (response.data.error) {
+          alert(response.data.message);
+        } else {
+          setTab(2);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   return (
     <div className="donorRegistration">
       <button className="backBtn" onClick={() => navigate(-1)}>
@@ -93,7 +91,9 @@ export default function RegistrationPage() {
       <div className="mainHeading">Blood Reservoir</div>
       <div className="headingCon">
         <div className="header">Register Yourself as Donor</div>
-        <div className="details" style={{color: 'red'}}>Save someone’s life in time of need</div>
+        <div className="details" style={{ color: "red" }}>
+          Save someone’s life in time of need
+        </div>
       </div>
       <div className="mainContent">
         <div className="ImageField">
@@ -186,21 +186,23 @@ export default function RegistrationPage() {
         <div className="fieldsDiv">
           <div className="fieldCon">
             <div className="field">Your Blood Type</div>
-            <select 
+            <select
               className="select input"
               onChange={(e) => handleChange(e)}
               value={data.bloodType}
               name="bloodType"
             >
               <option>Choose BloodType</option>
-              <option value='AB+' className="option">AB+</option>
-              <option value='AB-' >AB-</option>
-              <option value='A+' >A+</option>
-              <option value='A-' >A-</option>
-              <option value='B+' >B+</option>
-              <option value='B-' >B-</option>
-              <option value='O+' >O+</option>
-              <option value='O-' >O-</option>
+              <option value="AB+" className="option">
+                AB+
+              </option>
+              <option value="AB-">AB-</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
             </select>
           </div>
           <div className="fieldCon">
@@ -214,7 +216,11 @@ export default function RegistrationPage() {
             />
           </div>
         </div>
-        <button className="Btn" onClick={handleRegistration} disabled={isValid} style={{ opacity: isValid ? "0.8" : "1" }}>
+        <button
+          className="Btn"
+          onClick={handleRegistration}
+          disabled={isValid()}
+        >
           Register Yourself
         </button>
       </div>

@@ -4,14 +4,20 @@ import axios from "axios";
 const OPTIONS = ["Role", "Admin", "Patient", "Blood Bank"];
 
 export default function LoginPage() {
-  const [data, setData] = useState({ email: "", password: "", role: "" });
+  const [data, setData] = useState({ email: "", password: "" });
+  const [role, setRole] = useState("Role");
+
   const handleChange = (e) => {
     const { value, name } = e.target;
     setData({ ...data, [name]: value });
   };
 
   const handleSubmit = () => {
-    axios.post("/login", data).then((res) => {
+    let url = "";
+    if (role === "Admin") url = "/admin/login";
+    else if (role === "Patient") url = "/Patient/login";
+    else if (role === "Blood Bank") url = "/bank/login";
+    axios.post(url, data).then((res) => {
       console.log(res);
       if (!res.err) {
         console.log(res.err);
@@ -53,15 +59,21 @@ export default function LoginPage() {
 
         <select
           name="role"
-          value={data.role}
-          onChange={(e) => handleChange(e)}
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
           className="select"
         >
           {OPTIONS.map((el) => (
             <option value={el}>{el}</option>
           ))}
         </select>
-        <button className="Btn">LOG IN</button>
+        <button
+          className="Btn"
+          disabled={role === "Role"}
+          onClick={handleSubmit}
+        >
+          LOG IN
+        </button>
       </div>
     </div>
   );
