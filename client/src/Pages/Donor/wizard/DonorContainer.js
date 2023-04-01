@@ -20,7 +20,7 @@ export default function DonorContainer() {
   const [data, setData] = useState(initialObj);
 
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
   }, [data]);
   const handleChange = (e) => {
     const { value, name } = e.target;

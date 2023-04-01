@@ -4,6 +4,21 @@ import { requestContext } from "./BlooBankContainer";
 
 export default function Wizard1() {
   const { setTab, handleChange, data } = useContext(requestContext);
+  const isValid = () => {
+    const isEmpty = [
+      "bankName",
+      "city",
+      "address",
+      "email",
+      "phone",
+      // "phone2",
+      "password",
+      "password2",
+    ].every((key) => data[key] !== "");
+
+    return !isEmpty;
+  };
+
   return (
     <div className="wizard1">
       <div className="MainContent">

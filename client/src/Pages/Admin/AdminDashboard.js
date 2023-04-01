@@ -9,6 +9,7 @@ export default function AdminDashboard() {
   const [btnClick, setBtnClick] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [check, setCheck] = useState(false);
+  const [filters, setFilters] = useState("All");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -60,31 +61,41 @@ export default function AdminDashboard() {
           <div className="upperCon">
             <div className="starBtn">
               <div className="text">Starred</div>
-              <input className="checkbox" type="checkbox" onChange={(e) => setCheck(!check)}></input>
+              <input
+                className="checkbox"
+                type="checkbox"
+                onChange={(e) => setCheck(!check)}
+              ></input>
             </div>
-            {
-              btnClick === 3 ? null :
-              <select className="select">
-                <option>All</option>
-                <option>Pending</option>
-                <option>Rejected</option>
-                <option>Approved</option>
+            {btnClick === 3 ? null : (
+              <select
+                className="select"
+                value={filters}
+                onChange={(e) => setFilters(e.target.value)}
+              >
+                <option value="All">All</option>
+                <option value="Pending">Pending</option>
+                <option value="Rejected">Rejected</option>
+                <option value="Approved">Approved</option>
               </select>
-            }
+            )}
           </div>
           <div className="tableCon">
-            {
-              btnClick === 1 ? 
-              <PatientRequests/> : 
-              btnClick === 2 ?
-              <BankReplies/> : 
-              btnClick === 3 ? 
-              <AllDonors Check = {check}/> : null
-            }
+            {btnClick === 1 ? (
+              <PatientRequests filters={filters} check={check} />
+            ) : btnClick === 2 ? (
+              <BankReplies filters={filters} check={check} />
+            ) : btnClick === 3 ? (
+              <AllDonors check={check} />
+            ) : null}
           </div>
         </div>
       </div>
-      <div className="logoutModal" style={{ display: showModal ? "flex" : "none" }} onClick={(e) => setShowModal(false)}>
+      <div
+        className="logoutModal"
+        style={{ display: showModal ? "flex" : "none" }}
+        onClick={(e) => setShowModal(false)}
+      >
         <div className="logout">
           <div className="modalHeading">Confirm Logout</div>
           <div className="innerHeading">Are you sure you want to logout?</div>

@@ -4,6 +4,19 @@ import { requestContext } from "./BlooBankContainer";
 
 export default function Wizard2() {
   const { setTab, handleChange, setData, data } = useContext(requestContext);
+  const isValid = () => {
+    const isEmpty = [
+      "adminImg",
+      "adminFname",
+      "adminLname",
+      "adminAddress",
+      "adminEmail",
+      "adminPhone",
+      "adminCNIC",
+    ].every((key) => data[key] !== "");
+
+    return !isEmpty;
+  };
 
   function handleChangeImg(e) {
     console.log(e.target.files);

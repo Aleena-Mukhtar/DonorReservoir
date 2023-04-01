@@ -154,6 +154,10 @@ $check-color: #077861;
         .Btn{
             margin: 2rem 0;
             width: 30%;
+
+            &:disabled{
+                opacity: 0.4;
+            }
         }
     }
     @media(max-width: 780px){

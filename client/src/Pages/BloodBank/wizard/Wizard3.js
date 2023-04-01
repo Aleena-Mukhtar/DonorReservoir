@@ -29,19 +29,20 @@ export default function Wizard3() {
       setTypes([...types, name]);
     }
   };
+  const navigateToLoginPage = () => {
+    navigate(`/login`);
+  };
 
   const handleSubmit = () => {
-    axios.post("/bloodBank", data).then((res) => {
+    axios.post("/bloodBank", { ...data, bloodTypes: types }).then((res) => {
       console.log(res);
       if (!res.err) {
         console.log(res.err);
       } else {
         console.log("success");
+        navigateToLoginPage();
       }
     });
-  };
-  const navigateToLoginPage = () => {
-    navigate(`/login`);
   };
   return (
     <div className="wizard3 wizard1">
@@ -82,7 +83,7 @@ export default function Wizard3() {
             <button className="BackBtn" onClick={handleBack}>
               Back
             </button>
-            <button className="Btn" onClick={navigateToLoginPage}>
+            <button className="Btn" onClick={handleSubmit}>
               SignUp
             </button>
           </div>
