@@ -1,19 +1,144 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { BiUser } from 'react-icons/bi';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { MdDelete, MdModeEditOutline } from 'react-icons/md';
+import LoggedInNavbar from './LoggedInNavbar';
+import { RiEditCircleFill } from 'react-icons/ri';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const userData = JSON.parse(sessionStorage.getItem("userData"));
+const initialObj = {
+    img: userData?.img,
+    fname: userData?.fname,
+    lname: userData?.lname,
+    address: userData?.address,
+    email: userData?.email,
+    phone: userData?.phone,
+    phone2: userData?.phone2,
+    password: userData?.password,
+    password2: userData?.password2,
+    CNIC: userData?.CNIC,
+};
+const BankObj = {
+    img: userData?.img,
+    fname: userData?.fname,
+    lname: userData?.lname,
+    address: userData?.address,
+    email: userData?.email,
+    phone: userData?.phone,
+    mobile: userData?.mobile,
+    password: userData?.password,
+    password2: userData?.password2,
+    adminCNIC: userData?.adminCNIC,
+    bankName: userData?.bankName,
+    city: userData?.city,
+    adminAddress: userData?.adminAddress,
+    adminEmail: userData?.adminEmail,
+    adminPhone: userData?.adminPhone,
+    bloodTypes: userData?.bloodTypes,
+};
 
 export default function EditProfile() {
     const [showModal, setShowModal] = useState(false);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
-    const [file, setFile] = useState(null);
-    function handleChange(e) {
-        setShowModal(true);
-        console.log(e.target.files);
-        setFile(URL.createObjectURL(e.target.files[0]));
+    const role = sessionStorage.getItem("role");
+    const id = sessionStorage.getItem("id");
+    const [data, setData] = useState(role === "Blood Bank" ? BankObj : initialObj);
+    const bankSection = useRef(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {}, [showModal]);
+    useEffect(() => {
+        // window.location.reload();
+    }, []);
+
+    async function uploadImg(e) {
+        const file = e.target.files[0];
+        const formdata = new FormData();
+        formdata.append("file", file);
+        let res = await Singleupload(formdata);
+        if (res.success) {
+          console.log(res.url);
+          data.img = res.url;
+          setShowModal(true);
+        } else {}
     }
+    
+    const Singleupload = async (formdata) => {
+        const myHeaders = new Headers();
+        myHeaders.append(
+          "Authorization",
+          `Bearer ${sessionStorage.getItem("token")}`
+        );
+    
+        const requestOptions = {
+          method: "POST",
+          body: formdata,
+          headers: myHeaders,
+        };
+        const response = await fetch("/donor/upload", requestOptions);
+        const data = await response.json();
+        return data;
+    };
+    const handleRemove = () => {
+        data.img = "";
+    }
+    // function handleChange(e) {
+    //     setShowModal(true);
+    //     console.log(e.target.files);
+    //     setFile(URL.createObjectURL(e.target.files[0]));
+    // }
+    const handleFieldChange = (e) => {
+        const { value, name } = e.target;
+        setData({ ...data, [name]: value });
+    };
+    const editUser=(e)=>{
+        e.preventDefault(); 
+        var _url = "";
+        if (role === "Admin") _url = `http://localhost:5000/admin/edit/${id}`
+        else if (role === "Blood Bank") _url = `http://localhost:5000/bloodBank/edit/${id}`
+        axios({
+            url: _url,
+            method: "PUT",
+            data:JSON.stringify(data),
+            headers: {
+              "content-type": "application/json"
+            }
+        })
+        .then(res => {
+            if (res.data.success) {
+                console.log(res);
+                alert("Account Updated Successfully");
+                sessionStorage.setItem("userData",JSON.stringify(data));
+                if(role === "Admin") navigate(`/adminDashboard`);
+                else if(role === "Blood Bank") navigate(`/bloodBankDashboard`);
+            }
+            else {
+                console.log(res);
+            }
+        })
+    }
+
+    const handleLogout = () => {
+        sessionStorage.removeItem('userData');
+        sessionStorage.setItem("isLoggedIn",false);
+        sessionStorage.removeItem('id');
+        sessionStorage.removeItem('role');
+        navigate(`/`);
+    }
+
+    const scrollDown = (ref) => {
+        window.scrollTo({
+          top: ref.current.offsetTop,
+          behavior: 'smooth',
+        });
+    };
+
   return (
-    <div className='editProfile'>
+    <>
+    <LoggedInNavbar/>
+    <div className='editProfile eachBank'>
         <div className='con1'>
             <div className='innerCon'>
                 <div className='mainHeading'>User Profile</div>
@@ -21,6 +146,13 @@ export default function EditProfile() {
                     <BiUser className='icon'/>
                     <div className='label'>User Info</div>
                 </div>
+                {
+                    role === "Blood Bank" ? 
+                    <div className='userContent' onClick={() => scrollDown(bankSection)}>
+                        <BiUser className='icon'/>
+                        <div className='label'>Bank Info</div>
+                    </div> : null
+                }
             </div>
             <button className='logoutBtn' onClick={(e) => setShowLogoutModal(!showLogoutModal)}>
                 <AiOutlineLogout className='icon'/>
@@ -29,104 +161,236 @@ export default function EditProfile() {
         </div>
         <div className='editProfileContent'>
             <div className='pictureCon'>
-                <img
-                    src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
-                    alt="logo"
-                    className="edit-img"
-                    onClick={() => setShowModal(!showModal)}
-                />
+                {data?.img === "" ? (
+                    <img
+                        src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
+                        alt="logo"
+                        className="edit-img"
+                        onClick={() => setShowModal(!showModal)}
+                    />
+                    ) : (
+                    <img 
+                        src={data?.img} 
+                        alt="logo" 
+                        className="edit-img" 
+                        onClick={() => setShowModal(!showModal)}
+                    />
+                    )
+                }
+                <RiEditCircleFill className='editIcon' onClick={() => setShowModal(!showModal)}/>
                 <div className='detailCon'>
-                    <div className='nameCon'>First Last Name</div>
-                    <div className='address'>Lahore, Pakistan</div>
+                    <div className='nameCon'>{userData?.lname} {userData?.fname}</div>
+                    <div className='address'>{userData?.address}</div>
                 </div>
             </div>
             <div className='formFields'>
+                {
+                    role === "Blood Bank" ? 
+                    <div className="heading">Admin Information :</div> : null
+                }
                 <div className='fieldsDiv'>
                     <div className='fieldCon'>
                         <div className='field'>First Name</div>
-                        <input className='input' type='text' />
+                        <input 
+                            className='input' 
+                            type='text' 
+                            onChange={(e) => handleFieldChange(e)}
+                            value={data.fname}
+                            name="fname"
+                        />
                     </div>
                     <div className='fieldCon'>
                         <div className='field'>Last Name</div>
-                        <input className='input' type='text' />
+                        <input 
+                            className='input' 
+                            type='text'
+                            onChange={(e) => handleFieldChange(e)}
+                            value={data.lname}
+                            name="lname" 
+                        />
                     </div>
                 </div>
                 <div className='fieldsDiv'>
                     <div className='fieldCon'>
                         <div className='field'>Address</div>
-                        <input className='input' type='text' />
+                        <input 
+                            className='input' 
+                            type='text' 
+                            onChange={(e) => handleFieldChange(e)}
+                            value={role === "Blood Bank" ? data.adminAddress : data.address}
+                            name={role === "Blood Bank" ? "adminAddress" : "address"}
+                        />
                     </div>
                     <div className='fieldCon'>
                         <div className='field'>Email</div>
-                        <input className='input' type='text' />
+                        <input 
+                            className='input' 
+                            type='text'
+                            onChange={(e) => handleFieldChange(e)}
+                            value={role === "Blood Bank" ? data.adminEmail : data.email}
+                            name={role === "Blood Bank" ? "adminEmail" : "email"} 
+                        />
                     </div>
                 </div>
                 <div className='fieldsDiv'>
                     <div className='fieldCon'>
-                        <div className='field'>Phone Number 1</div>
-                        <input className='input' type='number' />
+                        <div className='field'>Phone Number</div>
+                        <input 
+                            className='input' 
+                            type='text' 
+                            onChange={(e) => handleFieldChange(e)}
+                            value={role === "Blood Bank" ? data.adminPhone : data.phone}
+                            name={role === "Blood Bank" ? "adminPhone" : "phone"}
+                        />
                     </div>
-                    <div className='fieldCon'>
-                        <div className='field'>Phone Number 2</div>
-                        <input className='input' type='number' />
-                    </div>
+                    {
+                        role === "Blood Bank" ?
+                        <div className='fieldCon'>
+                            <div className='field'>CNIC</div>
+                            <input 
+                                className='input' 
+                                type='text' 
+                                onChange={(e) => handleFieldChange(e)}
+                                value={data.adminCNIC}
+                                name="adminCNIC"
+                            />
+                        </div> :
+                        <div className='fieldCon'>
+                            <div className='field'>Mobile Number</div>
+                            <input 
+                                className='input' 
+                                type='text'
+                                onChange={(e) => handleFieldChange(e)}
+                                value={data.phone2}
+                                name="phone2" 
+                            />
+                        </div>
+                    }
                 </div>
-                <div className='fieldsDiv'>
-                    <div className='fieldCon'>
-                        <div className='field'>CNIC</div>
-                        <input className='input' type='number' />
+                {
+                    role === "Blood Bank" ? null :
+                    <div className='fieldsDiv'>
+                        <div className='fieldCon'>
+                            <div className='field'>CNIC</div>
+                            <input 
+                                className='input' 
+                                type='text' 
+                                onChange={(e) => handleFieldChange(e)}
+                                value={data.CNIC}
+                                name="CNIC"
+                            />
+                        </div>
+                        <div className='fieldCon'>
+                            <div className='field'>Password</div>
+                            <input 
+                                className='input' 
+                                type='password'
+                                onChange={(e) => handleFieldChange(e)}
+                                value={data.password}
+                                name="password"
+                            />
+                        </div>
                     </div>
-                    <div className='fieldCon'>
-                        <div className='field'>Password</div>
-                        <input className='input' type='password' />
-                    </div>
-                </div>
+                }
             </div>
-            <div className='formFields bankFormFields'>
-                <div className='fieldsDiv'>
-                    <div className='fieldCon'>
-                        <div className='field'>Bank Name</div>
-                        <input className='input' type='text' />
+            {
+                role === "Blood Bank" ?
+                <>
+                <div className="heading" ref={bankSection}>Blood Bank Information :</div>
+                <div className='formFields bankFormFields'>
+                    <div className='fieldsDiv'>
+                        <div className='fieldCon'>
+                            <div className='field'>Bank Name</div>
+                            <input 
+                                className='input' 
+                                type='text'
+                                onChange={(e) => handleFieldChange(e)}
+                                value={data.bankName}
+                                name="bankName" 
+                            />
+                        </div>
+                        <div className='fieldCon'>
+                            <div className='field'>Bank Address</div>
+                            <input 
+                                className='input' 
+                                type='text'
+                                onChange={(e) => handleFieldChange(e)}
+                                value={data.address}
+                                name="address" 
+                            />
+                        </div>
                     </div>
-                    <div className='fieldCon'>
-                        <div className='field'>Bank Admin Name</div>
-                        <input className='input' type='text' />
+                    <div className='fieldsDiv'>
+                        <div className='fieldCon'>
+                            <div className='field'>Mobile Number</div>
+                            <input 
+                                className='input' 
+                                type='text' 
+                                onChange={(e) => handleFieldChange(e)}
+                                value={data.mobile}
+                                name="mobile"
+                            />
+                        </div>
+                        <div className='fieldCon'>
+                            <div className='field'>Phone Number</div>
+                            <input 
+                                className='input' 
+                                type='text' 
+                                onChange={(e) => handleFieldChange(e)}
+                                value={data.phone}
+                                name="phone"
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className='fieldsDiv'>
-                    <div className='fieldCon'>
-                        <div className='field'>Address</div>
-                        <input className='input' type='text' />
+                    <div className='fieldsDiv'>
+                        <div className='fieldCon'>
+                            <div className='field'>Email</div>
+                            <input 
+                                className='input' 
+                                type='text' 
+                                onChange={(e) => handleFieldChange(e)}
+                                value={data.email}
+                                name="email"
+                            />
+                        </div>
+                        <div className='fieldCon'>
+                            <div className='field'>Blood Types Available</div>
+                            <input 
+                                className='input' 
+                                type='text' 
+                                onChange={(e) => handleFieldChange(e)}
+                                value={data.bloodTypes}
+                                name="bloodTypes"
+                            />
+                        </div>
                     </div>
-                    <div className='fieldCon'>
-                        <div className='field'>City</div>
-                        <input className='input' type='text' />
+                    <div className='fieldsDiv'>
+                        <div className='fieldCon'>
+                            <div className='field'>City</div>
+                            <input 
+                                className='input' 
+                                type='text' 
+                                onChange={(e) => handleFieldChange(e)}
+                                value={data.city}
+                                name="city"
+                            />
+                        </div>
+                        <div className='fieldCon'>
+                            <div className='field'>Password</div>
+                            <input 
+                                className='input' 
+                                type='text' 
+                                onChange={(e) => handleFieldChange(e)}
+                                value={data.password}
+                                name="password"
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className='fieldsDiv'>
-                    <div className='fieldCon'>
-                        <div className='field'>Phone Number 1</div>
-                        <input className='input' type='number' />
-                    </div>
-                    <div className='fieldCon'>
-                        <div className='field'>Phone Number 2</div>
-                        <input className='input' type='number' />
-                    </div>
-                </div>
-                <div className='fieldsDiv'>
-                    <div className='fieldCon'>
-                        <div className='field'>Email</div>
-                        <input className='input' type='text' />
-                    </div>
-                    <div className='fieldCon'>
-                        <div className='field'>Password</div>
-                        <input className='input' type='password' />
-                    </div>
-                </div>
-            </div>
+                </div> </>: null
+            }
             <div className='BtnCon'>
-                <button className='backBtn'>Back</button>
-                <button className='saveBtn'>Save Changes</button>
+                <button className='backBtn' onClick={() => navigate(-1)}>Back</button>
+                <button className='saveBtn' onClick={editUser}>Save Changes</button>
             </div>
         </div>
         <div className='setPictureModal' onClick={() => setShowModal(false)} style={{display: showModal ? 'flex' : 'none'}}>
@@ -135,14 +399,14 @@ export default function EditProfile() {
                 <div className='heading'>Profile picture</div>
                 <div className='subHeading'>A picture helps people recognize you</div>
                 <div className='imgDiv'>
-                    {file ? (
-                        <img src={file} alt="logo" className="upload-img" />
+                    {data?.img ? (
+                        <img src={data?.img} alt="logo" className="upload-img" />
                         ) : (
-                            <img
-                                src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
-                                alt="logo"
-                                className="upload-img"
-                            />
+                        <img
+                            src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
+                            alt="logo"
+                            className="upload-img"
+                        />
                         )
                     }
                 </div>
@@ -158,10 +422,10 @@ export default function EditProfile() {
                         id="image"
                         accept=".png, .jpg, .jpeg"
                         name="img"
-                        onChange={handleChange}
+                        onChange={(e) => uploadImg(e)}
                         style={{ display: "none" }}
                     />
-                    <button className='modelBtn'>
+                    <button className='modelBtn' onClick={handleRemove}>
                         <MdDelete className='icon'/>
                         <div className='label'>Remove</div>
                     </button>
@@ -174,10 +438,11 @@ export default function EditProfile() {
           <div className='innerHeading'>Are you sure you want to logout?</div>
           <div className='btnCon'>
             <button className='cancelBtn' onClick={(e) => setShowLogoutModal(false)}>Cancel</button>
-            <button className='okBtn'>OK</button>
+            <button className='okBtn' onClick={handleLogout}>OK</button>
           </div>
         </div>
       </div>
     </div>
+    </>
   )
 }

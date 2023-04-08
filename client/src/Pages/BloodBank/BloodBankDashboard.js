@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineLogout } from "react-icons/ai";
+import LoggedInNavabr from '../Auth/LoggedInNavbar';
 
 export default function BloodBankDashboard() {
   const navigate = useNavigate();
@@ -11,16 +12,18 @@ export default function BloodBankDashboard() {
   useEffect(() => {
     // get data
   }, []);
-  const navigateToEachPatientPage = () => {
-    navigate(`/eachPatient`);
-  };
-  const navigateToEachBankPage = () => {
-    navigate(`/eachBank`);
-  };
-  const navigateToBottleStockPage = () => {
-    navigate(`/bottlesStock`);
-  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('userData');
+    sessionStorage.setItem("isLoggedIn",false);
+    sessionStorage.removeItem('id');
+    sessionStorage.removeItem('role');
+    navigate(`/`);
+  }
+
   return (
+    <>
+    <LoggedInNavabr/>
     <div className="adminDashboard bloodBankDashboard">
       <div className="heading">Blood Bank Dashboard</div>
       <div className="mainContent">
@@ -133,10 +136,11 @@ export default function BloodBankDashboard() {
             <button className="cancelBtn" onClick={(e) => setShowModal(false)}>
               Cancel
             </button>
-            <button className="okBtn">OK</button>
+            <button className="okBtn" onClick={handleLogout}>OK</button>
           </div>
         </div>
       </div>
     </div>
+    </>
   );
 }

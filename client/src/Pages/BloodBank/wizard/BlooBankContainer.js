@@ -11,7 +11,7 @@ const initialObj = {
   address: "",
   email: "",
   phone: "",
-  phone2: "",
+  mobile: "",
   password: "",
   password2: "",
 

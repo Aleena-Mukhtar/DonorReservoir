@@ -30,6 +30,17 @@ $header-color: #D6D5D5;
                 align-items: flex-start;
                 justify-content: space-between;
                 width: 100%;
+                .NotificationDiv{
+                    width: 100%;
+                    position: relative;
+                    .icon{
+                        position: absolute;
+                        font-size: 30px;
+                        top: 3%;
+                        right: 16%;
+                        color: green;
+                    }
+                }
                 .btn{
                     padding: 1rem;
                     width: 80%;

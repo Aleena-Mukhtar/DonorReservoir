@@ -2,20 +2,6 @@ const router = require("express").Router();
 const Donor = require("./../models/Donor");
 const upload = require("./upload");
 
-// router.post("/donor", (req, res) => {
-//   const newitem = new Donor(req.body);
-//   newitem.save((err, obj) => {
-//     if (err) {
-//       console.log(err);
-//       return res.status(400).json({ message: "Error", error: err });
-//     }
-//     res.status(200).json({
-//       message: "Donor registered successfully!",
-//       data: obj,
-//       error: false,
-//     });
-//   });
-// });
 router.post("/donor", async (req, res) => {
   const newitem = new Donor(req.body);
   const _email = req.body.email
@@ -176,29 +162,6 @@ router.put("/starDonor/:id", (req, res) => {
 //       });
 //     }
 //   );
-// });
-
-// router.post("/upload", auth, (req, res) => {
-//   const singleUpload = upload.single("file");
-//   singleUpload(req, res, function (err, doc) {
-//     if (err) {
-//       return res.status(201).json({
-//         success: false,
-//         errors: {
-//           title: "Image Upload Error",
-//           detail: err.message,
-//           error: err,
-//         },
-//       });
-//     }
-//     const url = req.protocol + "://" + req.get("host");
-
-//     const x = url + "/uploads/" + req.file.filename;
-//     res.status(200).json({
-//       success: true,
-//       url: x,
-//     });
-//   });
 // });
 
 module.exports = router;

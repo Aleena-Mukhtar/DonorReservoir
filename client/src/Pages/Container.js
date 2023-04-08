@@ -15,6 +15,8 @@ import BlooBankContainer from "./BloodBank/wizard/BlooBankContainer";
 import BloodBankDashboard from "./BloodBank/BloodBankDashboard";
 import DonorContainer from "./Donor/wizard/DonorContainer";
 import EachDonor from "./Admin/EachDonor";
+import EachBloodBank from "./Admin/EachBloodBank";
+import FilterBanks from "./Admin/FilterBanks";
 
 export default function Container() {
   return (
@@ -82,6 +84,16 @@ export default function Container() {
             exact
             path="/eachDonor/:id"
             element={<EachDonor />}
+          />
+          <Route
+            exact
+            path="/eachBank/:id"
+            element={<EachBloodBank />}
+          />
+          <Route
+            exact
+            path="/filterBank/:type"
+            element={<FilterBanks />}
           />
         </Routes>
         <Footer />
