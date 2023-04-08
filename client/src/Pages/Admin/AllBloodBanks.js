@@ -2,29 +2,29 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export default function AllDonors({ check }) {
-  const [donors, setDonors] = useState(null);
-  const [filterDonors, setFilterDonors] = useState([]);
+export default function AllBloodBanks({ check }) {
+  const [banks, setBanks] = useState(null);
+  const [filterBanks, setFilterBanks] = useState([]);
   const navigate = useNavigate();
   const navigateToEachDonorPage = (ID) => {
-    navigate(`/eachDonor/${ID}`);
+    navigate(`/eachBank/${ID}`);
   };
   useEffect(() => {
-    axios(`http://localhost:5000/donor/getAll/`)
+    axios(`http://localhost:5000/bloodBank/`)
       .then((data) => {
-        setDonors(data.data.data);
+        setBanks(data.data);
       })
       .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {
-    if (donors) {
-      let _filteredData = donors;
+    if (banks) {
+      let _filteredData = banks;
       // agar star checked ha to sirf star waly ayen gy warna sb
       if (check) _filteredData = _filteredData.filter((el) => el.star);
-      setFilterDonors(_filteredData);
+      setFilterBanks(_filteredData);
     }
-  }, [check, donors]);
+  }, [check, banks]);
   return (
     <div className="allDonors">
       <table className="table">
@@ -39,18 +39,21 @@ export default function AllDonors({ check }) {
             Phone
           </th>
           <th className="headText" align="center">
-            Blood Type
+            Address
+          </th>
+          <th className="headText" align="center">
+            City
           </th>
         </thead>
         <tbody className="tableBody">
-          {filterDonors?.map((el) => (
+          {filterBanks?.map((el) => (
             <tr
               className="eachRow1"
               onClick={() => navigateToEachDonorPage(el._id)}
               key={el._id}
             >
               <td className="rowText" align="center">
-                {el.fname}
+                {el.bankName}
               </td>
               <td className="rowText" align="center">
                 {el.email}
@@ -59,7 +62,10 @@ export default function AllDonors({ check }) {
                 {el.phone}
               </td>
               <td className="rowText" align="center">
-                {el.bloodType}
+                {el.address}
+              </td>
+              <td className="rowText" align="center">
+                {el.city}
               </td>
             </tr>
           ))}

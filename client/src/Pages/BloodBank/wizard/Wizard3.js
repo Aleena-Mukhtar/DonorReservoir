@@ -18,12 +18,12 @@ export default function Wizard3() {
     setData({ ...data, bloodTypes: types });
     setTab(2);
   };
+
   const handleCheck = (e) => {
     const { name } = e.target;
 
     if (types.includes(name)) {
       const rest = types.filter((el) => el !== name);
-
       setTypes(rest);
     } else {
       setTypes([...types, name]);
@@ -36,8 +36,8 @@ export default function Wizard3() {
   const handleSubmit = () => {
     axios.post("/bloodBank", { ...data, bloodTypes: types }).then((res) => {
       console.log(res);
-      if (!res.err) {
-        console.log(res.err);
+      if (res.err) {
+        console.log(res);
       } else {
         console.log("success");
         navigateToLoginPage();
