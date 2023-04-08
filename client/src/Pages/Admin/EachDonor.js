@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { useNavigate, useParams } from "react-router-dom";
-import { BiUser } from 'react-icons/bi';
+import { BiUser } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { AiOutlineStar, AiFillStar, AiOutlineLogout } from "react-icons/ai";
 import axios from "axios";
@@ -11,7 +11,7 @@ export default function EachDonor() {
   const navigate = useNavigate();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const [starred, setStarred] = useState(false);
+
   const [star, setStar] = useState(true);
   const [time, setTime] = useState("");
   const [donor, setDonor] = useState({});
@@ -25,7 +25,7 @@ export default function EachDonor() {
         DisplayCurrentTime(new Date(data.data.data[0]?.createdAt.toString()));
       })
       .catch((err) => console.log(err));
-  }, [star, starred]);
+  }, []);
   function DisplayCurrentTime(date) {
     let hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
     let am_pm = date.getHours() >= 12 ? "PM" : "AM";
@@ -67,7 +67,9 @@ export default function EachDonor() {
         if (res.data.success) {
           console.log(res.data.data.star);
           console.log("Starred Successfully");
-          setStarred(res.data.data.star);
+          // setStarred(res.data.data.star);
+          setStar(res.data.data.star);
+          setDonor(data.data.data);
         } else {
           console.log(res);
         }
@@ -75,191 +77,206 @@ export default function EachDonor() {
       .catch((err) => console.log(err));
   };
   const handleLogout = () => {
-    sessionStorage.removeItem('userData');
-    sessionStorage.setItem("isLoggedIn",false);
-    sessionStorage.removeItem('id');
-    sessionStorage.removeItem('role');
+    sessionStorage.removeItem("userData");
+    sessionStorage.setItem("isLoggedIn", false);
+    sessionStorage.removeItem("id");
+    sessionStorage.removeItem("role");
     navigate(`/`);
-  }
+  };
   return (
     <>
-    <LoggedInNavbar/>
-    <div className="eachDonor">
-      <button className="backBtn" onClick={() => navigate(-1)}>
-        <HiOutlineArrowNarrowLeft className="icon" />
-      </button>
-      <div className='editProfile'>
-        <div className='con1'>
-          <div className='innerCon'>
-            <div className='mainHeading'>Donor Profile</div>
-            <div className='userContent'>
-              <BiUser className='icon'/>
-              <div className='label'>User Info</div>
+      <LoggedInNavbar />
+      <div className="eachDonor">
+        <button className="backBtn" onClick={() => navigate(-1)}>
+          <HiOutlineArrowNarrowLeft className="icon" />
+        </button>
+        <div className="editProfile">
+          <div className="con1">
+            <div className="innerCon">
+              <div className="mainHeading">Donor Profile</div>
+              <div className="userContent">
+                <BiUser className="icon" />
+                <div className="label">User Info</div>
+              </div>
             </div>
+            <button
+              className="logoutBtn"
+              onClick={(e) => setShowLogoutModal(!showLogoutModal)}
+            >
+              <AiOutlineLogout className="icon" />
+              <div className="label">Log Out</div>
+            </button>
           </div>
-          <button className='logoutBtn' onClick={(e) => setShowLogoutModal(!showLogoutModal)}>
-            <AiOutlineLogout className='icon'/>
-            <div className='label'>Log Out</div>
-          </button>
-        </div>
-        <div className='editProfileContent'>
-          <div className="upperProfileCon">
-            <div className='pictureCon'>
-              {donor?.img === "" ? (
-                <img
-                  src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
-                  alt="logo"
-                  className="edit-img"
-                />
+          <div className="editProfileContent">
+            <div className="upperProfileCon">
+              <div className="pictureCon">
+                {donor?.img === "" ? (
+                  <img
+                    src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
+                    alt="logo"
+                    className="edit-img"
+                  />
                 ) : (
-                <img 
-                  src={donor?.img} 
-                  alt="logo" 
-                  className="edit-img" 
-                />
-                )
-              }
-              <div className='detailCon'>
-                <div className="nameDiv">
-                  <div className='nameCon'>{donor?.lname} {donor?.fname}</div>
-                  <div className='address'>{new Date(donor?.createdAt?.toString())?.toDateString()}</div>
+                  <img src={donor?.img} alt="logo" className="edit-img" />
+                )}
+                <div className="detailCon">
+                  <div className="nameDiv">
+                    <div className="nameCon">
+                      {donor?.lname} {donor?.fname}
+                    </div>
+                    <div className="address">
+                      {new Date(donor?.createdAt?.toString())?.toDateString()}
+                    </div>
+                  </div>
+                  <div className="BtnCon">
+                    <button className="starBtn btn" onClick={starDonor}>
+                      {star ? (
+                        <AiFillStar className="icon" />
+                      ) : (
+                        <AiOutlineStar className="icon" />
+                      )}
+                    </button>
+                    <button
+                      className="deleteBtn btn"
+                      onClick={(e) => setShowDeleteModal(!showDeleteModal)}
+                    >
+                      <MdDelete className="icon" />
+                    </button>
+                  </div>
                 </div>
-                <div className="BtnCon">
-                  <button className="starBtn btn" onClick={starDonor}>
-                    {star ? (
-                      <AiFillStar className="icon" />
-                    ) : (
-                      <AiOutlineStar className="icon" />
-                    )}
-                  </button>
-                  <button
-                    className="deleteBtn btn"
-                    onClick={(e) => setShowDeleteModal(!showDeleteModal)}
-                  >
-                    <MdDelete className="icon" />
-                  </button>
+              </div>
+            </div>
+            <div className="formFields">
+              <div className="fieldsDiv">
+                <div className="fieldCon">
+                  <div className="field">First Name</div>
+                  <input
+                    className="input"
+                    type="text"
+                    disabled={true}
+                    value={donor?.fname}
+                  />
+                </div>
+                <div className="fieldCon">
+                  <div className="field">Last Name</div>
+                  <input
+                    className="input"
+                    type="text"
+                    disabled={true}
+                    value={donor?.lname}
+                  />
+                </div>
+              </div>
+              <div className="fieldsDiv">
+                <div className="fieldCon">
+                  <div className="field">Address</div>
+                  <input
+                    className="input"
+                    type="text"
+                    disabled={true}
+                    value={donor?.address}
+                  />
+                </div>
+                <div className="fieldCon">
+                  <div className="field">Email</div>
+                  <input
+                    className="input"
+                    type="text"
+                    disabled={true}
+                    value={donor?.email}
+                  />
+                </div>
+              </div>
+              <div className="fieldsDiv">
+                <div className="fieldCon">
+                  <div className="field">Phone Number</div>
+                  <input
+                    className="input"
+                    type="text"
+                    disabled={true}
+                    value={donor?.phone}
+                  />
+                </div>
+                <div className="fieldCon">
+                  <div className="field">Mobile Number</div>
+                  <input
+                    className="input"
+                    type="text"
+                    disabled={true}
+                    value={donor?.phone2}
+                  />
+                </div>
+              </div>
+              <div className="fieldsDiv">
+                <div className="fieldCon">
+                  <div className="field">CNIC</div>
+                  <input
+                    className="input"
+                    type="text"
+                    disabled={true}
+                    value={donor?.CNIC}
+                  />
+                </div>
+                <div className="fieldCon">
+                  <div className="field">Blood Type</div>
+                  <input
+                    className="input"
+                    type="text"
+                    disabled={true}
+                    value={donor?.bloodType}
+                  />
                 </div>
               </div>
             </div>
           </div>
-          <div className='formFields'>
-            <div className='fieldsDiv'>
-              <div className='fieldCon'>
-                <div className='field'>First Name</div>
-                <input 
-                  className='input' 
-                  type='text' 
-                  disabled={true}
-                  value={donor?.fname}
-                />
+          <div
+            className="logoutModal"
+            style={{ display: showLogoutModal ? "flex" : "none" }}
+            onClick={(e) => setShowLogoutModal(false)}
+          >
+            <div className="logout">
+              <div className="modalHeading">Confirm Logout</div>
+              <div className="innerHeading">
+                Are you sure you want to logout?
               </div>
-              <div className='fieldCon'>
-                <div className='field'>Last Name</div>
-                <input 
-                  className='input' 
-                  type='text'
-                  disabled={true}
-                  value={donor?.lname}
-                />
-              </div>
-            </div>
-            <div className='fieldsDiv'>
-              <div className='fieldCon'>
-                <div className='field'>Address</div>
-                <input 
-                  className='input' 
-                  type='text' 
-                  disabled={true}
-                  value={donor?.address}
-                />
-              </div>
-              <div className='fieldCon'>
-                <div className='field'>Email</div>
-                <input 
-                  className='input' 
-                  type='text'
-                  disabled={true}
-                  value={donor?.email}
-                />
-              </div>
-            </div>
-            <div className='fieldsDiv'>
-              <div className='fieldCon'>
-                <div className='field'>Phone Number</div>
-                <input 
-                  className='input' 
-                  type='text' 
-                  disabled={true}
-                  value={donor?.phone}
-                />
-              </div>
-              <div className='fieldCon'>
-                <div className='field'>Mobile Number</div>
-                <input 
-                  className='input' 
-                  type='text'
-                  disabled={true}
-                  value={donor?.phone2} 
-                />
-              </div>
-            </div>
-            <div className='fieldsDiv'>
-              <div className='fieldCon'>
-                <div className='field'>CNIC</div>
-                <input 
-                  className='input' 
-                  type='text' 
-                  disabled={true}
-                  value={donor?.CNIC}
-                />
-              </div>
-              <div className='fieldCon'>
-                <div className='field'>Blood Type</div>
-                <input 
-                  className='input' 
-                  type='text'
-                  disabled={true}
-                  value={donor?.bloodType}
-                />
+              <div className="btnCon">
+                <button
+                  className="cancelBtn"
+                  onClick={(e) => setShowLogoutModal(false)}
+                >
+                  Cancel
+                </button>
+                <button className="okBtn" onClick={handleLogout}>
+                  OK
+                </button>
               </div>
             </div>
           </div>
-        </div>
-        <div className='logoutModal' style={{display: showLogoutModal ? 'flex' : 'none'}} onClick={(e) => setShowLogoutModal(false)}>
-          <div className='logout'>
-            <div className='modalHeading'>Confirm Logout</div>
-            <div className='innerHeading'>Are you sure you want to logout?</div>
-            <div className='btnCon'>
-              <button className='cancelBtn' onClick={(e) => setShowLogoutModal(false)}>Cancel</button>
-              <button className='okBtn' onClick={handleLogout}>OK</button>
-            </div>
-          </div>
-        </div>
-        <div
-          className="logoutModal"
-          style={{ display: showDeleteModal ? "flex" : "none" }}
-          onClick={(e) => setShowDeleteModal(false)}
-        >
-          <div className="logout">
-            <div className="modalHeading">Confirm Delete</div>
-            <div className="innerHeading">
-              Are you sure you want to delete this donor's data?
-            </div>
-            <div className="btnCon">
-              <button
-                className="cancelBtn"
-                onClick={(e) => setShowDeleteModal(false)}
-              >
-                Cancel
-              </button>
-              <button className="okBtn" onClick={handleDelete}>
-                OK
-              </button>
+          <div
+            className="logoutModal"
+            style={{ display: showDeleteModal ? "flex" : "none" }}
+            onClick={(e) => setShowDeleteModal(false)}
+          >
+            <div className="logout">
+              <div className="modalHeading">Confirm Delete</div>
+              <div className="innerHeading">
+                Are you sure you want to delete this donor's data?
+              </div>
+              <div className="btnCon">
+                <button
+                  className="cancelBtn"
+                  onClick={(e) => setShowDeleteModal(false)}
+                >
+                  Cancel
+                </button>
+                <button className="okBtn" onClick={handleDelete}>
+                  OK
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 }
