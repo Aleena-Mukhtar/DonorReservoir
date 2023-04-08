@@ -9,6 +9,9 @@ const passport = require("passport");
 const db = require("./config/config").get(process.env.NODE_ENV);
 const _class = require("./routes/class");
 const donor = require("./routes/Donor");
+const admin = require("./routes/Admin");
+const bloodBank = require("./routes/BloodBank");
+const adminNotification = require("./routes/AdminNotifications");
 
 const corsOptions = {
   origin: "*",
@@ -35,6 +38,9 @@ app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cors(corsOptions));
 app.use("/donor", donor);
+app.use("/admin", admin);
+app.use("/bloodBank", bloodBank);
+app.use("/adminNotification", adminNotification);
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
