@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const OPTIONS = ["Role", "Admin", "Patient", "Blood Bank"];
 
 export default function LoginPage() {
   const [data, setData] = useState({ email: "", password: "" });
   const [role, setRole] = useState("Role");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -16,14 +18,24 @@ export default function LoginPage() {
     let url = "";
     if (role === "Admin") url = "/admin/login";
     else if (role === "Patient") url = "/Patient/login";
-    else if (role === "Blood Bank") url = "/bank/login";
+    else if (role === "Blood Bank") url = "/bloodBank/login";
     axios.post(url, data).then((res) => {
-      console.log(res);
-      if (!res.err) {
-        console.log(res.err);
+      console.log(res.data);
+      if (res.data.error) {
+        alert(res.data.message)
       } else {
         console.log("success");
-        //then naviagte to page
+        // sessionStorage.setItem
+        // sessionStorage.setItem("id",res.data.userData._id);
+        // sessionStorage.setItem("role",role);
+        // sessionStorage.setItem("userData",JSON.stringify(res.data.userData));
+        // sessionStorage.setItem("isLoggedIn",true);
+        sessionStorage.setItem("id",res.data.userData._id);
+        sessionStorage.setItem("role",role);
+        sessionStorage.setItem("userData",JSON.stringify(res.data.userData));
+        sessionStorage.setItem("isLoggedIn",true);
+        if(role === "Admin") navigate(`/adminDashboard`);
+        else if(role === "Blood Bank") navigate(`/bloodBankDashboard`);
       }
     });
   };

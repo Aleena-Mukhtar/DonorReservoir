@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { useNavigate, useParams } from "react-router-dom";
 import { BiUser } from 'react-icons/bi';
@@ -7,25 +7,26 @@ import { AiOutlineStar, AiFillStar, AiOutlineLogout } from "react-icons/ai";
 import axios from "axios";
 import LoggedInNavbar from "../Auth/LoggedInNavbar";
 
-export default function EachDonor() {
+export default function EachBloodBank() {
   const navigate = useNavigate();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [starred, setStarred] = useState(false);
-  const [star, setStar] = useState(true);
   const [time, setTime] = useState("");
-  const [donor, setDonor] = useState({});
+  const [bank, setbank] = useState({});
+  const bankSection = useRef(null);
   const { id } = useParams();
+
   useEffect(() => {
-    axios(`http://localhost:5000/donor/get/${id}`)
+    axios(`http://localhost:5000/bloodBank/${id}`)
       .then((data) => {
-        console.log(data);
-        setDonor(data.data.data[0]);
-        setStar(data.data.data[0]?.star);
-        DisplayCurrentTime(new Date(data.data.data[0]?.createdAt.toString()));
+        console.log(data.data);
+        setbank(data.data);
+        DisplayCurrentTime(new Date(data.data?.createdAt.toString()));
       })
       .catch((err) => console.log(err));
-  }, [star, starred]);
+  }, [starred]);
+
   function DisplayCurrentTime(date) {
     let hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
     let am_pm = date.getHours() >= 12 ? "PM" : "AM";
@@ -34,9 +35,10 @@ export default function EachDonor() {
       date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
     setTime(hours + ":" + minutes + " " + am_pm);
   }
+
   function handleDelete() {
     var config = {
-      url: `http://localhost:5000/donor/delete/${id}`,
+      url: `http://localhost:5000/bloodBank/${id}`,
       method: "DELETE",
     };
     axios(config)
@@ -50,13 +52,15 @@ export default function EachDonor() {
       })
       .catch((err) => console.log(err));
   }
-  const starDonor = (e) => {
+
+  const starbank = (e) => {
     e.preventDefault();
+    console.log(bank?.star);
     const data = {
-      star: !star,
+      star: !bank?.star,
     };
     axios({
-      url: `http://localhost:5000/donor/starDonor/${id}`,
+      url: `http://localhost:5000/bloodBank/starBank/${id}`,
       method: "PUT",
       data: data,
       headers: {
@@ -74,6 +78,7 @@ export default function EachDonor() {
       })
       .catch((err) => console.log(err));
   };
+
   const handleLogout = () => {
     sessionStorage.removeItem('userData');
     sessionStorage.setItem("isLoggedIn",false);
@@ -81,20 +86,31 @@ export default function EachDonor() {
     sessionStorage.removeItem('role');
     navigate(`/`);
   }
+
+  const scrollDown = (ref) => {
+    window.scrollTo({
+      top: ref.current.offsetTop,
+      behavior: 'smooth',
+    });
+  };
   return (
     <>
     <LoggedInNavbar/>
-    <div className="eachDonor">
+    <div className="eachDonor eachBank">
       <button className="backBtn" onClick={() => navigate(-1)}>
         <HiOutlineArrowNarrowLeft className="icon" />
       </button>
       <div className='editProfile'>
         <div className='con1'>
           <div className='innerCon'>
-            <div className='mainHeading'>Donor Profile</div>
+            <div className='mainHeading'>Bank Profile</div>
             <div className='userContent'>
               <BiUser className='icon'/>
-              <div className='label'>User Info</div>
+              <div className='label'>Admin Info</div>
+            </div>
+            <div className='userContent' onClick={() => scrollDown(bankSection)}>
+              <BiUser className='icon'/>
+              <div className='label'>Bank Info</div>
             </div>
           </div>
           <button className='logoutBtn' onClick={(e) => setShowLogoutModal(!showLogoutModal)}>
@@ -105,7 +121,7 @@ export default function EachDonor() {
         <div className='editProfileContent'>
           <div className="upperProfileCon">
             <div className='pictureCon'>
-              {donor?.img === "" ? (
+              {bank?.img === "" ? (
                 <img
                   src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
                   alt="logo"
@@ -113,7 +129,7 @@ export default function EachDonor() {
                 />
                 ) : (
                 <img 
-                  src={donor?.img} 
+                  src={bank?.img} 
                   alt="logo" 
                   className="edit-img" 
                 />
@@ -121,12 +137,12 @@ export default function EachDonor() {
               }
               <div className='detailCon'>
                 <div className="nameDiv">
-                  <div className='nameCon'>{donor?.lname} {donor?.fname}</div>
-                  <div className='address'>{new Date(donor?.createdAt?.toString())?.toDateString()}</div>
+                  <div className='nameCon'>{bank?.lname} {bank?.fname}</div>
+                  <div className='address'>{new Date(bank?.createdAt?.toString())?.toDateString()}</div>
                 </div>
                 <div className="BtnCon">
-                  <button className="starBtn btn" onClick={starDonor}>
-                    {star ? (
+                  <button className="starBtn btn" onClick={starbank}>
+                    {bank?.star ? (
                       <AiFillStar className="icon" />
                     ) : (
                       <AiOutlineStar className="icon" />
@@ -143,6 +159,7 @@ export default function EachDonor() {
             </div>
           </div>
           <div className='formFields'>
+            <div className="heading">Admin Information :</div>
             <div className='fieldsDiv'>
               <div className='fieldCon'>
                 <div className='field'>First Name</div>
@@ -150,7 +167,7 @@ export default function EachDonor() {
                   className='input' 
                   type='text' 
                   disabled={true}
-                  value={donor?.fname}
+                  value={bank?.fname}
                 />
               </div>
               <div className='fieldCon'>
@@ -159,7 +176,7 @@ export default function EachDonor() {
                   className='input' 
                   type='text'
                   disabled={true}
-                  value={donor?.lname}
+                  value={bank?.lname}
                 />
               </div>
             </div>
@@ -170,7 +187,7 @@ export default function EachDonor() {
                   className='input' 
                   type='text' 
                   disabled={true}
-                  value={donor?.address}
+                  value={bank?.adminAddress}
                 />
               </div>
               <div className='fieldCon'>
@@ -179,7 +196,7 @@ export default function EachDonor() {
                   className='input' 
                   type='text'
                   disabled={true}
-                  value={donor?.email}
+                  value={bank?.adminEmail}
                 />
               </div>
             </div>
@@ -190,7 +207,68 @@ export default function EachDonor() {
                   className='input' 
                   type='text' 
                   disabled={true}
-                  value={donor?.phone}
+                  value={bank?.adminPhone}
+                />
+              </div>
+              <div className='fieldCon'>
+                <div className='field'>CNIC</div>
+                <input 
+                  className='input' 
+                  type='text'
+                  disabled={true}
+                  value={bank?.adminCNIC} 
+                />
+              </div>
+            </div>
+            <div className="heading" ref={bankSection}>Blood Bank Information :</div>
+            <div className='fieldsDiv'>
+              <div className='fieldCon'>
+                <div className='field'>Bank Name</div>
+                <input 
+                  className='input' 
+                  type='text' 
+                  disabled={true}
+                  value={bank?.bankName}
+                />
+              </div>
+              <div className='fieldCon'>
+                <div className='field'>Bank Address</div>
+                <input 
+                  className='input' 
+                  type='text'
+                  disabled={true}
+                  value={bank?.address}
+                />
+              </div>
+            </div>
+            <div className='fieldsDiv'>
+              <div className='fieldCon'>
+                <div className='field'>Bank Email</div>
+                <input 
+                  className='input' 
+                  type='text' 
+                  disabled={true}
+                  value={bank?.email}
+                />
+              </div>
+              <div className='fieldCon'>
+                <div className='field'>Blood Types Available</div>
+                <input 
+                  className='input' 
+                  type='text'
+                  disabled={true}
+                  value={bank?.bloodTypes}
+                />
+              </div>
+            </div>
+            <div className='fieldsDiv'>
+              <div className='fieldCon'>
+                <div className='field'>Phone Number</div>
+                <input 
+                  className='input' 
+                  type='text' 
+                  disabled={true}
+                  value={bank?.phone}
                 />
               </div>
               <div className='fieldCon'>
@@ -199,27 +277,27 @@ export default function EachDonor() {
                   className='input' 
                   type='text'
                   disabled={true}
-                  value={donor?.phone2} 
+                  value={bank?.mobile}
                 />
               </div>
             </div>
             <div className='fieldsDiv'>
               <div className='fieldCon'>
-                <div className='field'>CNIC</div>
+                <div className='field'>City</div>
                 <input 
                   className='input' 
                   type='text' 
                   disabled={true}
-                  value={donor?.CNIC}
+                  value={bank?.city}
                 />
               </div>
               <div className='fieldCon'>
-                <div className='field'>Blood Type</div>
+                <div className='field'>Password</div>
                 <input 
                   className='input' 
-                  type='text'
+                  type='text' 
                   disabled={true}
-                  value={donor?.bloodType}
+                  value={bank?.password}
                 />
               </div>
             </div>
@@ -243,7 +321,7 @@ export default function EachDonor() {
           <div className="logout">
             <div className="modalHeading">Confirm Delete</div>
             <div className="innerHeading">
-              Are you sure you want to delete this donor's data?
+              Are you sure you want to delete this bank's data?
             </div>
             <div className="btnCon">
               <button

@@ -11,7 +11,6 @@ export default function Wizard1() {
       "address",
       "email",
       "phone",
-      // "phone2",
       "password",
       "password2",
     ].every((key) => data[key] !== "");
@@ -23,7 +22,7 @@ export default function Wizard1() {
     <div className="wizard1">
       <div className="MainContent">
         <div className="MainCon">
-          <div className="MainHeading">Personal Information</div>
+          <div className="MainHeading">Bank Information</div>
         </div>
         <div className="Formfields">
           <div className="fieldsDiv">
@@ -60,7 +59,7 @@ export default function Wizard1() {
               />
             </div>
             <div className="fieldCon">
-              <div className="field">Email</div>
+              <div className="field">Email (official email)</div>
               <input
                 className="input"
                 onChange={(e) => handleChange(e)}
@@ -72,7 +71,7 @@ export default function Wizard1() {
           </div>
           <div className="fieldsDiv">
             <div className="fieldCon">
-              <div className="field">Phone Number 1</div>
+              <div className="field">Phone Number</div>
               <input
                 className="input"
                 onChange={(e) => handleChange(e)}
@@ -82,13 +81,13 @@ export default function Wizard1() {
               />
             </div>
             <div className="fieldCon">
-              <div className="field">Phone Number 2</div>
+              <div className="field">Mobile Number</div>
               <input
                 className="input"
                 onChange={(e) => handleChange(e)}
                 type="text"
-                value={data.phone2}
-                name={"phone2"}
+                value={data.mobile}
+                name={"mobile"}
               />
             </div>
           </div>
@@ -118,7 +117,12 @@ export default function Wizard1() {
             <button className="BackBtn" onClick={() => setTab(0)}>
               Back
             </button>
-            <button className="Btn" onClick={() => setTab(2)}>
+            <button 
+              className="Btn" 
+              onClick={() => setTab(2)}
+              disabled={isValid()}
+              style={{ opacity: isValid() ? "0.8" : "1" }} 
+            >
               Continue
               <BsArrowRight className="icon" />
             </button>

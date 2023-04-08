@@ -21,19 +21,19 @@ const bankSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  phone2: String,
+  mobile: String,
   password: {
     type: String,
     required: true,
   },
   password2: String,
 
-  adminImg: String,
-  adminFname: {
+  img: String,
+  fname: {
     type: String,
     required: true,
   },
-  adminLname: {
+  lname: {
     type: String,
     required: true,
   },
@@ -54,11 +54,16 @@ const bankSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
   bloodTypes: {
     type: [String],
     required: true,
   },
-});
+  star: {
+    type: Boolean,
+    default: false,
+  },
+},
+{ timestamps: true }
+);
 
 module.exports = mongoose.model("BloodBank", bankSchema);

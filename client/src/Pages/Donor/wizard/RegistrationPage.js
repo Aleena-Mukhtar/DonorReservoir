@@ -24,7 +24,7 @@ export default function RegistrationPage() {
     const myHeaders = new Headers();
     myHeaders.append(
       "Authorization",
-      `Bearer ${localStorage.getItem("token")}`
+      `Bearer ${sessionStorage.getItem("token")}`
     );
 
     const requestOptions = {
@@ -169,7 +169,7 @@ export default function RegistrationPage() {
               onChange={(e) => handleChange(e)}
               value={data.phone}
               name="phone"
-              type="number"
+              type="text"
             />
           </div>
           <div className="fieldCon">
@@ -179,7 +179,7 @@ export default function RegistrationPage() {
               onChange={(e) => handleChange(e)}
               value={data.phone2}
               name="phone2"
-              type="number"
+              type="text"
             />
           </div>
         </div>
@@ -212,7 +212,7 @@ export default function RegistrationPage() {
               onChange={(e) => handleChange(e)}
               value={data.CNIC}
               name="CNIC"
-              type="number"
+              type="text"
             />
           </div>
         </div>
@@ -220,6 +220,7 @@ export default function RegistrationPage() {
           className="Btn"
           onClick={handleRegistration}
           disabled={isValid()}
+          style={{ opacity: isValid() ? "0.8" : "1" }}
         >
           Register Yourself
         </button>
