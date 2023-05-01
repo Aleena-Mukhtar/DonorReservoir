@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Notification = require("../models/AdminNotifications");
+const Notification = require("../models/bankNotifications");
 
 
 // Create a new notification

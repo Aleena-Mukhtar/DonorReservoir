@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoggedInNavbar from "../Auth/LoggedInNavbar";
 
-export default function AdminNotifications() {
+export default function BankNotifications() {
   const [notifications, setNotifications] = useState(null);
-  const [read, setread] = useState(false);
   const navigate = useNavigate();
   const navigateToFilterBankPage = (type, ID) => {
     console.log(type);
@@ -14,22 +13,20 @@ export default function AdminNotifications() {
   };
   
   useEffect(() => {
-    axios(`http://localhost:5000/adminNotification/`)
+    axios(`http://localhost:5000/bankNotification/`)
       .then((data) => {
         console.log(data);
         setNotifications(data.data);
       })
       .catch((err) => console.log(err));
-  }, [read]);
+  }, []);
 
   const readRequest = (ID) => {
-    setread(true);
-    console.log(read);
     const data = {
       read: true,
     };
     axios({
-      url: `http://localhost:5000/adminNotification/markAsRead/${ID}`,
+      url: `http://localhost:5000/bankNotification/markAsRead/${ID}`,
       method: "PUT",
       data: data,
       headers: {
@@ -64,16 +61,16 @@ export default function AdminNotifications() {
             {notifications?.map((el) => (
               <tr className="eachRow" onClick={(e) => navigateToFilterBankPage(el.bloodType, el._id)} key={el._id}>
                 <td className="rowText" align="center">
-                  <div style={{fontWeight: el.read ? 'lighter' : 'bold'}}>We Need {el.bloodType} Blood Bottles Urgently!!</div>
+                  <div style={{fontWeight: el.read ? 'lighter' : 'bold'}}>The {el.hospitalName} Needs {el.bloodType} Blood Bottles Urgently!!</div>
                   <div className="detailsCon">
-                    <button className="emailBtn" onClick={() => readRequest(el._id)}>Send Email</button>
+                    <button className="emailBtn" onClick={() => readRequest(el._id)}>Send Reply</button>
                   </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>    
+      </div>
     </div>
     </>
   );
