@@ -94,6 +94,7 @@ $header-color: #D6D5D5;
     flex-direction: column;
     width: 100%;
     padding-bottom: 3rem;
+    position: relative;
     .BackButton{
         width: 100%;
         display: flex;
@@ -150,6 +151,11 @@ $header-color: #D6D5D5;
                                 color: black;
                             }
                         }
+                        .sendBtn:hover{
+                            .icon{
+                                color: $navbar-color;
+                            }
+                        }
                     }
                 }
                 .eachRow1:hover{
@@ -174,6 +180,45 @@ $header-color: #D6D5D5;
         background-color: $icon-color;
         border-radius: 5px;
     }
+    .logoutModal{
+        .logout{
+            height: unset;
+            padding: 1.5rem;
+            .modalHeading{
+                width: 100%;
+            }
+            .innerHeading{
+                margin-top: 1rem;
+                font-weight: bold;
+            }
+            .fieldCon{
+                width: 100%;
+                margin-top: 1rem;
+                .header{
+                    margin-bottom: 0.5rem;
+                    font-size: 15px;
+                }
+                .input{
+                    width: 90%;
+                    background-color: $font-color;
+                    border: none;
+                    border: 1px solid $navbar-color;
+                    border-radius: 5px;
+                    padding: 0.8rem;
+                }
+            }
+            .btnCon{
+                margin-top: 2rem;
+            }
+        }
+    }
+    @media(max-width: 970px){
+        .logoutModal{
+            .logout{
+                width: 55%;
+            }
+        }
+    }
     @media(max-width: 850px){
         .tableCon{
             .table{
@@ -194,7 +239,20 @@ $header-color: #D6D5D5;
             margin: 0 0.7rem;
             overflow: scroll;
             .table{
-                width: 650px;
+                width: 750px;
+            }
+        }
+        .logoutModal{
+            .logout{
+                width: 70%;
+                .modalHeading{
+                    font-size: 20px;
+                }
+                .btnCon{
+                    button{
+                        width: 40%;
+                    }
+                }
             }
         }
     }
