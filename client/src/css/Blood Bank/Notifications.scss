@@ -1,0 +1,177 @@
+$navbar-color: #b81d1d;
+$font-color: #FFFFFF;
+$icon-color: #A6A3A3;
+$check-color: #077861;
+$header-color: #D6D5D5;
+.bankNotifications{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    .backBtn{
+        background-color: transparent;
+        font-size: 30px;
+        width: 95%;
+        text-align: left;
+        border: none;
+        cursor: pointer;
+        margin-top: 1rem;
+        margin-left: 0.5rem;
+    }
+    .heading{
+        margin-top: 3rem;
+        font-size: 25px;
+        font-weight: bold;
+    }
+    .subHeading{
+        margin: 0.5rem 0;
+        font-size: 18px;
+        color: $navbar-color;
+    }
+    .tableCon{
+        width: 90%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        margin-top: 2rem;
+        height: 70vh;
+        border-radius: 8px;
+        margin-bottom: 3rem;
+        .table{
+            width: 100%;
+            border-radius: 8px;
+            .tableHeader{
+                width: 100%;
+                background-color: $header-color;
+                border-radius: 8px;
+                .headText{
+                    padding: 1rem 0;
+                    font-size: 17px;
+                    padding-left: 1rem;
+                }
+            }
+            .tableBody{
+                background-color: $font-color;
+                .eachRow{
+                    cursor: pointer;
+                    .rowText{
+                        padding: 0.6rem;
+                        font-size: 16px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        .detailsCon{
+                            display: flex;
+                            align-items: center;
+                            justify-content: flex-end;
+                            width: 30%;
+                            font-size: 14px;
+                            .emailBtn{
+                                border: none;
+                                background-color: $navbar-color;
+                                color: $font-color;
+                                padding: 0.8rem;
+                                border-radius: 8px;
+                                width: 55%;
+                                font-size: 15px;
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                }
+                .eachRow1{
+                    cursor: pointer;
+                    .rowText{
+                        padding: 0.8rem;
+                        font-size: 16px;
+                    }
+                }
+                .eachRow:hover, .eachRow1:hover{
+                    background-color: rgba($color: $header-color, $alpha: 0.3);
+                }
+            }
+        }
+    }
+    .tableCon::-webkit-scrollbar-track
+    {
+        background-color: $font-color;
+        border-radius: 5px;
+    }
+    .tableCon::-webkit-scrollbar
+    {
+        width: 8px;
+        background-color: $icon-color;
+        border-radius: 5px;
+    }
+    .tableCon::-webkit-scrollbar-thumb
+    {
+        background-color: $icon-color;
+        border-radius: 5px;
+    }
+    .logoutModal{
+        .logout{
+            height: 80vh;
+            overflow-y: scroll;
+            padding: 1.5rem;
+            .modalHeading{
+                width: 100%;
+                margin-top: 3rem;
+            }
+            .innerHeading{
+                margin-top: 1rem;
+                font-weight: bold;
+            }
+            .fieldCon{
+                width: 100%;
+                margin-top: 1rem;
+                .header{
+                    margin-bottom: 0.5rem;
+                    font-size: 15px;
+                }
+                .input{
+                    width: 90%;
+                    background-color: $font-color;
+                    border: none;
+                    border: 1px solid $navbar-color;
+                    border-radius: 5px;
+                    padding: 0.8rem;
+                }
+            }
+            .btnCon{
+                margin-top: 2rem;
+            }
+        }
+        .logout::-webkit-scrollbar-track
+        {
+            background-color: $font-color;
+            border-radius: 5px;
+        }
+        .logout::-webkit-scrollbar
+        {
+            width: 8px;
+            background-color: $navbar-color;
+            border-radius: 5px;
+        }
+        .logout::-webkit-scrollbar-thumb
+        {
+            background-color: $navbar-color;
+            border-radius: 5px;
+        }
+    }
+    @media(max-width: 570px){
+        .heading{
+            font-size: 20px;
+        }
+        .subHeading{
+            font-size: 16px;
+        }
+        .tableCon{
+            overflow: scroll;
+            .table{
+                width: 720px;
+            }
+        }
+    }
+}

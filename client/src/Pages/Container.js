@@ -7,9 +7,7 @@ import EachPatientRequest from "./Admin/EachPatientRequest";
 import EditProfile from "./Auth/EditProfile";
 import Footer from "./Auth/Footer";
 import Homepage from "./Auth/Homepage";
-import LoggedInNavbar from "./Auth/LoggedInNavbar";
 import LoginPage from "./Auth/LoginPage";
-import Navbar from "./Auth/Navbar";
 import Register from "./Auth/Register";
 import BlooBankContainer from "./BloodBank/wizard/BlooBankContainer";
 import BloodBankDashboard from "./BloodBank/BloodBankDashboard";
@@ -17,13 +15,16 @@ import DonorContainer from "./Donor/wizard/DonorContainer";
 import EachDonor from "./Admin/EachDonor";
 import EachBloodBank from "./Admin/EachBloodBank";
 import FilterBanks from "./Admin/FilterBanks";
+import BankNotifications from "./BloodBank/BankNotifications";
+import AdminNotifications from "./Admin/AdminNotifications";
+import Inbox from "./Auth/Inbox";
+import Notification from "./Auth/Notification";
+import Reply from "./Auth/Reply";
 
 export default function Container() {
   return (
     <div className="container">
       <Router>
-        {/* <Navbar/> */}
-        {/* <LoggedInNavbar /> */}
         <Routes>
           <Route 
             exact 
@@ -92,8 +93,33 @@ export default function Container() {
           />
           <Route
             exact
-            path="/filterBank/:type"
+            path="/filterBank/:type/:ID"
             element={<FilterBanks />}
+          />
+          <Route
+            exact
+            path="/bankNotifications"
+            element={<BankNotifications />}
+          />
+          <Route
+            exact
+            path="/adminNotifications"
+            element={<AdminNotifications />}
+          />
+          <Route
+            exact
+            path="/inbox"
+            element={<Inbox/>}
+          />
+          <Route
+            exact
+            path="/inbox/:id"
+            element={<Notification/>}
+          />
+          <Route
+            exact
+            path="/reply/:id"
+            element={<Reply/>}
           />
         </Routes>
         <Footer />
