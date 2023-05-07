@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoggedInNavbar from "../Auth/LoggedInNavbar";
+import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 
 export default function AdminNotifications() {
   const [notifications, setNotifications] = useState(null);
@@ -22,7 +23,7 @@ export default function AdminNotifications() {
       .catch((err) => console.log(err));
   }, [read]);
 
-  const readRequest = (ID) => {
+  const readRequest = (Type, ID) => {
     setread(true);
     console.log(read);
     const data = {
@@ -40,6 +41,7 @@ export default function AdminNotifications() {
       if (res.data.success) {
         console.log(res.data.data.read);
         console.log("mark as read Successfully");
+        navigateToFilterBankPage(Type, ID);
       } else {
         console.log(res);
       }
@@ -51,6 +53,9 @@ export default function AdminNotifications() {
     <>
     <LoggedInNavbar/>
     <div className="bankNotifications">
+      <button className="backBtn" onClick={() => navigate(-1)}>
+        <HiOutlineArrowNarrowLeft className="icon" />
+      </button>
       <div className="heading">Urgent Blood Notifications</div>
       <div className="subHeading">These notifications must handle on urgent bases</div>
       <div className="tableCon">
@@ -62,11 +67,11 @@ export default function AdminNotifications() {
           </thead>
           <tbody className="tableBody">
             {notifications?.map((el) => (
-              <tr className="eachRow" onClick={(e) => navigateToFilterBankPage(el.bloodType, el._id)} key={el._id}>
+              <tr className="eachRow" key={el._id}>
                 <td className="rowText" align="center">
                   <div style={{fontWeight: el.read ? 'lighter' : 'bold'}}>We Need {el.bloodType} Blood Bottles Urgently!!</div>
                   <div className="detailsCon">
-                    <button className="emailBtn" onClick={() => readRequest(el._id)}>Send Email</button>
+                    <button className="emailBtn" onClick={() => readRequest(el.bloodType, el._id)}>Send Email</button>
                   </div>
                 </td>
               </tr>

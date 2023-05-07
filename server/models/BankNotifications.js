@@ -19,11 +19,27 @@ const BankNotificationsSchema = new mongoose.Schema({
   days: {
     type: String,
     required: true,
-    unique: true,
   },
   read: {
     type: Boolean,
     default: false,
+  },
+  reply: {
+    type: {
+      read: {
+        type: Boolean,
+        default: false,
+      },
+      unitPrice: {
+        type: String,
+      },
+      discount: {
+        type: String,
+      },
+      shipping: {
+        type: String,
+      },
+    },
   },
 },
 { timestamps: true }

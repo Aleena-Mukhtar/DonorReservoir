@@ -17,6 +17,9 @@ import EachBloodBank from "./Admin/EachBloodBank";
 import FilterBanks from "./Admin/FilterBanks";
 import BankNotifications from "./BloodBank/BankNotifications";
 import AdminNotifications from "./Admin/AdminNotifications";
+import Inbox from "./Auth/Inbox";
+import Notification from "./Auth/Notification";
+import Reply from "./Auth/Reply";
 
 export default function Container() {
   return (
@@ -102,6 +105,21 @@ export default function Container() {
             exact
             path="/adminNotifications"
             element={<AdminNotifications />}
+          />
+          <Route
+            exact
+            path="/inbox"
+            element={<Inbox/>}
+          />
+          <Route
+            exact
+            path="/inbox/:id"
+            element={<Notification/>}
+          />
+          <Route
+            exact
+            path="/reply/:id"
+            element={<Reply/>}
           />
         </Routes>
         <Footer />
