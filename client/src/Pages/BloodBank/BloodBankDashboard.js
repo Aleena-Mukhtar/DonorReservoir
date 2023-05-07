@@ -2,23 +2,20 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineLogout } from "react-icons/ai";
 import LoggedInNavabr from '../Auth/LoggedInNavbar';
-import BankNotifications from "./BankNotifications";
-import { GoPrimitiveDot } from 'react-icons/go';
 import axios from "axios";
 
 export default function BloodBankDashboard() {
   const navigate = useNavigate();
   const [btnClick, setBtnClick] = useState(1);
   const [showModal, setShowModal] = useState(false);
-  // const [filterNotifications, setFilterNotifications] = useState([]);
-  const [history, setHistory] = useState([1, 2, 3, 5, 6, 7]); //isko empty array krna ha example k liy 123 likha ha
+  const [history, setHistory] = useState([]);
   useEffect(() => {
-    // axios(`http://localhost:5000/bankNotification/`)
-    //   .then((data) => {
-    //     console.log(data);
-    //     setFilterNotifications(data.data.filter((el) => el.read));
-    //   })
-    //   .catch((err) => console.log(err));
+    axios(`http://localhost:5000/bankNotification/`)
+      .then((data) => {
+        console.log(data);
+        setHistory(data.data);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   const handleLogout = () => {
@@ -37,17 +34,8 @@ export default function BloodBankDashboard() {
       <div className="mainContent">
         <div className="leftPanel">
           <div className="BtnDiv">
-            {/* <div className="NotificationDiv">
-              <button
-                className={btnClick === 1 ? "btn click" : "btn"}
-                onClick={(e) => setBtnClick(1)}
-              >
-                Notifications
-              </button>
-              {filterNotifications ? <GoPrimitiveDot className="icon"/> : null}
-            </div> */}
             <button
-              className={btnClick === 2 ? "btn click" : "btn"}
+              className={btnClick === 1 ? "btn click" : "btn"}
               onClick={(e) => setBtnClick(2)}
             >
               History
@@ -63,8 +51,8 @@ export default function BloodBankDashboard() {
         </div>
         <div className="rightPanel">
           <div className="tableCon">
-            {btnClick === 1 ? null
-            : (
+            {btnClick === 1 ?
+            (
               <table className="table">
                 <thead className="tableHeader">
                   <th className="headText" align="center">
@@ -77,41 +65,41 @@ export default function BloodBankDashboard() {
                     Quantity
                   </th>
                   <th className="headText" align="center">
+                    Status
+                  </th>
+                  <th className="headText" align="center">
                     Date
                   </th>
                   <th className="headText" align="center">
-                    Time
-                  </th>
-                  <th className="headText" align="center">
-                    Total Price (Rupees)
+                    Total Price (PKR)
                   </th>
                 </thead>
                 <tbody className="tableBody">
-                  {history.map((el) => (
-                    <tr className="eachRow1">
+                  {history?.map((el) => (
+                    <tr className="eachRow1" onClick={(e) => navigate(`/shipment/${el._id}`)}>
                       <td className="rowText" align="center">
-                        National Hospital
+                        {el?.hospitalName}
                       </td>
                       <td className="rowText" align="center">
-                        B+
+                        {el?.bloodType}
                       </td>
                       <td className="rowText" align="center">
-                        5
+                        {el?.count}
+                      </td>
+                      <td className="rowText" align="center" style={{fontWeight: 'bold', color: el?.status === 'Accepted' ? 'green' : 'red'}}>
+                        {el?.status}
                       </td>
                       <td className="rowText" align="center">
-                        22 December, 2022
+                        {new Date(el?.updatedAt.toString()).toDateString()}
                       </td>
                       <td className="rowText" align="center">
-                        8:50 pm
-                      </td>
-                      <td className="rowText" align="center">
-                        600
+                        {((parseInt(el?.count)  * parseInt(el?.reply?.unitPrice)) - ((parseInt(el?.count)  * parseInt(el?.reply?.unitPrice)) * (parseFloat(el?.reply?.discount)/100))) + parseInt(el?.reply?.shipping)}
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-            )}
+            ) : null}
           </div>
         </div>
       </div>

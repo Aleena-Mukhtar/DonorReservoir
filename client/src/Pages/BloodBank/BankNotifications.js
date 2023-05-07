@@ -8,6 +8,7 @@ import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 export default function BankNotifications() {
   const [notifications, setNotifications] = useState(null);
   const [notification, setNotification] = useState({});
+  const [read, setRead] = useState(false);
   const [id, setId] = useState(null);
   const [data, setData] = useState({
     unitPrice: "",
@@ -21,10 +22,10 @@ export default function BankNotifications() {
     axios(`http://localhost:5000/bankNotification/`)
       .then((data) => {
         console.log(data);
-        setNotifications(data.data);
+        setNotifications(data.data.filter(el => !el.read));
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [read]);
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -47,6 +48,7 @@ export default function BankNotifications() {
       if (res.data.success) {
         console.log(res.data.data.read);
         console.log("mark as read Successfully");
+        setRead(true);
       } else {
         console.log(res);
       }
@@ -80,8 +82,8 @@ export default function BankNotifications() {
     .then(res => {
       if (res.data.success) {
         console.log(res);
-        alert("Reply Sent Successfully");
-        navigate('/bloodBankDashboard');
+        readRequest(id);
+        navigate(`/invoice/${id}`);
       }
       else {
         console.log(res);
@@ -126,33 +128,39 @@ export default function BankNotifications() {
         <div className="logout">
           <div className="modalHeading">Email Reply Integration</div>
           <div className="innerHeading">Fill some data for reply Please:</div>
-          <div className="fieldCon">
-            <div className="header">Hospital Name: </div>
-            <input type="text" className="input" disabled={true} value={notification?.hospitalName}/>
+          <div className="OuterField">
+            <div className="fieldCon">
+              <div className="header">Hospital Name: </div>
+              <input type="text" className="input" disabled={true} value={notification?.hospitalName}/>
+            </div>
+            <div className="fieldCon">
+              <div className="header">Blood Type: </div>
+              <input type="text" className="input" disabled={true} value={notification?.bloodType}/>
+            </div>
           </div>
-          <div className="fieldCon">
-            <div className="header">Blood Type: </div>
-            <input type="text" className="input" disabled={true} value={notification?.bloodType}/>
+          <div className="OuterField">
+            <div className="fieldCon">
+              <div className="header">Bottle Count: </div>
+              <input type="number" className="input" name="count" onChange={(e) => handleChange(e)} disabled={true} value={notification?.count}/>
+            </div>
+            <div className="fieldCon">
+              <div className="header">Need Stock (In days): </div>
+              <input type="number" className="input" name="days" onChange={(e) => handleChange(e)} disabled={true} value={notification?.days}/>
+            </div>
           </div>
-          <div className="fieldCon">
-            <div className="header">Bottle Count: </div>
-            <input type="number" className="input" name="count" onChange={(e) => handleChange(e)} disabled={true} value={notification?.count}/>
-          </div>
-          <div className="fieldCon">
-            <div className="header">Need Stock (In days): </div>
-            <input type="number" className="input" name="days" onChange={(e) => handleChange(e)} disabled={true} value={notification?.days}/>
-          </div>
-          <div className="fieldCon">
-            <div className="header">Price Per Unit (PKR): </div>
-            <input type="number" className="input" name="unitPrice" onChange={(e) => handleChange(e)} value={data.unitPrice}/>
-          </div>
-          <div className="fieldCon">
-            <div className="header">discount (%): </div>
-            <input type="number" className="input" name="discount" onChange={(e) => handleChange(e)} value={data.discount}/>
+          <div className="OuterField">
+            <div className="fieldCon">
+              <div className="header">Price Per Unit (PKR): </div>
+              <input type="number" className="input" name="unitPrice" onChange={(e) => handleChange(e)} value={data.unitPrice}/>
+            </div>
+            <div className="fieldCon">
+              <div className="header">discount (%): </div>
+              <input type="number" className="input" name="discount" onChange={(e) => handleChange(e)} value={data.discount}/>
+            </div>
           </div>
           <div className="fieldCon">
             <div className="header">shipping (PKR): </div>
-            <input type="number" className="input" name="shipping" onChange={(e) => handleChange(e)} value={data.shipping}/>
+            <input type="number" className="input ship" name="shipping" onChange={(e) => handleChange(e)} value={data.shipping}/>
           </div>
           <div className="btnCon">
             <button className="cancelBtn" onClick={(e) => setShowModal(false)}>

@@ -8,7 +8,17 @@ $header-color: #D6D5D5;
         margin: 1.5rem 0;
     }
     .mainContent{
+        .leftPanel{
+            width: 18%;
+            .BtnDiv{
+                align-items: center;
+                .btn{
+                    width: 80%;
+                }
+            }
+        }
         .rightPanel{
+            width: 85%;
             .tableCon{
                 height: 90vh;
                 .table{

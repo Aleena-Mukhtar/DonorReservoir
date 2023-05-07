@@ -20,7 +20,6 @@ export default function AllDonors({ check }) {
   useEffect(() => {
     if (donors) {
       let _filteredData = donors;
-      // agar star checked ha to sirf star waly ayen gy warna sb
       if (check) _filteredData = _filteredData.filter((el) => el.star);
       setFilterDonors(_filteredData);
     }

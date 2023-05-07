@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminDashboard from "./Admin/AdminDashboard";
 import BottleDetails from "./Admin/BottleDetails";
-import EachBankReply from "./Admin/EachBankReply";
 import EachPatientRequest from "./Admin/EachPatientRequest";
 import EditProfile from "./Auth/EditProfile";
 import Footer from "./Auth/Footer";
@@ -20,6 +19,8 @@ import AdminNotifications from "./Admin/AdminNotifications";
 import Inbox from "./Auth/Inbox";
 import Notification from "./Auth/Notification";
 import Reply from "./Auth/Reply";
+import Invoice from "./BloodBank/Invoice";
+import EachShipment from "./BloodBank/EachShipment";
 
 export default function Container() {
   return (
@@ -65,11 +66,6 @@ export default function Container() {
             exact 
             path="/eachPatient" 
             element={<EachPatientRequest />} 
-          />
-          <Route 
-            exact 
-            path="/eachBank" 
-            element={<EachBankReply />} 
           />
           <Route 
             exact 
@@ -120,6 +116,16 @@ export default function Container() {
             exact
             path="/reply/:id"
             element={<Reply/>}
+          />
+          <Route
+            exact
+            path="/invoice/:id"
+            element={<Invoice/>}
+          />
+          <Route
+            exact
+            path="/shipment/:id"
+            element={<EachShipment/>}
           />
         </Routes>
         <Footer />

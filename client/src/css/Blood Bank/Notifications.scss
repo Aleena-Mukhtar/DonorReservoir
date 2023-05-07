@@ -113,15 +113,21 @@ $header-color: #D6D5D5;
     .logoutModal{
         .logout{
             height: 80vh;
+            width: 70%;
             overflow-y: scroll;
             padding: 1.5rem;
             .modalHeading{
                 width: 100%;
-                margin-top: 3rem;
             }
             .innerHeading{
                 margin-top: 1rem;
                 font-weight: bold;
+            }
+            .OuterField{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
             }
             .fieldCon{
                 width: 100%;
@@ -137,6 +143,9 @@ $header-color: #D6D5D5;
                     border: 1px solid $navbar-color;
                     border-radius: 5px;
                     padding: 0.8rem;
+                }
+                .ship{
+                    width: 95%;
                 }
             }
             .btnCon{
@@ -160,6 +169,28 @@ $header-color: #D6D5D5;
             border-radius: 5px;
         }
     }
+    @media(max-width: 900px){
+        .logoutModal{
+            .logout{
+                .modalHeading{
+                    margin-top: 11rem;
+                }
+                .OuterField{
+                    flex-wrap: wrap;
+                }
+                .fieldCon{
+                    .ship{
+                        width: 90%;
+                    }
+                }
+                .btnCon{
+                    button{
+                        width: 40%;
+                    }
+                }
+            }
+        }
+    }
     @media(max-width: 570px){
         .heading{
             font-size: 20px;
@@ -172,6 +203,109 @@ $header-color: #D6D5D5;
             .table{
                 width: 720px;
             }
+        }
+    }
+}
+
+.Invoice{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    .heading{
+        margin: 2rem 0;
+        font-size: 22px;
+        font-weight: bold;
+        text-align: center;
+    }
+    .mainContent{
+        width: 90%;
+    }
+    .tableCon{
+        width: 100%;
+        .table{
+            width: 100%;
+            .tableHeader{
+                background-color: $navbar-color;
+                .headText{
+                    color: $font-color;
+                    padding: 0.9rem 0;
+                    font-size: 18px;
+                    font-weight: lighter;
+                }
+            }
+            .tableBody{
+                background-color: $header-color;
+                .eachRow{
+                    .rowText{
+                        padding: 0.9rem 0;
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    }
+    .billDetails{
+        margin: 1rem 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        .details{
+            width: 30%;
+            .eachDetail{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 1rem 0;
+                font-size: 18px;
+                .header{
+                    font-weight: bold;
+                }
+            }
+            .total{
+                border-top: 2px solid black;
+            }
+        }
+    }
+    .doneBtn{
+        margin-top: 4rem;
+        background-color: $navbar-color;
+        color: $font-color;
+        border: none;
+        width: 25%;
+        padding: 0.7rem;
+        cursor: pointer;
+        border-radius: 8px;
+        font-size: 18px;
+    }
+    @media(max-width: 650px){
+        .billDetails{
+            .details{
+                width: 50%;
+            }
+        }
+        .doneBtn{
+            width: 35%;
+        }
+    }
+    @media(max-width: 450px){
+       .tableCon{
+            overflow-x: scroll;
+            overflow-y: hidden;
+            .table{
+                width: 600px;
+            }
+       }
+       .billDetails{
+            .details{
+                width: 70%;
+            }
+        }
+        .doneBtn{
+            width: 40%;
         }
     }
 }

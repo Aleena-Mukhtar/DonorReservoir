@@ -37,9 +37,9 @@ export default function Notification() {
             <div className='intro1'>{userData?.fname} {userData?.lname}</div>
             <div className='intro1'>Urgent Request for 10 Bottles of {notification?.bloodType} Blood</div>
             <img
-                src={process.env.PUBLIC_URL + "/signature.png"}
-                alt="logo"
-                className="signature"
+              src={process.env.PUBLIC_URL + "/signature.png"}
+              alt="logo"
+              className="signature"
             />
             <div className='intro1'>{notification?.hospitalName}</div>
         </div>
