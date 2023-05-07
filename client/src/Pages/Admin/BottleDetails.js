@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import LoggedInNavbar from "../Auth/LoggedInNavbar";
 
 export default function BottleDetails() {
   const navigate = useNavigate();
-  const [data, setData] = useState([
-    { bloodType: "AB+", quantity: "5", unitPrice: "150", totalPrice: "600" },
-    { bloodType: "AB-", quantity: "5", unitPrice: "150", totalPrice: "600" },
-    { bloodType: "A+", quantity: "5", unitPrice: "150", totalPrice: "600" },
-    { bloodType: "A-", quantity: "5", unitPrice: "150", totalPrice: "600" },
-    { bloodType: "B+", quantity: "5", unitPrice: "150", totalPrice: "600" },
-    { bloodType: "B-", quantity: "5", unitPrice: "150", totalPrice: "600" },
-    { bloodType: "O+", quantity: "5", unitPrice: "150", totalPrice: "600" },
-    { bloodType: "O-", quantity: "5", unitPrice: "150", totalPrice: "600" },
-  ]);
-
+  const [data, setData] = useState([]);
   useEffect(() => {
-    // get data
+    axios(`http://localhost:5000/bloodBottle/`)
+      .then((data) => {
+        console.log(data);
+        setData(data.data);
+      })
+      .catch((err) => console.log(err));
   }, []);
+
   return (
+    <>
+    <LoggedInNavbar/>
     <div className="bottleDetails">
       <button className="backBtn" onClick={(e) => navigate(-1)}>
         <HiOutlineArrowNarrowLeft className="icon" />
@@ -44,16 +44,16 @@ export default function BottleDetails() {
             {data.map((el) => (
               <tr className="eachRow">
                 <td className="rowText" align="center">
-                  {el.bloodType}
+                  {el?.bloodType}
                 </td>
                 <td className="rowText" align="center">
-                  {el.quantity}
+                  {el?.count}
                 </td>
                 <td className="rowText" align="center">
                   {el.unitPrice}
                 </td>
                 <td className="rowText" align="center">
-                  {el.totalPrice}
+                  {(parseInt(el?.unitPrice) * parseInt(el?.count))}
                 </td>
               </tr>
             ))}
@@ -61,5 +61,6 @@ export default function BottleDetails() {
         </table>
       </div>
     </div>
+    </>
   );
 }

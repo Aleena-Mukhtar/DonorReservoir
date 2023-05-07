@@ -67,6 +67,111 @@ router.put("/markAsRead/:id", (req, res) => {
   );
 });
 
+router.put("/markAdminAsRead/:id", (req, res) => {
+  Notification.findByIdAndUpdate(
+    { _id: req.params.id },
+    { adminRead: req.body.read },
+    { new: true },
+    (err, obj) => {
+      if (err) {
+        console.log(err);
+        return res
+          .status(400)
+          .json({ message: "Failed to update ", success: false });
+      }
+      res.status(200).json({
+        success: true,
+        message: "Notification mark as read successfully!",
+        data: obj,
+      });
+    }
+  );
+});
+
+router.put("/markReplyAdminAsRead/:id", (req, res) => {
+  Notification.findByIdAndUpdate(
+    { _id: req.params.id },
+    {adminReplyRead: req.body.read},
+    { new: true },
+    (err, obj) => {
+      if (err) {
+        console.log(err);
+        return res
+          .status(400)
+          .json({ message: "Failed to update ", success: false });
+      }
+      res.status(200).json({
+        success: true,
+        message: "reply mark as read successfully!",
+        data: obj,
+      });
+    }
+  );
+});
+
+router.put("/markBankAsRead/:id", (req, res) => {
+  Notification.findByIdAndUpdate(
+    { _id: req.params.id },
+    { bankRead: req.body.read },
+    { new: true },
+    (err, obj) => {
+      if (err) {
+        console.log(err);
+        return res
+          .status(400)
+          .json({ message: "Failed to update ", success: false });
+      }
+      res.status(200).json({
+        success: true,
+        message: "Notification mark as read successfully!",
+        data: obj,
+      });
+    }
+  );
+});
+
+router.put("/markReplyBankAsRead/:id", (req, res) => {
+  Notification.findByIdAndUpdate(
+    { _id: req.params.id },
+    {bankReplyRead: req.body.read},
+    { new: true },
+    (err, obj) => {
+      if (err) {
+        console.log(err);
+        return res
+          .status(400)
+          .json({ message: "Failed to update ", success: false });
+      }
+      res.status(200).json({
+        success: true,
+        message: "reply mark as read successfully!",
+        data: obj,
+      });
+    }
+  );
+});
+
+router.put("/updateStatus/:id", (req, res) => {
+  Notification.findByIdAndUpdate(
+    { _id: req.params.id },
+    {status: req.body.status},
+    { new: true },
+    (err, obj) => {
+      if (err) {
+        console.log(err);
+        return res
+          .status(400)
+          .json({ message: "Failed to update ", success: false });
+      }
+      res.status(200).json({
+        success: true,
+        message: "status updated successfully!",
+        data: obj,
+      });
+    }
+  );
+});
+
 // Delete a bank by ID
 router.delete("/:id", getNotification, async (req, res) => {
   try {
