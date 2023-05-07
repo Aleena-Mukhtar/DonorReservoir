@@ -9,23 +9,42 @@ export default function LoggedInNavbar() {
   const [isActive, setisActive] = useState(false);
   const [isEdit, setisEdit] = useState(false);
   const [filterNotifications, setFilterNotifications] = useState([]);
+  const [filterInbox, setFilterInbox] = useState([]);
   const userData = JSON.parse(sessionStorage.getItem("userData"));
   const role = sessionStorage.getItem("role");
+  const login = sessionStorage.getItem("isLoggedIn");
   const navigate = useNavigate();
 
   useEffect(() => {
     let url;
-    if(role === "Blood Bank") url = `http://localhost:5000/bankNotification/`;
-    else if(role === "Admin") url = `http://localhost:5000/adminNotification/`;
-    axios(url)
+    if(role === "Admin") {
+      url = `http://localhost:5000/adminNotification/`;
+      axios(url)
       .then((data) => {
         console.log(data);
         setFilterNotifications(data.data.filter(el => !el.read));
       })
       .catch((err) => console.log(err));
+    }
+    axios(`http://localhost:5000/bankNotification/`)
+      .then((data) => {
+        console.log(data);
+        if(role === 'Admin') {
+          setFilterInbox(data.data.filter(el => (!el.adminRead || !el.adminReplyRead)));
+        }
+        else if(role === 'Blood Bank') {
+          setFilterNotifications(data.data.filter(el => !el.read));
+          setFilterInbox(data.data.filter(el => (!el.bankRead || !el.bankReplyRead)));
+        }
+      })
+      .catch((err) => console.log(err));
   }, []);
   const navigateToHomePage = () => {
-    navigate(`/`);
+    if(login === 'true'){
+      if(role === 'Admin') navigate('/adminDashboard');
+      else if(role === 'Blood Bank') navigate('/bloodBankDashboard');
+    }
+    else navigate(`/`);
   };
   const navigateToEditPage = () => {
     navigate(`/editProfile`);
@@ -65,7 +84,7 @@ export default function LoggedInNavbar() {
             </button>
             <button className='notificationBtn' onClick={navigateToInbox}>
               <MdOutlineMailOutline className='icon'/>
-              {filterNotifications.length === 0 ? null : <GoPrimitiveDot className="dotIcon"/>}
+              {filterInbox.length === 0 ? null : <GoPrimitiveDot className="dotIcon"/>}
             </button>
             <button className='notificationBtn' onClick={handleClick}>
               <BiBell className='icon'/>

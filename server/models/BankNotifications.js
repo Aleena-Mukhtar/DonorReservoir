@@ -20,16 +20,32 @@ const BankNotificationsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  status: {
+    type: String,
+    default: 'Pending',
+  },
   read: {
+    type: Boolean,
+    default: false,
+  },
+  adminRead: {
+    type: Boolean,
+    default: false,
+  },
+  bankRead: {
+    type: Boolean,
+    default: false,
+  },
+  adminReplyRead: {
+    type: Boolean,
+    default: false,
+  },
+  bankReplyRead: {
     type: Boolean,
     default: false,
   },
   reply: {
     type: {
-      read: {
-        type: Boolean,
-        default: false,
-      },
       unitPrice: {
         type: String,
       },
