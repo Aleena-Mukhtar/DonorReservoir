@@ -163,6 +163,24 @@ $icon-color: #A6A3A3;
     .navbarCon{
         .BtnCon{
             justify-content: flex-end;
+            .notificationBtn{
+                position: relative;
+                background-color: transparent;
+                border: none;
+                margin-right: 1rem;
+                cursor: pointer;
+                .icon{
+                    font-size: 28px;
+                    color: $font-color;
+                }
+                .dotIcon{
+                    position: absolute;
+                    font-size: 20px;
+                    color: rgb(3, 207, 3);
+                    top: 0;
+                    right: 0;
+                }
+            }
             .ProfileLogo{
                 height: 45px;
                 width: 45px;

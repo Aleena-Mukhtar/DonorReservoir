@@ -12,6 +12,7 @@ const donor = require("./routes/Donor");
 const admin = require("./routes/Admin");
 const bloodBank = require("./routes/BloodBank");
 const adminNotification = require("./routes/AdminNotifications");
+const bankNotification = require("./routes/BankNotifications");
 
 const corsOptions = {
   origin: "*",
@@ -41,6 +42,7 @@ app.use("/donor", donor);
 app.use("/admin", admin);
 app.use("/bloodBank", bloodBank);
 app.use("/adminNotification", adminNotification);
+app.use("/BankNotification", bankNotification);
 
 mongoose.Promise = global.Promise;
 mongoose.connect(

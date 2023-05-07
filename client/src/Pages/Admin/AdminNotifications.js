@@ -2,13 +2,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import LoggedInNavbar from "../Auth/LoggedInNavbar";
+import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 
 export default function AdminNotifications() {
   const [notifications, setNotifications] = useState(null);
+  const [read, setread] = useState(false);
   const navigate = useNavigate();
-  const navigateToFilterBankPage = (type) => {
+  const navigateToFilterBankPage = (type, ID) => {
     console.log(type);
-    navigate(`/filterBank/${type}`);
+    navigate(`/filterBank/${type}/${ID}`);
   };
   
   useEffect(() => {
@@ -18,28 +21,65 @@ export default function AdminNotifications() {
         setNotifications(data.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [read]);
+
+  const readRequest = (Type, ID) => {
+    setread(true);
+    console.log(read);
+    const data = {
+      read: true,
+    };
+    axios({
+      url: `http://localhost:5000/adminNotification/markAsRead/${ID}`,
+      method: "PUT",
+      data: data,
+      headers: {
+        "content-type": "application/json",
+      },
+    })
+    .then((res) => {
+      if (res.data.success) {
+        console.log(res.data.data.read);
+        console.log("mark as read Successfully");
+        navigateToFilterBankPage(Type, ID);
+      } else {
+        console.log(res);
+      }
+    })
+    .catch((err) => console.log(err));
+  };
+
   return (
-    <div className="patientRequests adminNotifications">
-      <table className="table">
-        <thead className="tableHeader">
-          <th className="headText" align="left">
-            Blood Need Notifications
-          </th>
-        </thead>
-        <tbody className="tableBody">
-          {notifications?.map((el) => (
-            <tr className="eachRow" onClick={(e) => navigateToFilterBankPage(el.bloodType)} key={el._id}>
-              <td className="rowText" align="center">
-                <div style={{fontWeight: el.read ? 'lighter' : 'bold'}}>We Need {el.bloodType} Blood Bottles Urgently!!</div>
-                <div className="detailsCon">
-                  <button className="emailBtn">Send Email</button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <>
+    <LoggedInNavbar/>
+    <div className="bankNotifications">
+      <button className="backBtn" onClick={() => navigate(-1)}>
+        <HiOutlineArrowNarrowLeft className="icon" />
+      </button>
+      <div className="heading">Urgent Blood Notifications</div>
+      <div className="subHeading">These notifications must handle on urgent bases</div>
+      <div className="tableCon">
+        <table className="table">
+          <thead className="tableHeader">
+            <th className="headText" align="left">
+              Blood Need Notifications
+            </th>
+          </thead>
+          <tbody className="tableBody">
+            {notifications?.map((el) => (
+              <tr className="eachRow" key={el._id}>
+                <td className="rowText" align="center">
+                  <div style={{fontWeight: el.read ? 'lighter' : 'bold'}}>We Need {el.bloodType} Blood Bottles Urgently!!</div>
+                  <div className="detailsCon">
+                    <button className="emailBtn" onClick={() => readRequest(el.bloodType, el._id)}>Send Email</button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>    
     </div>
+    </>
   );
 }

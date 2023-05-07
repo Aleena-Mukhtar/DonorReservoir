@@ -45,7 +45,7 @@ export default function AdminDashboard() {
       <div className="mainContent">
         <div className="leftPanel">
           <div className="BtnDiv">
-            <div className="NotificationDiv">
+            {/* <div className="NotificationDiv">
               <button
                 className={btnClick === 5 ? "btn click" : "btn"}
                 onClick={(e) => setBtnClick(5)}
@@ -53,7 +53,7 @@ export default function AdminDashboard() {
                 Notifications
               </button>
               {filterNotifications ? <GoPrimitiveDot className="icon"/> : null}
-            </div>
+            </div> */}
             <button
               className={btnClick === 0 ? "btn click" : "btn"}
               onClick={navigateToBottleStockPage}
@@ -128,8 +128,6 @@ export default function AdminDashboard() {
               <AllDonors check={check} />
             ) : btnClick === 4 ? (
               <AllBloodBanks check={check} />
-            ) : btnClick === 5 ? (
-              <AdminNotifications/>
             ) : null}
           </div>
         </div>

@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Notification = require("../models/AdminNotifications");
+const Notification = require("../models/BankNotifications");
 
 
 // Create a new notification
@@ -26,6 +26,24 @@ router.get("/", async (req, res) => {
 // Get a specific notification by ID
 router.get("/:id", getNotification, (req, res) => {
   res.json(res.notification);
+});
+
+router.put("/sendReply/:id",(req,res)=>{
+  Notification.findByIdAndUpdate(
+    {_id:req.params.id},
+    {reply: req.body.reply},
+    {new:true},
+    (err,obj) => {
+    if(err) {
+      console.log(err);
+      return res.status(400).json({message:"Failed to update " ,success : false});
+    }
+    res.status(200).json({
+      success:true,
+      message :"Reply sent successfully!",
+      data : obj
+    });
+  });
 });
 
 router.put("/markAsRead/:id", (req, res) => {
