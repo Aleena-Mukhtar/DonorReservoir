@@ -2,12 +2,9 @@ import React, { useState, useEffect } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import AllDonors from "./AllDonors";
-import BankReplies from "./BankReplies";
 import PatientRequests from "./PatientRequests";
 import LoggedInNavbar from "../Auth/LoggedInNavbar";
 import AllBloodBanks from "./AllBloodBanks";
-import AdminNotifications from "./AdminNotifications";
-import { GoPrimitiveDot } from 'react-icons/go';
 import axios from "axios";
 
 export default function AdminDashboard() {
@@ -45,15 +42,6 @@ export default function AdminDashboard() {
       <div className="mainContent">
         <div className="leftPanel">
           <div className="BtnDiv">
-            {/* <div className="NotificationDiv">
-              <button
-                className={btnClick === 5 ? "btn click" : "btn"}
-                onClick={(e) => setBtnClick(5)}
-              >
-                Notifications
-              </button>
-              {filterNotifications ? <GoPrimitiveDot className="icon"/> : null}
-            </div> */}
             <button
               className={btnClick === 0 ? "btn click" : "btn"}
               onClick={navigateToBottleStockPage}
@@ -65,12 +53,6 @@ export default function AdminDashboard() {
               onClick={(e) => setBtnClick(1)}
             >
               Patient Requests
-            </button>
-            <button
-              className={btnClick === 2 ? "btn click" : "btn"}
-              onClick={(e) => setBtnClick(2)}
-            >
-              Blood Bank
             </button>
             <button
               className={btnClick === 3 ? "btn click" : "btn"}
@@ -122,8 +104,6 @@ export default function AdminDashboard() {
           <div className="tableCon">
             {btnClick === 1 ? (
               <PatientRequests filters={filters} check={check} />
-            ) : btnClick === 2 ? (
-              <BankReplies filters={filters} check={check} />
             ) : btnClick === 3 ? (
               <AllDonors check={check} />
             ) : btnClick === 4 ? (
