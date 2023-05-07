@@ -42,7 +42,7 @@ app.use("/donor", donor);
 app.use("/admin", admin);
 app.use("/bloodBank", bloodBank);
 app.use("/adminNotification", adminNotification);
-app.use("/bankNotification", bankNotification);
+app.use("/BankNotification", bankNotification);
 
 mongoose.Promise = global.Promise;
 mongoose.connect(

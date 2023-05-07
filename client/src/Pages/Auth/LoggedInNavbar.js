@@ -30,6 +30,9 @@ export default function LoggedInNavbar() {
   const navigateToEditPage = () => {
     navigate(`/editProfile`);
   };
+  const navigateToInbox = () => {
+    navigate(`/inbox`);
+  };
   const handleLogout = () => {
     sessionStorage.removeItem('userData');
     sessionStorage.setItem("isLoggedIn",false);
@@ -60,7 +63,7 @@ export default function LoggedInNavbar() {
             <button className='search btn' onClick={() => setisActive(!isActive)}>
               <BiSearch className='icon'/>
             </button>
-            <button className='notificationBtn' onClick={handleClick}>
+            <button className='notificationBtn' onClick={navigateToInbox}>
               <MdOutlineMailOutline className='icon'/>
               {filterNotifications.length === 0 ? null : <GoPrimitiveDot className="dotIcon"/>}
             </button>

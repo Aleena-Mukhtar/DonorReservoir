@@ -11,6 +11,12 @@ const initialObj = {
     count: "",
     days: "",
     bloodType: "",
+    reply: {
+        unitPrice: "",
+        discount: "",
+        shipping: "",
+        read: false,
+    },
 };
 
 export default function FilterBanks(props) {
@@ -61,7 +67,7 @@ export default function FilterBanks(props) {
         } else {
           alert('Email Send Successfully!');
           setShowModal(false);
-          handleNotificationDelete();
+        //   handleNotificationDelete();
           navigate('/adminDashboard');
         }
       })
@@ -70,23 +76,23 @@ export default function FilterBanks(props) {
       });
   }
 
-  const handleNotificationDelete = () => {
-    const config = {
-      url: `http://localhost:5000/adminNotification/${ID}`,
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+    const handleNotificationDelete = () => {
+        const config = {
+        url: `http://localhost:5000/adminNotification/${ID}`,
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        };
 
-    axios(config)
-    .then(response => {
-        console.log(response.data); // handle success response
-    })
-    .catch(error => {
-        console.log(error); // handle error response
-    });
-  }
+        axios(config)
+        .then(response => {
+            console.log(response.data); // handle success response
+        })
+        .catch(error => {
+            console.log(error); // handle error response
+        });
+    }
 
   return (
     <>

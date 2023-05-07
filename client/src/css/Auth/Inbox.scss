@@ -1,0 +1,170 @@
+$navbar-color: #b81d1d;
+$font-color: #FFFFFF;
+$icon-color: #A6A3A3;
+$check-color: #077861;
+$header-color: #D6D5D5;
+.SharedInbox{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    .backBtn{
+        background-color: transparent;
+        font-size: 30px;
+        width: 95%;
+        text-align: left;
+        border: none;
+        cursor: pointer;
+        margin-top: 1rem;
+        margin-left: 0.5rem;
+    }
+    .heading {
+        margin-top: 3rem;
+        font-size: 25px;
+        font-weight: bold;
+    }
+    .subHeading {
+        margin: 0.5rem 0;
+        font-size: 18px;
+        color: #b81d1d;
+        text-align: center;
+    }
+    .mainContainer{
+        width: 90%;
+        height: 90vh;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        background-color: $font-color;
+        border: 1px solid $navbar-color;
+        border-radius: 10px;
+        margin: 3rem 0;
+        .innerCon{
+            border-bottom: 1px solid $icon-color;
+            box-shadow: 0 2px #cac9c9;
+            .con1{
+                margin: 0 1rem;
+                width: 97%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-bottom: 1px solid $icon-color;
+                box-shadow: 0 2px #cac9c9;
+                .inner1{
+                    display: flex;
+                    padding: 1rem 0.2rem;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 95%;
+                    cursor: pointer;
+                }
+                .inner1:hover{
+                    background-color: rgba($color: $header-color, $alpha: 0.3);
+                }
+                .inner2{
+                    background-color: transparent;
+                    border: none;
+                    .icon{
+                        font-size: 20px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        padding: 0.5rem;
+                    }
+                }
+                .inner2:hover{
+                    background-color: rgba($color: $header-color, $alpha: 0.3);
+                }
+            }
+            .con2{
+                padding: 1rem 0;
+                margin: 0 1rem;
+                width: 97%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                box-shadow: 0 2px #cac9c9;
+                cursor: pointer;
+                .inner1{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 95%;
+                }
+            }
+            .con2:hover{
+                background-color: rgba($color: $header-color, $alpha: 0.3);
+            }
+        }
+    }
+    .mainContainer::-webkit-scrollbar-track
+    {
+        background-color: $font-color;
+        border-radius: 5px;
+    }
+    .mainContainer::-webkit-scrollbar
+    {
+        width: 8px;
+        background-color: $navbar-color;
+        border-radius: 5px;
+    }
+    .mainContainer::-webkit-scrollbar-thumb
+    {
+        background-color: $navbar-color;
+        border-radius: 5px;
+    }
+    @media(max-width: 500px){
+        .subHeading{
+            font-size: 17px;
+            width: 85%;
+        }
+        .mainContainer{
+            overflow: scroll;
+            .innerCon{
+                width: 480px;
+            }
+        }
+    }
+}
+
+.notification{
+    .backBtn{
+        background-color: transparent;
+        font-size: 30px;
+        border: none;
+        cursor: pointer;
+        margin-top: 0.5rem;
+        margin-left: 0.5rem;
+    }
+    .heading {
+        margin: 2rem 0;
+        font-size: 25px;
+        font-weight: bold;
+        width: 100%;
+        text-align: center;
+    }
+    .mainCon{
+        margin: 0 3rem;
+        font-size: 17px;
+        margin-bottom: 3rem;
+        .intro{
+            margin-top: 1rem;
+            font-weight: bold;
+            span{
+                font-weight: normal;
+                margin-left: 0.5rem;
+            }
+        }
+        .intro1{
+            margin-top: 1rem;
+        }
+        .body{
+            margin: 2rem 0;
+            margin-left: 1.5rem;
+        }
+        .signature{
+            width: 10%;
+            margin: 0.5rem 0;
+        }
+    }
+}
