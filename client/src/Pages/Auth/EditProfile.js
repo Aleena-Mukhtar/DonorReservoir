@@ -7,44 +7,46 @@ import { RiEditCircleFill } from 'react-icons/ri';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const userData = JSON.parse(sessionStorage.getItem("userData"));
-const initialObj = {
-    img: userData?.img,
-    fname: userData?.fname,
-    lname: userData?.lname,
-    address: userData?.address,
-    email: userData?.email,
-    phone: userData?.phone,
-    phone2: userData?.phone2,
-    password: userData?.password,
-    password2: userData?.password2,
-    CNIC: userData?.CNIC,
-};
-const BankObj = {
-    img: userData?.img,
-    fname: userData?.fname,
-    lname: userData?.lname,
-    address: userData?.address,
-    email: userData?.email,
-    phone: userData?.phone,
-    mobile: userData?.mobile,
-    password: userData?.password,
-    password2: userData?.password2,
-    adminCNIC: userData?.adminCNIC,
-    bankName: userData?.bankName,
-    city: userData?.city,
-    adminAddress: userData?.adminAddress,
-    adminEmail: userData?.adminEmail,
-    adminPhone: userData?.adminPhone,
-    bloodTypes: userData?.bloodTypes,
-};
-
 export default function EditProfile() {
     const [showModal, setShowModal] = useState(false);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const userData = JSON.parse(sessionStorage.getItem("userData"));
     const role = sessionStorage.getItem("role");
     const id = sessionStorage.getItem("id");
-    const [data, setData] = useState(role === "Blood Bank" ? BankObj : initialObj);
+    const [data, setData] = useState(
+        role === "Blood Bank" ? 
+        {
+            img: userData?.img,
+            fname: userData?.fname,
+            lname: userData?.lname,
+            address: userData?.address,
+            email: userData?.email,
+            phone: userData?.phone,
+            mobile: userData?.mobile,
+            password: userData?.password,
+            password2: userData?.password2,
+            adminCNIC: userData?.adminCNIC,
+            bankName: userData?.bankName,
+            city: userData?.city,
+            adminAddress: userData?.adminAddress,
+            adminEmail: userData?.adminEmail,
+            adminPhone: userData?.adminPhone,
+            bloodTypes: userData?.bloodTypes,
+        }
+        :
+        {
+            img: userData?.img,
+            fname: userData?.fname,
+            lname: userData?.lname,
+            address: userData?.address,
+            email: userData?.email,
+            phone: userData?.phone,
+            phone2: userData?.phone2,
+            password: userData?.password,
+            password2: userData?.password2,
+            CNIC: userData?.CNIC,
+        }
+    );
     const bankSection = useRef(null);
     const navigate = useNavigate();
 
@@ -98,6 +100,7 @@ export default function EditProfile() {
         var _url = "";
         if (role === "Admin") _url = `http://localhost:5000/admin/edit/${id}`
         else if (role === "Blood Bank") _url = `http://localhost:5000/bloodBank/edit/${id}`
+        else if (role === "Patient") _url = `http://localhost:5000/patient/${id}`
         axios({
             url: _url,
             method: "PUT",
@@ -113,6 +116,7 @@ export default function EditProfile() {
                 sessionStorage.setItem("userData",JSON.stringify(data));
                 if(role === "Admin") navigate(`/adminDashboard`);
                 else if(role === "Blood Bank") navigate(`/bloodBankDashboard`);
+                else if(role === "Patient") navigate(`/patientDashboard`);
             }
             else {
                 console.log(res);

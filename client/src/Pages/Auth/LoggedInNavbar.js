@@ -43,6 +43,7 @@ export default function LoggedInNavbar() {
     if(login === 'true'){
       if(role === 'Admin') navigate('/adminDashboard');
       else if(role === 'Blood Bank') navigate('/bloodBankDashboard');
+      else if(role === 'Patient') navigate('/patientDashboard');
     }
     else navigate(`/`);
   };

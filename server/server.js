@@ -14,6 +14,8 @@ const bloodBank = require("./routes/BloodBank");
 const adminNotification = require("./routes/AdminNotifications");
 const bankNotification = require("./routes/BankNotifications");
 const bloodBottles = require("./routes/BloodBottles");
+const patient= require("./routes/Patient");
+const bloodRequest = require("./routes/BloodRequest");
 
 const corsOptions = {
   origin: "*",
@@ -45,15 +47,17 @@ app.use("/bloodBank", bloodBank);
 app.use("/adminNotification", adminNotification);
 app.use("/BankNotification", bankNotification);
 app.use("/bloodBottle", bloodBottles);
+app.use("/patient", patient);
+app.use("/bloodRequest", bloodRequest);
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
-  db.DATABASE,
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  function (err) {
-    if (err) console.log(err);
-    console.log("database is connected");
-  }
+    db.DATABASE,
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    function (err) {
+      if (err) console.log(err);
+      console.log("database is connected");
+    }
 );
 
 if (process.env.NODE_ENV === "production") {

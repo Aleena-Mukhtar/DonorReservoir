@@ -16,6 +16,9 @@ export default function Register() {
   const navigateToBankTermsPage = () => {
     navigate(`/bankSignup`);
   };
+  const navigateToPatientTermsPage = () => {
+    navigate(`/patientSignup`);
+  };
   return (
     <div className='register'>
         <div className='mainContent'>
@@ -28,7 +31,7 @@ export default function Register() {
                 Login as an Admin
             </button>
             <button className='signinBtn'>
-                <RiUserLocationLine className='icon'/>
+                <RiUserLocationLine className='icon' onClick={navigateToPatientTermsPage}/>
                 Sign up as Patient
             </button>
             

@@ -19,23 +19,22 @@ export default function LoginPage() {
     if (role === "Admin") url = "/admin/login";
     else if (role === "Patient") url = "/Patient/login";
     else if (role === "Blood Bank") url = "/bloodBank/login";
+    else if (role === "Patient") url = "/patient/login";
     axios.post(url, data).then((res) => {
       console.log(res.data);
       if (res.data.error) {
         alert(res.data.message)
       } else {
         console.log("success");
-        // sessionStorage.setItem
         // sessionStorage.setItem("id",res.data.userData._id);
         // sessionStorage.setItem("role",role);
-        // sessionStorage.setItem("userData",JSON.stringify(res.data.userData));
-        // sessionStorage.setItem("isLoggedIn",true);
         sessionStorage.setItem("id",res.data.userData._id);
         sessionStorage.setItem("role",role);
         sessionStorage.setItem("userData",JSON.stringify(res.data.userData));
         sessionStorage.setItem("isLoggedIn",true);
         if(role === "Admin") navigate(`/adminDashboard`);
         else if(role === "Blood Bank") navigate(`/bloodBankDashboard`);
+        else if(role === "Patient") navigate(`/patientDashboard`);
       }
     });
   };
