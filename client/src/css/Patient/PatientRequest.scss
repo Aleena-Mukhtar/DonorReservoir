@@ -1,0 +1,70 @@
+$navbar-color: #b81d1d;
+$font-color: #FFFFFF;
+$icon-color: #A6A3A3;
+$check-color: #077861;
+.patientDashboard{
+    @media(max-width: 800px){
+        .mainContent{
+            .leftPanel{
+                width: 100%;
+                .BtnDiv{
+                    .btn{
+                        width: 100%;
+                    }
+                }
+            }
+            .rightPanel{
+                width: 100%;
+            }
+        }
+    }
+}
+
+.bloodRequest{
+    .mainHeading{
+        width: 100%;
+        text-align: center;
+        font-size: 22px;
+        font-weight: bold;
+    }
+    .subHeading{
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        color: $navbar-color;
+        margin-top: 0.5rem;
+    }
+    .formFields{
+        width: 95%;
+        margin-top: 2rem;
+        .btnCon{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+            .btn{
+                padding: 0.8rem 2rem;
+                background-color: $navbar-color;
+                color: $font-color;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 18px;
+            }
+        }
+    }
+    @media(max-width: 500px){
+        .formFields{
+            .fields{
+                .fieldsDiv{
+                    flex-direction: column;
+                    .fieldCon{
+                        width: 90%;
+                    }
+                }
+            }
+        }
+    }
+}
