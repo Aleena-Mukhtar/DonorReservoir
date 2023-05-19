@@ -13,6 +13,9 @@ export default function Homepage() {
   const navigateToBankTermsPage = () => {
     navigate(`/bankSignup`);
   };
+  const navigateToPatientTermsPage = () => {
+    navigate(`/patientSignup`);
+  };
   const navigateToDonorTermsPage = () => {
     navigate(`/donorRegistration`);
   };
@@ -79,7 +82,7 @@ export default function Homepage() {
             </ul>
           </div>
           <div className='AdminBtnCon'>
-            <button className='Btn'>Sign Up as Patient</button>
+            <button className='Btn' onClick={navigateToPatientTermsPage}>Sign Up as Patient</button>
           </div>
         </div>
       </div>

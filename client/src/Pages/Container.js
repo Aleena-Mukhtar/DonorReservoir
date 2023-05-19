@@ -21,6 +21,8 @@ import Notification from "./Auth/Notification";
 import Reply from "./Auth/Reply";
 import Invoice from "./BloodBank/Invoice";
 import EachShipment from "./BloodBank/EachShipment";
+import PatientContainer from "./Patient/wizard/PatientContainer";
+import PatientDashboard from "./Patient/PatientDashboard";
 
 export default function Container() {
   return (
@@ -126,6 +128,16 @@ export default function Container() {
             exact
             path="/shipment/:id"
             element={<EachShipment/>}
+          />
+          <Route 
+            exact 
+            path="/patientSignup" 
+            element={<PatientContainer />} 
+          />
+          <Route
+            exact
+            path="/patientDashboard"
+            element={<PatientDashboard />}
           />
         </Routes>
         <Footer />
