@@ -19,8 +19,8 @@ const PatientSchema = mongoose.Schema(
       unique: true,
     },
     city: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     address: {
       type: String,
@@ -38,12 +38,16 @@ const PatientSchema = mongoose.Schema(
       required: true,
     },
     password: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     password2: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
+    },
+    star: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

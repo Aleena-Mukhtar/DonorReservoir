@@ -6,6 +6,7 @@ import PatientRequests from "./PatientRequests";
 import LoggedInNavbar from "../Auth/LoggedInNavbar";
 import AllBloodBanks from "./AllBloodBanks";
 import axios from "axios";
+import AllPatients from "./AllPatients";
 
 export default function AdminDashboard() {
   const [btnClick, setBtnClick] = useState(1);
@@ -66,6 +67,12 @@ export default function AdminDashboard() {
             >
               Blood Banks
             </button>
+            <button
+              className={btnClick === 5 ? "btn click" : "btn"}
+              onClick={(e) => setBtnClick(5)}
+            >
+              Patients
+            </button>
           </div>
           <button
             className="logoutBtn"
@@ -77,7 +84,7 @@ export default function AdminDashboard() {
         </div>
         <div className="rightPanel">
           {
-            btnClick === 5 ? null :
+            btnClick === 6 ? null :
             <div className="upperCon">
               <div className="starBtn">
                 <div className="text">Starred</div>
@@ -87,7 +94,7 @@ export default function AdminDashboard() {
                   onChange={(e) => setCheck(!check)}
                 ></input>
               </div>
-              {btnClick === 3 || btnClick === 4 ? null : (
+              {btnClick === 3 || btnClick === 4 || btnClick === 5 ? null : (
                 <select
                   className="select"
                   value={filters}
@@ -108,6 +115,8 @@ export default function AdminDashboard() {
               <AllDonors check={check} />
             ) : btnClick === 4 ? (
               <AllBloodBanks check={check} />
+            ) : btnClick === 5 ? (
+              <AllPatients check={check} />
             ) : null}
           </div>
         </div>

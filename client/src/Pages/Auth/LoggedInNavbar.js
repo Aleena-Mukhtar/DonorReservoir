@@ -9,6 +9,7 @@ export default function LoggedInNavbar() {
   const [isActive, setisActive] = useState(false);
   const [isEdit, setisEdit] = useState(false);
   const [filterNotifications, setFilterNotifications] = useState([]);
+  const [filterPatientNotifications, setFilterPatientNotifications] = useState([]);
   const [filterInbox, setFilterInbox] = useState([]);
   const userData = JSON.parse(sessionStorage.getItem("userData"));
   const role = sessionStorage.getItem("role");
@@ -23,6 +24,13 @@ export default function LoggedInNavbar() {
       .then((data) => {
         console.log(data);
         setFilterNotifications(data.data.filter(el => !el.read));
+      })
+      .catch((err) => console.log(err));
+      url = `http://localhost:5000/bloodRequest/`;
+      axios(url)
+      .then((data) => {
+        console.log(data);
+        setFilterPatientNotifications(data.data.filter(el => !el.read));
       })
       .catch((err) => console.log(err));
     }
@@ -83,13 +91,16 @@ export default function LoggedInNavbar() {
             <button className='search btn' onClick={() => setisActive(!isActive)}>
               <BiSearch className='icon'/>
             </button>
-            <button className='notificationBtn' onClick={navigateToInbox}>
-              <MdOutlineMailOutline className='icon'/>
-              {filterInbox.length === 0 ? null : <GoPrimitiveDot className="dotIcon"/>}
-            </button>
+            {
+              role === 'Patient' ? null :
+              <button className='notificationBtn' onClick={navigateToInbox}>
+                <MdOutlineMailOutline className='icon'/>
+                {filterInbox.length === 0 ? null : <GoPrimitiveDot className="dotIcon"/>}
+              </button>
+            }
             <button className='notificationBtn' onClick={handleClick}>
               <BiBell className='icon'/>
-              {filterNotifications.length === 0 ? null : <GoPrimitiveDot className="dotIcon"/>}
+              {filterNotifications.length === 0 && filterPatientNotifications.length === 0 ? null : <GoPrimitiveDot className="dotIcon"/>}
             </button>
             {userData?.img === "" ? (
               <img

@@ -309,3 +309,23 @@ $header-color: #D6D5D5;
         }
     }
 }
+
+.adminNotifications{
+    height: unset;
+    .heading{
+        margin-top: 1rem;
+    }
+    .tableCon{
+        height: 45vh;
+        .table{
+            .tableBody{
+                .eachRow1{
+                    cursor: pointer !important;
+                    .rowText{
+                        padding: 1rem !important;
+                    }
+                }
+            }
+        }
+    }
+}
