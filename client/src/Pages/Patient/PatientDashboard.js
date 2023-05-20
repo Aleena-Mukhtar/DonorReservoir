@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineLogout } from "react-icons/ai";
+import { HiOutlineMail, HiOutlineMailOpen } from "react-icons/hi";
 import LoggedInNavabr from '../Auth/LoggedInNavbar';
 import axios from "axios";
 import BloodRequest from "./BloodRequest";
@@ -11,7 +12,7 @@ export default function PatientDashboard() {
   const [showModal, setShowModal] = useState(false);
   const [history, setHistory] = useState([]);
   useEffect(() => {
-    axios(`http://localhost:5000/bankNotification/`)
+    axios(`http://localhost:5000/bloodRequest/`)
       .then((data) => {
         console.log(data);
         setHistory(data.data);
@@ -39,7 +40,7 @@ export default function PatientDashboard() {
               className={btnClick === 1 ? "btn click" : "btn"}
               onClick={(e) => setBtnClick(1)}
             >
-              History
+              Inbox
             </button>
             <button
               className={btnClick === 2 ? "btn click" : "btn"}
@@ -57,59 +58,36 @@ export default function PatientDashboard() {
           </button>
         </div>
         <div className="rightPanel">
-          <div className="tableCon">
-            {btnClick === 1 ?
+          {btnClick === 1 ?
             (
-              <table className="table">
-                <thead className="tableHeader">
-                  <th className="headText" align="center">
-                    Hospital Name
-                  </th>
-                  <th className="headText" align="center">
-                    Blood Type
-                  </th>
-                  <th className="headText" align="center">
-                    Quantity
-                  </th>
-                  <th className="headText" align="center">
-                    Status
-                  </th>
-                  <th className="headText" align="center">
-                    Date
-                  </th>
-                  <th className="headText" align="center">
-                    Total Price (PKR)
-                  </th>
-                </thead>
-                <tbody className="tableBody">
-                  {history?.map((el) => (
-                    <tr className="eachRow1" onClick={(e) => navigate(`/shipment/${el._id}`)}>
-                      <td className="rowText" align="center">
-                        {el?.hospitalName}
-                      </td>
-                      <td className="rowText" align="center">
-                        {el?.bloodType}
-                      </td>
-                      <td className="rowText" align="center">
-                        {el?.count}
-                      </td>
-                      <td className="rowText" align="center" style={{fontWeight: 'bold', color: el?.status === 'Accepted' ? 'green' : 'red'}}>
-                        {el?.status}
-                      </td>
-                      <td className="rowText" align="center">
-                        {new Date(el?.updatedAt.toString()).toDateString()}
-                      </td>
-                      <td className="rowText" align="center">
-                        {((parseInt(el?.count)  * parseInt(el?.reply?.unitPrice)) - ((parseInt(el?.count)  * parseInt(el?.reply?.unitPrice)) * (parseFloat(el?.reply?.discount)/100))) + parseInt(el?.reply?.shipping)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className='mainContainer'>
+                {history.map((ele, index) => (
+                  <div className='innerCon' key={index}>
+                    <div className='con1'>
+                      <div className='inner1'>
+                        <div 
+                          className='header'
+                          style={{fontWeight: ele.read ? 'normal' : 'bold'}}
+                        >
+                        {
+                          ele.read ? <HiOutlineMailOpen className='mailIcon' color='green'/> : <HiOutlineMail className='mailIcon'/>
+                        }
+                        To: {ele.hospitalName} for {ele.bloodType}
+                      </div>
+                      <div 
+                        className='date' 
+                        style={{fontWeight: ele.read ? 'normal' : 'bold'}}
+                      >
+                        {new Date(ele?.createdAt.toString()).toDateString()}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                ))}
+              </div>
             ) : 
             btnClick === 2 ? <BloodRequest/> :
             null}
-          </div>
         </div>
       </div>
       <div

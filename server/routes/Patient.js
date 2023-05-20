@@ -117,6 +117,27 @@ router.delete("/:id", (req, res) => {
   });
 });
 
+router.put("/starPatient/:id", (req, res) => {
+    Patient.findByIdAndUpdate(
+        { _id: req.params.id },
+        { star: req.body.star },
+        { new: true },
+        (err, obj) => {
+            if (err) {
+            console.log(err);
+            return res
+                .status(400)
+                .json({ message: "Failed to update ", success: false });
+            }
+            res.status(200).json({
+                success: true,
+                message: "Patient starred successfully!",
+                data: obj,
+            });
+        }
+    );
+});
+
 router.put("/:id",(req,res)=>{
     Patient.findByIdAndUpdate(
         {_id:req.params.id},

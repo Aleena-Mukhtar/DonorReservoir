@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import axios from "axios";
 
 export default function BloodRequest() {
+    const userData = JSON.parse(sessionStorage.getItem("userData"));
     const [data, setData] = useState({
+        patient_id: userData._id,
         hospitalName: "ABC Management Hospital",
         count: "",
         days: "",

@@ -23,6 +23,7 @@ import Invoice from "./BloodBank/Invoice";
 import EachShipment from "./BloodBank/EachShipment";
 import PatientContainer from "./Patient/wizard/PatientContainer";
 import PatientDashboard from "./Patient/PatientDashboard";
+import EachPatient from "./Admin/EachPatient";
 
 export default function Container() {
   return (
@@ -83,6 +84,11 @@ export default function Container() {
             exact
             path="/eachDonor/:id"
             element={<EachDonor />}
+          />
+          <Route
+            exact
+            path="/eachPatient/:id"
+            element={<EachPatient />}
           />
           <Route
             exact

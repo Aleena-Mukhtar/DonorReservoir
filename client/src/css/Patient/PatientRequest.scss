@@ -3,6 +3,64 @@ $font-color: #FFFFFF;
 $icon-color: #A6A3A3;
 $check-color: #077861;
 .patientDashboard{
+    .mainContainer{
+        width: 90%;
+        height: 90vh;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        background-color: $font-color;
+        border: 1px solid $navbar-color;
+        border-radius: 10px;
+        margin-bottom: 3rem;
+        margin-top: 1rem;
+        .innerCon{
+            border-bottom: 1px solid $icon-color;
+            box-shadow: 0 2px #cac9c9;
+            .con1{
+                margin: 0 1rem;
+                width: 97%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                .inner1{
+                    display: flex;
+                    padding: 0.8rem 0.2rem;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 95%;
+                    cursor: pointer;
+                    .header{
+                        display: flex;
+                        align-items: center;
+                        .mailIcon{
+                            font-size: 30px;
+                            margin-right: 1rem;
+                            color: $navbar-color;
+                        }
+                    }
+                }
+                .inner1:hover{
+                    background-color: rgba($color: $header-color, $alpha: 0.3);
+                }
+            }
+        }
+    }
+    .mainContainer::-webkit-scrollbar-track
+    {
+        background-color: $font-color;
+        border-radius: 5px;
+    }
+    .mainContainer::-webkit-scrollbar
+    {
+        width: 8px;
+        background-color: $navbar-color;
+        border-radius: 5px;
+    }
+    .mainContainer::-webkit-scrollbar-thumb
+    {
+        background-color: $navbar-color;
+        border-radius: 5px;
+    }
     @media(max-width: 800px){
         .mainContent{
             .leftPanel{
@@ -18,9 +76,18 @@ $check-color: #077861;
             }
         }
     }
+    @media(max-width: 570px){
+        .mainContainer{
+            overflow: scroll;
+            .innerCon{
+                width: 550px;
+            }
+        }
+    }
 }
 
 .bloodRequest{
+    width: 95%;
     .mainHeading{
         width: 100%;
         text-align: center;

@@ -7,24 +7,24 @@ import { AiOutlineStar, AiFillStar, AiOutlineLogout } from "react-icons/ai";
 import axios from "axios";
 import LoggedInNavbar from "../Auth/LoggedInNavbar";
 
-export default function EachDonor() {
+export default function EachPatient() {
   const navigate = useNavigate();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const [star, setStar] = useState(true);
   const [time, setTime] = useState("");
-  const [donor, setDonor] = useState({});
+  const [patient, setPatient] = useState({});
   const { id } = useParams();
   useEffect(() => {
-    axios(`http://localhost:5000/donor/get/${id}`)
-      .then((data) => {
-        console.log(data);
-        setDonor(data.data.data[0]);
-        setStar(data.data.data[0]?.star);
-        DisplayCurrentTime(new Date(data.data.data[0]?.createdAt.toString()));
-      })
-      .catch((err) => console.log(err));
+    axios(`http://localhost:5000/patient/${id}`)
+        .then((data) => {
+            console.log(data);
+            setPatient(data.data.data[0]);
+            setStar(data.data.data[0]?.star);
+            DisplayCurrentTime(new Date(data.data.data[0]?.createdAt.toString()));
+        })
+        .catch((err) => console.log(err));
   }, []);
   function DisplayCurrentTime(date) {
     let hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
@@ -36,45 +36,44 @@ export default function EachDonor() {
   }
   function handleDelete() {
     var config = {
-      url: `http://localhost:5000/donor/delete/${id}`,
-      method: "DELETE",
+        url: `http://localhost:5000/patient/${id}`,
+        method: "DELETE",
     };
     axios(config)
-      .then((data) => {
-        if (data.data.success) {
-          console.log(data.data.message);
-          navigate(`/adminDashboard`);
-        } else {
-          console.log(data.data.message);
-        }
-      })
-      .catch((err) => console.log(err));
+        .then((data) => {
+            if (data.data.success) {
+                console.log(data.data.message);
+                navigate(`/adminDashboard`);
+            } else {
+                console.log(data.data.message);
+            }
+        })
+        .catch((err) => console.log(err));
   }
-  const starDonor = (e) => {
+  const starPatient = (e) => {
     e.preventDefault();
     const data = {
-      star: !star,
+        star: !star,
     };
     axios({
-      url: `http://localhost:5000/donor/starDonor/${id}`,
-      method: "PUT",
-      data: data,
-      headers: {
-        "content-type": "application/json",
-      },
+        url: `http://localhost:5000/patient/starPatient/${id}`,
+        method: "PUT",
+        data: data,
+        headers: {
+            "content-type": "application/json",
+        },
     })
-      .then((res) => {
-        if (res.data.success) {
-          console.log(res.data.data.star);
-          console.log("Starred Successfully");
-          // setStarred(res.data.data.star);
-          setStar(res.data.data.star);
-          setDonor(data.data.data);
-        } else {
-          console.log(res);
-        }
-      })
-      .catch((err) => console.log(err));
+        .then((res) => {
+            if (res.data.success) {
+                console.log(res.data.data.star);
+                console.log("Starred Successfully");
+                setStar(res.data.data.star);
+                setPatient(data.data.data);
+            } else {
+                console.log(res);
+            }
+        })
+        .catch((err) => console.log(err));
   };
   const handleLogout = () => {
     sessionStorage.removeItem("userData");
@@ -93,7 +92,7 @@ export default function EachDonor() {
         <div className="editProfile">
           <div className="con1">
             <div className="innerCon">
-              <div className="mainHeading">Donor Profile</div>
+              <div className="mainHeading">Patient Profile</div>
               <div className="userContent">
                 <BiUser className="icon" />
                 <div className="label">User Info</div>
@@ -110,26 +109,26 @@ export default function EachDonor() {
           <div className="editProfileContent">
             <div className="upperProfileCon">
               <div className="pictureCon">
-                {donor?.img === "" ? (
+                {patient?.img === "" ? (
                   <img
                     src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
                     alt="logo"
                     className="edit-img"
                   />
                 ) : (
-                  <img src={donor?.img} alt="logo" className="edit-img" />
+                  <img src={patient?.img} alt="logo" className="edit-img" />
                 )}
                 <div className="detailCon">
                   <div className="nameDiv">
                     <div className="nameCon">
-                      {donor?.lname} {donor?.fname}
+                      {patient?.fname} {patient?.lname}
                     </div>
                     <div className="address">
-                      {new Date(donor?.createdAt?.toString())?.toDateString()}
+                      {new Date(patient?.createdAt?.toString())?.toDateString()}
                     </div>
                   </div>
                   <div className="BtnCon">
-                    <button className="starBtn btn" onClick={starDonor}>
+                    <button className="starBtn btn" onClick={starPatient}>
                       {star ? (
                         <AiFillStar className="icon" />
                       ) : (
@@ -147,86 +146,86 @@ export default function EachDonor() {
               </div>
             </div>
             <div className="formFields">
-              <div className="fieldsDiv">
-                <div className="fieldCon">
-                  <div className="field">First Name</div>
-                  <input
-                    className="input"
-                    type="text"
-                    disabled={true}
-                    value={donor?.fname}
-                  />
+                <div className="fieldsDiv">
+                    <div className="fieldCon">
+                        <div className="field">First Name</div>
+                        <input
+                            className="input"
+                            type="text"
+                            disabled={true}
+                            value={patient?.fname}
+                        />
+                    </div>
+                    <div className="fieldCon">
+                        <div className="field">Last Name</div>
+                        <input
+                            className="input"
+                            type="text"
+                            disabled={true}
+                            value={patient?.lname}
+                        />
+                    </div>
                 </div>
-                <div className="fieldCon">
-                  <div className="field">Last Name</div>
-                  <input
-                    className="input"
-                    type="text"
-                    disabled={true}
-                    value={donor?.lname}
-                  />
+                <div className="fieldsDiv">
+                    <div className="fieldCon">
+                        <div className="field">Address</div>
+                        <input
+                            className="input"
+                            type="text"
+                            disabled={true}
+                            value={patient?.address}
+                        />
+                    </div>
+                    <div className="fieldCon">
+                        <div className="field">City</div>
+                        <input
+                            className="input"
+                            type="text"
+                            disabled={true}
+                            value={patient?.city}
+                        />
+                    </div>
                 </div>
-              </div>
-              <div className="fieldsDiv">
-                <div className="fieldCon">
-                  <div className="field">Address</div>
-                  <input
-                    className="input"
-                    type="text"
-                    disabled={true}
-                    value={donor?.address}
-                  />
+                <div className="fieldsDiv">
+                    <div className="fieldCon">
+                        <div className="field">Phone Number</div>
+                        <input
+                            className="input"
+                            type="text"
+                            disabled={true}
+                            value={patient?.phone}
+                        />
+                    </div>
+                    <div className="fieldCon">
+                        <div className="field">Mobile Number</div>
+                        <input
+                            className="input"
+                            type="text"
+                            disabled={true}
+                            value={patient?.phone2}
+                        />
+                    </div>
                 </div>
-                <div className="fieldCon">
-                  <div className="field">Email</div>
-                  <input
-                    className="input"
-                    type="text"
-                    disabled={true}
-                    value={donor?.email}
-                  />
+                <div className="fieldsDiv">
+                    <div className="fieldCon">
+                        <div className="field">CNIC</div>
+                        <input
+                            className="input"
+                            type="text"
+                            disabled={true}
+                            value={patient?.CNIC}
+                        />
+                    </div>
+                    <div className="fieldCon">
+                        <div className="field">Email</div>
+                        <input
+                            className="input"
+                            type="text"
+                            disabled={true}
+                            value={patient?.email}
+                        />
+                    </div>
                 </div>
-              </div>
-              <div className="fieldsDiv">
-                <div className="fieldCon">
-                  <div className="field">Phone Number</div>
-                  <input
-                    className="input"
-                    type="text"
-                    disabled={true}
-                    value={donor?.phone}
-                  />
-                </div>
-                <div className="fieldCon">
-                  <div className="field">Mobile Number</div>
-                  <input
-                    className="input"
-                    type="text"
-                    disabled={true}
-                    value={donor?.phone2}
-                  />
-                </div>
-              </div>
-              <div className="fieldsDiv">
-                <div className="fieldCon">
-                  <div className="field">CNIC</div>
-                  <input
-                    className="input"
-                    type="text"
-                    disabled={true}
-                    value={donor?.CNIC}
-                  />
-                </div>
-                <div className="fieldCon">
-                  <div className="field">Blood Type</div>
-                  <input
-                    className="input"
-                    type="text"
-                    disabled={true}
-                    value={donor?.bloodType}
-                  />
-                </div>
-              </div>
             </div>
           </div>
           <div
