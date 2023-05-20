@@ -7,6 +7,7 @@ import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 
 export default function AdminNotifications() {
   const [notifications, setNotifications] = useState(null);
+  const [patientNotifications, setPatientNotifications] = useState(null);
   const [read, setread] = useState(false);
   const navigate = useNavigate();
   const navigateToFilterBankPage = (type, ID) => {
@@ -20,7 +21,13 @@ export default function AdminNotifications() {
         console.log(data);
         setNotifications(data.data);
       })
-      .catch((err) => console.log(err));
+    .catch((err) => console.log(err));
+    axios(`http://localhost:5000/bloodRequest/`)
+      .then((data) => {
+        console.log(data);
+        setPatientNotifications(data.data);
+      })
+    .catch((err) => console.log(err));
   }, [read]);
 
   const readRequest = (Type, ID) => {
@@ -49,10 +56,35 @@ export default function AdminNotifications() {
     .catch((err) => console.log(err));
   };
 
+  const readPatientRequest = (ID) => {
+    setread(true);
+    const data = {
+      read: true,
+    };
+    axios({
+      url: `http://localhost:5000/bloodRequest/markAsRead/${ID}`,
+      method: "PUT",
+      data: data,
+      headers: {
+        "content-type": "application/json",
+      },
+    })
+    .then((res) => {
+      if (res.data.success) {
+        console.log(res.data.data.read);
+        console.log("mark as read Successfully");
+        navigate('/requestDetails');
+      } else {
+        console.log(res);
+      }
+    })
+    .catch((err) => console.log(err));
+  };
+
   return (
     <>
     <LoggedInNavbar/>
-    <div className="bankNotifications">
+    <div className="bankNotifications adminNotifications">
       <button className="backBtn" onClick={() => navigate(-1)}>
         <HiOutlineArrowNarrowLeft className="icon" />
       </button>
@@ -62,7 +94,25 @@ export default function AdminNotifications() {
         <table className="table">
           <thead className="tableHeader">
             <th className="headText" align="left">
-              Blood Need Notifications
+              Blood Requests From Patients
+            </th>
+          </thead>
+          <tbody className="tableBody">
+            {patientNotifications?.map((el) => (
+              <tr className="eachRow eachRow1" key={el._id} onClick={() => readPatientRequest(el._id)}>
+                <td className="rowText" align="center">
+                  <div style={{fontWeight: el.read ? 'lighter' : 'bold'}}>The Patient Needs {el.bloodType} Blood Bottles Urgently!!</div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="tableCon">
+        <table className="table">
+          <thead className="tableHeader">
+            <th className="headText" align="left">
+              Blood Shortage Notifications
             </th>
           </thead>
           <tbody className="tableBody">
