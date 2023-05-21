@@ -31,6 +31,10 @@ const BloodRequestSchema = mongoose.Schema(
       default: 'Pending',
       required: true,
     },
+    price: {
+      type: String,
+      default: '0',
+    },
   },
   { timestamps: true },
 );

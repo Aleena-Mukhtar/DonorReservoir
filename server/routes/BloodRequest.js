@@ -49,6 +49,27 @@ router.put("/markAsRead/:id", (req, res) => {
     );
 });
 
+router.put("/changeStatus/:id", (req, res) => {
+    Request.findByIdAndUpdate(
+        { _id: req.params.id },
+        { status: req.body.status },
+        { new: true },
+        (err, obj) => {
+            if (err) {
+                console.log(err);
+                return res
+                .status(400)
+                .json({ message: "Failed to update ", success: false });
+            }
+            res.status(200).json({
+                success: true,
+                message: "Request status changed successfully!",
+                data: obj,
+            });
+        }
+    );
+});
+
 // Delete a bank by ID
 router.delete("/:id", getRequest, async (req, res) => {
     try {
