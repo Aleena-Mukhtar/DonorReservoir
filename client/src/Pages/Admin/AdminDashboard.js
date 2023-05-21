@@ -53,7 +53,7 @@ export default function AdminDashboard() {
               className={btnClick === 1 ? "btn click" : "btn"}
               onClick={(e) => setBtnClick(1)}
             >
-              Patient Requests
+              Blood Requests
             </button>
             <button
               className={btnClick === 3 ? "btn click" : "btn"}

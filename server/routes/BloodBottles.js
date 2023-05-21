@@ -21,6 +21,24 @@ router.get('/', async (req, res) => {
   res.json(records);
 });
 
+router.put("/:type",(req,res)=>{
+  Admin.findByIdAndUpdate(
+    {bloodType: req.params.type},
+    req.body,
+    {new:true},
+    (err,obj) => {
+    if(err) {
+      console.log(err);
+      return res.status(400).json({message:"Failed to update " ,success : false});
+    }
+    res.status(200).json({
+      success:true,
+      message :"Bottles data Updated successfully!",
+      data : obj
+    });
+  });
+});
+
 module.exports = router;
 
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineLogout } from "react-icons/ai";
 import { HiOutlineMail, HiOutlineMailOpen } from "react-icons/hi";
+import { BsCheck2All } from 'react-icons/bs';
 import LoggedInNavabr from '../Auth/LoggedInNavbar';
 import axios from "axios";
 import BloodRequest from "./BloodRequest";
@@ -62,22 +63,14 @@ export default function PatientDashboard() {
             (
               <div className='mainContainer'>
                 {history.map((ele, index) => (
-                  <div className='innerCon' key={index}>
+                  <div className='innerCon' key={index} onClick={() => navigate(`/eachRequest/${ele._id}`)}>
                     <div className='con1'>
                       <div className='inner1'>
-                        <div 
-                          className='header'
-                          style={{fontWeight: ele.read ? 'normal' : 'bold'}}
-                        >
-                        {
-                          ele.read ? <HiOutlineMailOpen className='mailIcon' color='green'/> : <HiOutlineMail className='mailIcon'/>
-                        }
+                        <div className='header'>
+                        <BsCheck2All className='mailIcon' style={{color: ele.read ? 'blue' : 'gray'}}/>
                         To: {ele.hospitalName} for {ele.bloodType}
                       </div>
-                      <div 
-                        className='date' 
-                        style={{fontWeight: ele.read ? 'normal' : 'bold'}}
-                      >
+                      <div className='date'>
                         {new Date(ele?.createdAt.toString()).toDateString()}
                       </div>
                     </div>
