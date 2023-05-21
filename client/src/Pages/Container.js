@@ -67,7 +67,7 @@ export default function Container() {
           />
           <Route 
             exact 
-            path="/eachPatient" 
+            path="/eachRequest/:id" 
             element={<EachPatientRequest />} 
           />
           <Route 
