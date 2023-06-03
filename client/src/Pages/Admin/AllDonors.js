@@ -10,7 +10,7 @@ export default function AllDonors({ check }) {
     navigate(`/eachDonor/${ID}`);
   };
   useEffect(() => {
-    axios(`http://localhost:5000/donor/getAll/`)
+    axios(`http://localhost:5000/donor/`)
       .then((data) => {
         setDonors(data.data.data);
       })

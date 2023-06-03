@@ -93,15 +93,17 @@ export default function LoggedInNavbar() {
             </button>
             {
               role === 'Patient' ? null :
-              <button className='notificationBtn' onClick={navigateToInbox}>
-                <MdOutlineMailOutline className='icon'/>
-                {filterInbox.length === 0 ? null : <GoPrimitiveDot className="dotIcon"/>}
-              </button>
+              <>
+                <button className='notificationBtn' onClick={navigateToInbox}>
+                  <MdOutlineMailOutline className='icon'/>
+                  {filterInbox.length === 0 ? null : <GoPrimitiveDot className="dotIcon"/>}
+                </button>
+                <button className='notificationBtn' onClick={handleClick}>
+                  <BiBell className='icon'/>
+                  {filterNotifications.length === 0 && filterPatientNotifications.length === 0 ? null : <GoPrimitiveDot className="dotIcon"/>}
+                </button>
+              </>
             }
-            <button className='notificationBtn' onClick={handleClick}>
-              <BiBell className='icon'/>
-              {filterNotifications.length === 0 && filterPatientNotifications.length === 0 ? null : <GoPrimitiveDot className="dotIcon"/>}
-            </button>
             {userData?.img === "" ? (
               <img
                 src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}

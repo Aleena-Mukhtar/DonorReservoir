@@ -19,22 +19,91 @@ const initialObj = {
     },
 };
 
-export default function FilterBanks() {
-  const [banks, setBanks] = useState(null);
+export default function FilterDonors() {
+  const [donors, setDonors] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [bankName, setBankName] = useState('');
   const [data, setData] = useState(initialObj);
   const navigate = useNavigate();
-  const { type, ID } = useParams();
+  const { id } = useParams();
+  const { type } = useParams();
   console.log(type);
-  console.log(ID);
   useEffect(() => {
-    axios(`http://localhost:5000/bloodBank/`)
+    axios(`http://localhost:5000/donor/`)
       .then((data) => {
-        setBanks(data.data.filter((el) => el.bloodTypes.includes(type)));
+        setDonors(data.data.data.filter((el) => (el.bloodType === type)));
       })
       .catch((err) => console.log(err));
   }, []);
+
+    const changeStatus = (Status) => {
+        const data = {
+            status: Status,
+        };
+        axios({
+            url: `http://localhost:5000/bloodRequest/changeStatus/${id}`,
+            method: "PUT",
+            data: data,
+            headers: {
+                "content-type": "application/json",
+            },
+        })
+        .then((res) => {
+            if (res.data.success) {
+                console.log("Status Changed Successfully");
+                readRequest();
+            } else {
+                console.log(res);
+            }
+        })
+        .catch((err) => console.log(err));
+    };
+
+    const readRequest = () => {
+        const data = {
+            read: true,
+        };
+        axios({
+            url: `http://localhost:5000/bloodRequest/markAsRead/${id}`,
+            method: "PUT",
+            data: data,
+            headers: {
+                "content-type": "application/json",
+            },
+        })
+        .then((res) => {
+            if (res.data.success) {
+                console.log("Mark as read Successfully");
+            } else {
+                console.log(res);
+            }
+        })
+        .catch((err) => console.log(err));
+    };
+
+    const sendDonor = (ID) => {
+        const data = {
+            donorId: ID,
+        };
+        axios({
+            url: `http://localhost:5000/bloodRequest/${id}`,
+            method: "PUT",
+            data: data,
+            headers: {
+                "content-type": "application/json",
+            },
+        })
+        .then((res) => {
+            if (res.data.success) {
+                console.log("Donor sent Successfully");
+                changeStatus('Approved');
+                navigate(`/eachRequest/${id}`);
+            } else {
+                console.log(res);
+            }
+        })
+        .catch((err) => console.log(err));
+    };
 
   const handleEmail = (name) => {
     setBankName(name);
@@ -67,7 +136,7 @@ export default function FilterBanks() {
         } else {
           alert('Email Send Successfully!');
           setShowModal(false);
-          handleNotificationDelete();
+        //   handleNotificationDelete();
           navigate('/adminDashboard');
         }
       })
@@ -76,37 +145,22 @@ export default function FilterBanks() {
       });
   }
 
-    const handleNotificationDelete = () => {
-        const config = {
-        url: `http://localhost:5000/adminNotification/${ID}`,
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        };
-
-        axios(config)
-        .then(response => {
-            console.log(response.data); // handle success response
-        })
-        .catch(error => {
-            console.log(error); // handle error response
-        });
-    }
-
   return (
     <>
     <LoggedInNavbar/>
-    <div className="filterBanks">
+    <div className="filterBanks filterDonors">
         <div className="BackButton">
             <button className="backBtn" onClick={() => navigate(-1)}>
                 <HiOutlineArrowNarrowLeft className="icon" />
             </button>
         </div>
-        <div className="heading">List of Blood Banks contain {type}</div>
+        <div className="heading">List of Donors willing to donate {type}</div>
         <div className="tableCon">
             <table className="table">
                 <thead className="tableHeader">
+                    <th className="headText" align="center">
+                        Image
+                    </th>
                     <th className="headText" align="center">
                         Name
                     </th>
@@ -117,21 +171,27 @@ export default function FilterBanks() {
                         Email
                     </th>
                     <th className="headText" align="center">
-                        City
+                        CNIC
                     </th>
                     <th className="headText" align="center">
-                        Send Email
+                        Phone
+                    </th>
+                    <th className="headText" align="center">
+                        Send
                     </th>
                 </thead>
                 <tbody className="tableBody">
-                    {banks?.map((el) => (
+                    {donors?.map((el) => (
                         <tr
                         className="eachRow1"
-                        //   onClick={() => navigateToEachDonorPage(el._id)}
+                        // onClick={() => navigateToEachDonorPage(el._id)}
                         key={el._id}
                         >
                             <td className="rowText" align="center">
-                                {el.bankName}
+                                <img src={el.img} alt="logo" className="DonorImg"/>
+                            </td>
+                            <td className="rowText" align="center">
+                                {el.fname} {el.lname}
                             </td>
                             <td className="rowText" align="center">
                                 {el.address}
@@ -140,10 +200,13 @@ export default function FilterBanks() {
                                 {el.email}
                             </td>
                             <td className="rowText" align="center">
-                                {el.city}
+                                {el.CNIC}
                             </td>
                             <td className="rowText" align="center">
-                                <button className="sendBtn" onClick={() => handleEmail(el.bankName)}>
+                                {el.phone}
+                            </td>
+                            <td className="rowText" align="center">
+                                <button className="sendBtn" onClick={() => sendDonor(el._id)}>
                                     <IoSend className="icon"/>
                                 </button>
                             </td>

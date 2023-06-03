@@ -5,6 +5,11 @@ const BloodRequestSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Patient",
     },
+    donor_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Donor",
+      default: null,
+    },
     hospitalName: {
       type: String,
       required: true,
@@ -12,6 +17,11 @@ const BloodRequestSchema = mongoose.Schema(
     bloodType: {
       type: String,
       required: true,
+    },
+    givenCount: {
+      type: String,
+      required: true,
+      default: '0',
     },
     count: {
       type: String,

@@ -70,6 +70,48 @@ router.put("/changeStatus/:id", (req, res) => {
     );
 });
 
+router.put("/giveBottles/:id", (req, res) => {
+    Request.findByIdAndUpdate(
+        { _id: req.params.id },
+        { givenCount: req.body.bottles },
+        { new: true },
+        (err, obj) => {
+            if (err) {
+                console.log(err);
+                return res
+                .status(400)
+                .json({ message: "Failed to update ", success: false });
+            }
+            res.status(200).json({
+                success: true,
+                message: "Bottles assigned successfully!",
+                data: obj,
+            });
+        }
+    );
+});
+
+router.put("/:id", (req, res) => {
+    Request.findByIdAndUpdate(
+        { _id: req.params.id },
+        { donor_id: req.body.donorId },
+        { new: true },
+        (err, obj) => {
+            if (err) {
+                console.log(err);
+                return res
+                .status(400)
+                .json({ message: "Failed to update ", success: false });
+            }
+            res.status(200).json({
+                success: true,
+                message: "Donor set successfully!",
+                data: obj,
+            });
+        }
+    );
+});
+
 // Delete a bank by ID
 router.delete("/:id", getRequest, async (req, res) => {
     try {
