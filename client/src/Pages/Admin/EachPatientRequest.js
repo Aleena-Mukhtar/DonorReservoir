@@ -16,7 +16,9 @@ export default function EachPatientRequest() {
     const role = sessionStorage.getItem("role");
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [patient, setPatient] = useState({});
+    const [donor, setDonor] = useState(null);
     const [request, setRequest] = useState({});
+    const [bottle, setBottle] = useState({});
     const bankSection = useRef(null);
     const navigate = useNavigate();
 
@@ -26,11 +28,25 @@ export default function EachPatientRequest() {
         .then((data) => {
             setRequest(data.data);
             data.data.time = DisplayCurrentTime(new Date(data.data.createdAt.toString()));
+            axios(`http://localhost:5000/bloodBottle/${data.data.bloodType}`)
+            .then((data) => {
+                console.log(data.data);
+                setBottle(data.data.data);
+            })
+            .catch((err) => console.log(err));
             axios(`http://localhost:5000/patient/${data.data.patient_id}`)
             .then((data) => {
                 setPatient(data.data.data[0]);
             })
             .catch((err) => console.log(err));
+            if(data.data.donor_id){
+                axios(`http://localhost:5000/donor/get/${data.data.donor_id}`)
+                .then((data) => {
+                    console.log(data.data.data[0]);
+                    setDonor(data.data.data[0]);
+                })
+                .catch((err) => console.log(err));
+            }
         })
         .catch((err) => console.log(err));
     }, [status]);
@@ -91,12 +107,56 @@ export default function EachPatientRequest() {
         .catch((err) => console.log(err));
     };
 
-    const editUser=(e)=>{
-        e.preventDefault(); 
+    const AcceptBottle = (Type) => {
+        axios(`http://localhost:5000/bloodBottle/${Type}`)
+        .then((data) => {
+            console.log(data.data.data);
+            const count = parseInt(data.data.data.count) - parseInt(request?.count);
+            if(count < 5) handleSendAlert(Type);
+            if(count < 0) {
+                handleUpdateBottle(0, Type);
+                handleGivenBottle(data.data.data.count, request?._id);
+                setShowDeleteModal(true);
+            }
+            else{
+                handleUpdateBottle(count, Type);
+                handleGivenBottle(count, request?._id);
+            }
+        })
+        .catch((err) => console.log(err));
+    }
+
+    const handleSendAlert = (type) => {    
+        const config = {
+          url: "http://localhost:5000/adminNotification/",
+          method: "POST",
+          data: JSON.stringify({
+            bloodType: type
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+    
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                if (response.data.error) {
+                    console.log(response.data.message);
+                } else {
+                    console.log('Alert Send Successfully!');
+                }
+            })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    const handleGivenBottle = (Count, ID) => {
         axios({
-            url: `http://localhost:5000/bloodRequest/${request?.bloodTpe}`,
+            url: `http://localhost:5000/bloodRequest/giveBottles/${ID}`,
             method: "PUT",
-            data:JSON.stringify(data),
+            data: JSON.stringify({ bottles: Count.toString() }),
             headers: {
               "content-type": "application/json"
             }
@@ -104,7 +164,32 @@ export default function EachPatientRequest() {
         .then(res => {
             if (res.data.success) {
                 console.log(res);
-                alert("Account Updated Successfully");
+                console.log("Bottles Assigned Successfully");
+                changeStatus('Approved');
+            }
+            else {
+                console.log(res);
+            }
+        })
+    }
+
+    const handleUpdateBottle = (Count, type) => {
+        const data = {
+            count: Count.toString()
+        }
+        axios({
+            url: `http://localhost:5000/bloodBottle/${type}`,
+            method: "PUT",
+            data: JSON.stringify(data),
+            headers: {
+              "content-type": "application/json"
+            }
+        })
+        .then(res => {
+            if (res.data.success) {
+                console.log(res);
+                console.log("Bottle's data Updated Successfully");
+                changeStatus('Approved');
             }
             else {
                 console.log(res);
@@ -130,7 +215,7 @@ export default function EachPatientRequest() {
   return (
     <>
     <LoggedInNavbar/>
-    <div className='editProfile eachBank'>
+    <div className='editProfile eachBank eachRequest'>
         <div className='con1'>
             <div className='innerCon'>
                 <div className='mainHeading'>Request Detail</div>
@@ -313,20 +398,81 @@ export default function EachPatientRequest() {
                 request?.status === 'Pending' && role === 'Admin' ?
                 <div className='BtnCon'>
                     <button className='backBtn' onClick={(e) => setShowDenyModal(!showDenyModal)}>Deny Request</button>
-                    <button className='saveBtn' onClick={() => changeStatus('Approved')}>Approve Request</button>
+                    <button className='saveBtn' onClick={() => AcceptBottle(request?.bloodType)}>Approve Request</button>
                 </div> : null
             }
             {
-                role === 'Patient' && request?.status === 'Denied'?
+                request?.status === 'Denied'?
                 <div style={{color: 'red'}}>Sorry, Your request is denied by admin.</div> : null
             }
             {
-                role === 'Patient' && request?.status === 'Approved'?
+                request?.status === 'Approved'?
                 <div style={{color: 'green'}}>Congratulations, Your request is Approved. The attached invoice is sent to finance department and will be added in your bill.</div> : null
             }
             {
-                role === 'Patient' && request?.status === 'Pending'?
+                request?.status === 'Pending'?
                 <div>Waiting for admin to review.</div> : null
+            }
+            {
+                request?.status === 'Pending' ? null : 
+                <div className='Invoice'>
+                    <div className='heading'>Generated Invoice Attached with Your Reply</div>
+                    <table className="table">
+                        <thead className="tableHeader">
+                            <th className="headText" align="center">
+                                Blood Type
+                            </th>
+                            <th className="headText" align="center">
+                                Quantity
+                            </th>
+                            <th className="headText" align="center">
+                                Unit Price (PKR)
+                            </th>
+                            <th className="headText" align="center">
+                                Total (PKR)
+                            </th>
+                        </thead>
+                        <tbody className="tableBody">
+                            <tr className="eachRow">
+                                <td className="rowText" align="center">
+                                    {request?.bloodType}
+                                </td>
+                                <td className="rowText" align="center">
+                                    {request?.givenCount}
+                                </td>
+                                <td className="rowText" align="center">
+                                    {bottle?.unitPrice}
+                                </td>
+                                <td className="rowText" align="center">
+                                    {parseInt(request?.givenCount)  * parseInt(bottle?.unitPrice)}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            }
+            {
+                donor ? 
+                    <div className='donorCon'>
+                        <div className='donorHeading'>Please Consult with this Donor for remaining blood bottles</div>
+                        <div className='MainDonorContent'>
+                            <div className='leftCon'>
+                                <img src={donor.img} alt="logo" className="DonorImg"/>
+                            </div>
+                            <div className='rightDonorCon'>
+                                <div>{donor.fname} {donor.lname}</div>
+                                <div>{donor.address}</div>
+                                <div>{donor.email}</div>
+                                <div>{donor.phone}</div>
+                                <div>{donor.phone2}</div>
+                            </div>
+                        </div>
+                    </div>
+                 : null
+            }
+            {
+                donor ? 
+                <div>If still more bottles required. So, please make new request.</div> : null
             }
         </div>
         <div className='logoutModal' style={{display: showLogoutModal ? 'flex' : 'none'}} onClick={(e) => setShowLogoutModal(false)}>
@@ -341,11 +487,11 @@ export default function EachPatientRequest() {
         </div>
         <div className='logoutModal' style={{display: showDeleteModal ? 'flex' : 'none'}} onClick={(e) => setShowDeleteModal(false)}>
             <div className='logout'>
-                <div className='modalHeading'>Confirm Delete</div>
-                <div className='innerHeading'>Are you sure you want to delete this request?</div>
+                <div className='modalHeading'>Shortage of Blood</div>
+                <div className='innerHeading'>Sorry! we doesn't have enough bottles. Please send Donor's data.</div>
                 <div className='btnCon'>
                     <button className='cancelBtn' onClick={(e) => setShowDeleteModal(false)}>Cancel</button>
-                    <button className='okBtn'>OK</button>
+                    <button className='okBtn' onClick={() => navigate(`/filterDonor/${request?._id}/${request?.bloodType}`)}>Send</button>
                 </div>
             </div>
         </div>

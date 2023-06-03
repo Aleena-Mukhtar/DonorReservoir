@@ -21,25 +21,59 @@ router.get('/', async (req, res) => {
   res.json(records);
 });
 
-router.put("/:type",(req,res)=>{
-  Admin.findByIdAndUpdate(
-    {bloodType: req.params.type},
-    req.body,
-    {new:true},
-    (err,obj) => {
-    if(err) {
-      console.log(err);
-      return res.status(400).json({message:"Failed to update " ,success : false});
+router.get("/:type", async (req, res) => {
+  try {
+    const bloodType = req.params.type;
+    const bloodBottle = await BloodBottle.findOne({ bloodType });
+
+    if (!bloodBottle) {
+      return res.status(404).json({
+        success: false,
+        message: "Blood bottle not found",
+      });
     }
+
     res.status(200).json({
-      success:true,
-      message :"Bottles data Updated successfully!",
-      data : obj
+      success: true,
+      message: "Blood bottle found successfully!",
+      data: bloodBottle,
     });
-  });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      success: false,
+      message: "Failed to retrieve blood bottle",
+    });
+  }
 });
 
-module.exports = router;
+router.put("/:type", async (req, res) => {
+  try {
+    const updatedBloodBottle = await BloodBottle.findOneAndUpdate(
+      { bloodType: req.params.type },
+      req.body,
+      { new: true }
+    );
 
+    if (!updatedBloodBottle) {
+      return res.status(404).json({
+        success: false,
+        message: "Blood bottle not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Blood bottle data updated successfully!",
+      data: updatedBloodBottle,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: "Failed to update blood bottle",
+    });
+  }
+});
 
 module.exports = router;

@@ -25,7 +25,7 @@ export default function AdminNotifications() {
     axios(`http://localhost:5000/bloodRequest/`)
       .then((data) => {
         console.log(data);
-        setPatientNotifications(data.data);
+        setPatientNotifications(data.data.filter((el) => (!el.read)));
       })
     .catch((err) => console.log(err));
   }, [read]);
@@ -73,7 +73,7 @@ export default function AdminNotifications() {
       if (res.data.success) {
         console.log(res.data.data.read);
         console.log("mark as read Successfully");
-        navigate('/requestDetails');
+        navigate(`/eachRequest/${ID}`);
       } else {
         console.log(res);
       }

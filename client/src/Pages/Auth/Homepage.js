@@ -29,7 +29,7 @@ export default function Homepage() {
         <div className='DetailDiv'>
           <div className='heading'>GIVE SOMEONE A GIFT OF LIFE</div>
           <div className='detail'>Every other day people are in rare need of blood in emergencies. We provide you ease as much as possible so you don’t have to worry at that already stressful time.</div>
-          <button className='learnBtn'>
+          <button className='learnBtn' onClick={() => navigate(`/aboutUs`)}>
             LEARN MORE
             <BsArrowRight className='icon'/>
           </button>
@@ -82,7 +82,7 @@ export default function Homepage() {
             </ul>
           </div>
           <div className='AdminBtnCon'>
-            <button className='Btn' onClick={navigateToPatientTermsPage}>Sign Up as Patient</button>
+            <button className='Btn' onClick={navigateToPatientTermsPage}>Make a Blood Bottle Request</button>
           </div>
         </div>
       </div>

@@ -24,6 +24,9 @@ import EachShipment from "./BloodBank/EachShipment";
 import PatientContainer from "./Patient/wizard/PatientContainer";
 import PatientDashboard from "./Patient/PatientDashboard";
 import EachPatient from "./Admin/EachPatient";
+import FilterDonors from "./Admin/FilterDonors";
+import About from "./Auth/About";
+import Policy from "./Auth/Policy";
 
 export default function Container() {
   return (
@@ -144,6 +147,21 @@ export default function Container() {
             exact
             path="/patientDashboard"
             element={<PatientDashboard />}
+          />
+          <Route
+            exact
+            path="/filterDonor/:id/:type"
+            element={<FilterDonors />}
+          />
+          <Route
+            exact
+            path="/aboutUs"
+            element={<About />}
+          />
+          <Route
+            exact
+            path="/PrivacyPolicy"
+            element={<Policy />}
           />
         </Routes>
         <Footer />

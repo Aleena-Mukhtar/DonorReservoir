@@ -56,6 +56,76 @@ $header-color: #D6D5D5;
     }
 }
 
+.eachRequest{
+    .donorCon{
+        margin: 1rem 0;
+        padding: 1rem;
+        border: 1px solid $navbar-color;
+        border-radius: 5px;
+        width: 50%;
+        background-color: $font-color;
+        .donorHeading{
+            font-size: 18px;
+            color: $navbar-color;
+            text-align: center;
+            font-weight: bold;
+        }
+        .MainDonorContent{
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            .leftCon{
+                .DonorImg{
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 50%;
+                    margin-top: 1rem;
+                }
+            }
+            .rightDonorCon{
+                margin-left: 1rem;
+                font-size: 16px;
+            }
+        }
+    }
+    .Invoice{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        height: unset;
+        .heading{
+            margin: 2rem 0;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .table{
+            width: 90%;
+            .tableHeader{
+                background-color: $navbar-color;
+                .headText{
+                    color: $font-color;
+                    padding: 0.9rem 0;
+                    font-size: 18px;
+                    font-weight: lighter;
+                }
+            }
+            .tableBody{
+                background-color: $header-color;
+                .eachRow{
+                    .rowText{
+                        padding: 0.9rem 0;
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    }
+}
+
 .eachBankReply{
     .MainContent{
         .rightPanel{
