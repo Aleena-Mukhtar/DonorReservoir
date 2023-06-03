@@ -26,7 +26,7 @@ router.post("/donor", async (req, res) => {
   });
 });
 
-router.get("/getAll",(req,res)=>{
+router.get("/",(req,res)=>{
   Donor.find({},(err,doc)=>{
     if(err) {
       console.log(err);
@@ -50,6 +50,32 @@ router.get("/get/:id",(req,res)=>{
       data : doc
     });
   });
+});
+
+router.get("/:type", async (req, res) => {
+  try {
+    const bloodType = req.params.type;
+    const donor = await Donor.findOne({ bloodType });
+
+    if (!donor) {
+      return res.status(404).json({
+        success: false,
+        message: "Donor not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Donor found successfully!",
+      data: donor,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      success: false,
+      message: "Failed to retrieve blood bottle",
+    });
+  }
 });
 
 router.post("/upload", (req, res) => {

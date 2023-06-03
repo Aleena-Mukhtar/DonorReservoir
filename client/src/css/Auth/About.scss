@@ -1,0 +1,51 @@
+$navbar-color: #b81d1d;
+$font-color: #FFFFFF;
+$icon-color: #A6A3A3;
+.about{
+    margin: 0 4rem;
+    margin-bottom: 4rem;
+    .backBtn{
+        background-color: transparent;
+        font-size: 30px;
+        border: none;
+        cursor: pointer;
+        margin-top: 1rem;
+    }
+    .mainHeading{
+        text-align: center;
+        font-size: 25px;
+        font-weight: bold;
+        margin: 2rem 0;
+        color: $navbar-color;
+    }
+    .heading{
+        font-size: 20px;
+        margin: 2rem 0;
+        font-weight: bold;
+        border-bottom: 2px solid $navbar-color;
+    }
+    .detail{
+        width: 95%;
+        margin-bottom: 1rem;
+    }
+    .infoCon{
+        margin: 2rem 0;
+        .info{
+            font-weight: bold;
+            color: $navbar-color;
+            margin-bottom: 1rem;
+            span{
+                color: black;
+                margin-left: 1rem;
+            }
+        }
+    }
+}
+
+.policy{
+    .info{
+        font-weight: bold;
+        margin: 1rem 0;
+        font-size: 17px;
+    }
+}
