@@ -10,7 +10,6 @@ export default function BottleDetails() {
   useEffect(() => {
     axios(`http://localhost:5000/bloodBottle/`)
       .then((data) => {
-        console.log(data);
         setData(data.data);
       })
       .catch((err) => console.log(err));

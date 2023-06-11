@@ -10,6 +10,7 @@ export default function Inbox() {
     const [read, setread] = useState(false);
     const [active, setActive] = useState(null);
     const role = sessionStorage.getItem("role");
+    const userData = JSON.parse(sessionStorage.getItem("userData"));
     const navigate = useNavigate();
 
     const toggleAccordion = (index) => {
@@ -22,15 +23,14 @@ export default function Inbox() {
     useEffect(() => {
         axios(`http://localhost:5000/bankNotification/`)
           .then((data) => {
-            console.log(data);
-            setNotifications(data.data);
+            if(role === 'Blood Bank') setNotifications(data.data.filter(el => (el.bank_id === userData._id)));
+            else setNotifications(data.data);
           })
           .catch((err) => console.log(err));
     }, []);
 
     const readRequest = (ID) => {
         setread(true);
-        console.log(read);
         const data = {
           read: true,
         };
@@ -47,8 +47,6 @@ export default function Inbox() {
         })
         .then((res) => {
           if (res.data.success) {
-            console.log(res.data.data.read);
-            console.log("mark as read Successfully");
             navigate(`/inbox/${ID}`);
           } else {
             console.log(res);
@@ -75,8 +73,6 @@ export default function Inbox() {
       })
       .then((res) => {
         if (res.data.success) {
-          console.log(res.data.data.read);
-          console.log("mark as read Successfully");
           navigate(`/reply/${ID}`);
         } else {
           console.log(res);

@@ -4,8 +4,10 @@ const upload = require("./upload");
 
 router.post("/login", (req, res) => {
     Admin.findOne({email: req.body.email},(err,admin)=> {
-        if(err) {console.log(err);
-            return res.status(400).json({message:"Failed to Login" ,success : false});}
+        if(err) {
+          console.log(err);
+          return res.status(400).json({message:"Failed to Login" ,success : false});
+        }
         if (!admin) {
             return res.status(201).json({
                 message: "Invalid Email",

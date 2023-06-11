@@ -9,11 +9,11 @@ export default function BloodBankDashboard() {
   const [btnClick, setBtnClick] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [history, setHistory] = useState([]);
+  const userData = JSON.parse(sessionStorage.getItem("userData"));
   useEffect(() => {
     axios(`http://localhost:5000/bankNotification/`)
       .then((data) => {
-        console.log(data);
-        setHistory(data.data);
+        setHistory(data.data.filter(el => (el.bank_id === userData._id)));
       })
       .catch((err) => console.log(err));
   }, []);
@@ -36,7 +36,7 @@ export default function BloodBankDashboard() {
           <div className="BtnDiv">
             <button
               className={btnClick === 1 ? "btn click" : "btn"}
-              onClick={(e) => setBtnClick(2)}
+              onClick={(e) => setBtnClick(1)}
             >
               History
             </button>

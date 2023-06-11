@@ -22,27 +22,24 @@ export default function LoggedInNavbar() {
       url = `http://localhost:5000/adminNotification/`;
       axios(url)
       .then((data) => {
-        console.log(data);
         setFilterNotifications(data.data.filter(el => !el.read));
       })
       .catch((err) => console.log(err));
       url = `http://localhost:5000/bloodRequest/`;
       axios(url)
       .then((data) => {
-        console.log(data);
         setFilterPatientNotifications(data.data.filter(el => !el.read));
       })
       .catch((err) => console.log(err));
     }
     axios(`http://localhost:5000/bankNotification/`)
       .then((data) => {
-        console.log(data);
         if(role === 'Admin') {
           setFilterInbox(data.data.filter(el => (!el.adminRead || !el.adminReplyRead)));
         }
         else if(role === 'Blood Bank') {
-          setFilterNotifications(data.data.filter(el => !el.read));
-          setFilterInbox(data.data.filter(el => (!el.bankRead || !el.bankReplyRead)));
+          setFilterNotifications(data.data.filter(el => !el.read && el.bank_id === userData._id));
+          setFilterInbox(data.data.filter(el => ((!el.bankRead || !el.bankReplyRead)) && (el.bank_id === userData._id)));
         }
       })
       .catch((err) => console.log(err));
@@ -116,7 +113,7 @@ export default function LoggedInNavbar() {
             )}
             <div className='editMenu' style={{display: isEdit ? 'flex' : 'none'}}>
               <button className='editBtn' onClick={() => {navigateToEditPage(); setisEdit(false)}}>Edit Profile</button>
-              <button className='editBtn'>Help</button>
+              <button className='editBtn' onClick={() => navigate('/help')}>Help</button>
               <button className='editBtn' onClick={handleLogout}>Log Out</button>
             </div>
         </div>

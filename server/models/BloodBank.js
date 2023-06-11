@@ -28,7 +28,10 @@ const bankSchema = new mongoose.Schema({
   },
   password2: String,
 
-  img: String,
+  img: {
+    String,
+    default: "",
+  },
   fname: {
     type: String,
     required: true,
@@ -39,7 +42,6 @@ const bankSchema = new mongoose.Schema({
   },
   adminAddress: {
     type: String,
-    required: true,
   },
   adminEmail: {
     type: String,

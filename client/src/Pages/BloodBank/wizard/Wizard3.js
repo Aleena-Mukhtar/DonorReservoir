@@ -10,9 +10,7 @@ export default function Wizard3() {
   const navigate = useNavigate();
   const [types, setTypes] = useState(data.bloodTypes);
 
-  useEffect(() => {
-    console.log(types);
-  }, [types]);
+  useEffect(() => {}, [types]);
 
   const handleBack = () => {
     setData({ ...data, bloodTypes: types });
@@ -34,15 +32,28 @@ export default function Wizard3() {
   };
 
   const handleSubmit = () => {
-    axios.post("/bloodBank", { ...data, bloodTypes: types }).then((res) => {
-      console.log(res);
-      if (res.err) {
-        console.log(res);
-      } else {
-        console.log("success");
-        navigateToLoginPage();
-      }
-    });
+    data.bloodTypes = types;
+    if(data.bloodTypes.length === 0) alert('Please Select bloodTypes');
+    const config = {
+      url: "http://localhost:5000/bloodBank/",
+      method: "POST",
+      data: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        if (response.data.error) {
+          console.log(response.data.message);
+        } else {
+          navigateToLoginPage();
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
   return (
     <div className="wizard3 wizard1">

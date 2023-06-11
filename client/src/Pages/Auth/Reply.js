@@ -22,7 +22,6 @@ export default function Reply() {
     useEffect(() => {
       axios(`http://localhost:5000/bankNotification/${id}`)
         .then((data) => {
-          console.log(data);
           setNotification(data.data);
           if(data.data.status === 'Pending') setStatus(false);
           else setStatus(true);
@@ -44,8 +43,6 @@ export default function Reply() {
       })
       .then((res) => {
         if (res.data.success) {
-          console.log(res.data.data.read);
-          console.log("status Successfully");
           handleBloodBottles();
           setStatus(true);
         } else {
@@ -71,9 +68,7 @@ export default function Reply() {
       };
       axios(config)
         .then(function (response) {
-          console.log(JSON.stringify(response.data));
           if (response.data.success) {
-            console.log(response.data);
             alert('Shipment Record Added Successfuly');
           } else {
             console.log(response);

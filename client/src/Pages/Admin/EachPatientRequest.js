@@ -30,7 +30,6 @@ export default function EachPatientRequest() {
             data.data.time = DisplayCurrentTime(new Date(data.data.createdAt.toString()));
             axios(`http://localhost:5000/bloodBottle/${data.data.bloodType}`)
             .then((data) => {
-                console.log(data.data);
                 setBottle(data.data.data);
             })
             .catch((err) => console.log(err));
@@ -42,7 +41,6 @@ export default function EachPatientRequest() {
             if(data.data.donor_id){
                 axios(`http://localhost:5000/donor/get/${data.data.donor_id}`)
                 .then((data) => {
-                    console.log(data.data.data[0]);
                     setDonor(data.data.data[0]);
                 })
                 .catch((err) => console.log(err));
@@ -52,7 +50,6 @@ export default function EachPatientRequest() {
     }, [status]);
 
     function DisplayCurrentTime(date) {
-        console.log(date);
         let hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
         let am_pm = date.getHours() >= 12 ? "PM" : "AM";
         hours = hours < 10 ? "0" + hours : hours;
@@ -76,7 +73,6 @@ export default function EachPatientRequest() {
         .then((res) => {
             if (res.data.success) {
                 setStatus(res.data.data.status);
-                console.log("Status Changed Successfully");
                 readRequest();
             } else {
                 console.log(res);
@@ -99,7 +95,6 @@ export default function EachPatientRequest() {
         })
         .then((res) => {
             if (res.data.success) {
-                console.log("Mark as read Successfully");
             } else {
                 console.log(res);
             }
@@ -110,7 +105,6 @@ export default function EachPatientRequest() {
     const AcceptBottle = (Type) => {
         axios(`http://localhost:5000/bloodBottle/${Type}`)
         .then((data) => {
-            console.log(data.data.data);
             const count = parseInt(data.data.data.count) - parseInt(request?.count);
             if(count < 5) handleSendAlert(Type);
             if(count < 0) {
@@ -123,7 +117,10 @@ export default function EachPatientRequest() {
                 handleGivenBottle(count, request?._id);
             }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+            handleSendAlert(Type);
+            setShowDeleteModal(true);        
+        });
     }
 
     const handleSendAlert = (type) => {    
@@ -140,7 +137,6 @@ export default function EachPatientRequest() {
     
         axios(config)
             .then(function (response) {
-                console.log(JSON.stringify(response.data));
                 if (response.data.error) {
                     console.log(response.data.message);
                 } else {
@@ -163,8 +159,6 @@ export default function EachPatientRequest() {
         })
         .then(res => {
             if (res.data.success) {
-                console.log(res);
-                console.log("Bottles Assigned Successfully");
                 changeStatus('Approved');
             }
             else {
@@ -187,8 +181,6 @@ export default function EachPatientRequest() {
         })
         .then(res => {
             if (res.data.success) {
-                console.log(res);
-                console.log("Bottle's data Updated Successfully");
                 changeStatus('Approved');
             }
             else {
@@ -235,11 +227,19 @@ export default function EachPatientRequest() {
         </div>
         <div className='editProfileContent'>
             <div className='pictureCon'>
-                <img 
-                    src={patient?.img}
-                    alt="logo" 
-                    className="edit-img" 
-                />
+                {
+                    patient?.img === '' ? 
+                    <img 
+                        src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
+                        alt="logo" 
+                        className="edit-img" 
+                    /> : 
+                    <img 
+                        src={patient?.img}
+                        alt="logo" 
+                        className="edit-img" 
+                    />
+                }
                 <div className='detailCon'>
                     <div className='nameCon'>{patient?.lname} {patient?.fname}</div>
                     <div className='address'>{new Date(request?.createdAt?.toString())?.toDateString()} {request?.time}</div>
@@ -441,10 +441,10 @@ export default function EachPatientRequest() {
                                     {request?.givenCount}
                                 </td>
                                 <td className="rowText" align="center">
-                                    {bottle?.unitPrice}
+                                    {bottle?.unitPrice || 0}
                                 </td>
                                 <td className="rowText" align="center">
-                                    {parseInt(request?.givenCount)  * parseInt(bottle?.unitPrice)}
+                                    {(parseInt(request?.givenCount)  * parseInt(bottle?.unitPrice)) || 0}
                                 </td>
                             </tr>
                         </tbody>
@@ -510,182 +510,3 @@ export default function EachPatientRequest() {
     </>
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { HiOutlineArrowNarrowLeft, HiIdentification } from 'react-icons/hi';
-// import { FaUserCheck, FaAddressBook, FaPrescriptionBottleAlt } from 'react-icons/fa';
-// import { BsCalendar2DateFill, BsTelephoneOutboundFill, BsFillBookmarkStarFill } from 'react-icons/bs';
-// import { MdOutlineAccessTimeFilled, MdEmail, MdBloodtype, MdDelete } from 'react-icons/md';
-// import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
-
-// export default function EachPatientRequest() {
-//     const navigate = useNavigate();
-    // const [showDeleteModal, setShowDeleteModal] = useState(false);
-    // const [showDenyModal, setShowDenyModal] = useState(false);
-    // const [starred, setStarred] = useState(false);
-    // const [status, setStatus] = useState('notSet');
-//   return (
-//     <div className='eachDonor eachPatientRequest'>
-//         <div className='topDiv'>
-//             <button className='backBtn' onClick={() => navigate(-1)}>
-//                 <HiOutlineArrowNarrowLeft className='icon'/>
-//             </button>
-//             <div className='imgDiv'>
-//                 <img
-//                     src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
-//                     alt="logo"
-//                     className="donor-img"
-//                 />
-//             </div>
-//         </div>
-//         <div className='MainContent'>
-//             <div className='nameDiv'>
-//                 <div className='name'>Patient Name</div>
-//                 <div className='BtnCon'>
-//                     <button className='starBtn btn' onClick={(e) => setStarred(!starred)}>
-//                         {
-//                             starred ? 
-//                             <AiFillStar className='icon'/> : <AiOutlineStar className='icon'/>
-//                         }
-//                     </button>
-//                     <button className='deleteBtn btn' onClick={(e) => setShowDeleteModal(!showDeleteModal)}>
-//                         <MdDelete className='icon'/>
-//                     </button>
-//                     {
-//                         status === 'notSet' ? 
-//                         <>
-//                             <button className='denyBtn btn1' onClick={(e) => setShowDenyModal(!showDenyModal)}>Deny</button>
-//                             <button className='approveBtn btn1' onClick={(e) => setStatus('approve')}>Approve</button>
-//                         </> :  null
-//                     }
-//                 </div>
-//             </div>
-//             <div className='rightPanel'>
-//                 <div className='DetailCon'>
-//                     <div className='header'>
-//                         <FaUserCheck className='icon colorIcon'/>
-//                     </div>
-//                     <div className='text'>123456789101112</div>
-//                 </div>
-//                 <div className='DetailCon'>
-//                     <div className='header'>
-//                         <BsCalendar2DateFill className='icon'/>
-//                     </div>
-//                     <div className='text'>December 23, 2023</div>
-//                 </div>
-//                 <div className='DetailCon'>
-//                     <div className='header'>
-//                         <MdOutlineAccessTimeFilled className='icon colorIcon'/>
-//                     </div>
-//                     <div className='text'>8:15 pm</div>
-//                 </div>
-//                 <div className='DetailCon'>
-//                     <div className='header'>
-//                         <FaAddressBook className='icon'/>
-//                     </div>
-//                     <div className='text'>House # 12, Street # 34 Block A Lahore Punjab</div>
-//                 </div>
-//                 <div className='DetailCon'>
-//                     <div className='header'>
-//                         <HiIdentification className='icon colorIcon'/>
-//                     </div>
-//                     <div className='text'>35202-1234567-0</div>
-//                 </div>
-//                 <div className='DetailCon'>
-//                     <div className='header'>
-//                         <BsTelephoneOutboundFill className='icon'/>
-//                     </div>
-//                     <div className='text'>12345678910</div>
-//                 </div>
-//                 <div className='DetailCon'>
-//                     <div className='header'>
-//                         <BsTelephoneOutboundFill className='icon colorIcon'/>
-//                     </div>
-//                     <div className='text'>12345678910</div>
-//                 </div>
-//                 <div className='DetailCon'>
-//                     <div className='header'>
-//                         <MdEmail className='icon'/>
-//                     </div>
-//                     <div className='text'>patient@gmail.com</div>
-//                 </div>
-//                 <div className='DetailCon'>
-//                     <div className='header'>
-//                         <MdBloodtype className='icon colorIcon'/>
-//                     </div>
-//                     <div className='text'>B+</div>
-//                 </div>
-//                 <div className='DetailCon'>
-//                     <div className='header'>
-//                         <FaPrescriptionBottleAlt className='icon'/>
-//                     </div>
-//                     <div className='text'>3</div>
-//                 </div>
-//                 <div className='DetailCon'>
-//                     <div className='header'>
-//                         <BsFillBookmarkStarFill className='icon colorIcon'/>
-//                     </div>
-//                     <div className={status === 'approve' ? 'text Astatus' : 'text Dstatus'}>
-//                         {
-//                             status === 'deny' ? 'Denied' : status === 'approve' ? 'Approved' : 'Pending'
-//                         }
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-        // <div className='logoutModal' style={{display: showDeleteModal ? 'flex' : 'none'}} onClick={(e) => setShowDeleteModal(false)}>
-        //     <div className='logout'>
-        //         <div className='modalHeading'>Confirm Delete</div>
-        //         <div className='innerHeading'>Are you sure you want to delete this request?</div>
-        //         <div className='btnCon'>
-        //             <button className='cancelBtn' onClick={(e) => setShowDeleteModal(false)}>Cancel</button>
-        //             <button className='okBtn'>OK</button>
-        //         </div>
-        //     </div>
-        // </div>
-        // <div className='logoutModal' style={{display: showDenyModal ? 'flex' : 'none'}} onClick={(e) => setShowDenyModal(false)}>
-        //     <div className='logout'>
-        //         <div className='modalHeading'>Confirm Deny</div>
-        //         <div className='innerHeading'>Are you sure you want to delete this request?</div>
-        //         <div className='innerHeading' style={{color: 'red'}}>By this action that patient is unable to recieve blood.</div>
-        //         <div className='btnCon'>
-        //             <button className='cancelBtn' onClick={(e) => setShowDenyModal(false)}>Cancel</button>
-        //             <button className='okBtn' onClick={(e) => setStatus('deny')}>OK</button>
-        //         </div>
-        //     </div>
-        // </div>
-//     </div>
-//   )
-// }

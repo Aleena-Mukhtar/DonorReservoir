@@ -13,7 +13,7 @@ export default function Footer() {
         </div>
         <div className='detail'>
           <Link className='link' to='/aboutUs'>Contact</Link>
-          <Link className='link' to='/aboutUs'>Help Center</Link>
+          <Link className='link' to='/help'>Help Center</Link>
           <Link className='link' to='/aboutUs'>About Us</Link>
         </div>
       </div>

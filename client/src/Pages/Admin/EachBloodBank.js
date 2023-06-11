@@ -20,7 +20,6 @@ export default function EachBloodBank() {
   useEffect(() => {
     axios(`http://localhost:5000/bloodBank/${id}`)
       .then((data) => {
-        console.log(data.data);
         setbank(data.data);
         DisplayCurrentTime(new Date(data.data?.createdAt.toString()));
       })
@@ -44,7 +43,6 @@ export default function EachBloodBank() {
     axios(config)
       .then((data) => {
         if (data.data.success) {
-          console.log(data.data.message);
           navigate(`/adminDashboard`);
         } else {
           console.log(data.data.message);
@@ -55,7 +53,6 @@ export default function EachBloodBank() {
 
   const starbank = (e) => {
     e.preventDefault();
-    console.log(bank?.star);
     const data = {
       star: !bank?.star,
     };
@@ -69,8 +66,6 @@ export default function EachBloodBank() {
     })
       .then((res) => {
         if (res.data.success) {
-          console.log(res.data.data.star);
-          console.log("Starred Successfully");
           setbank(res.data.data);
           setStarred(res.data.data.star);
         } else {

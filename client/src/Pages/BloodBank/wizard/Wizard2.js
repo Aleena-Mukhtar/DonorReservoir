@@ -6,10 +6,8 @@ export default function Wizard2() {
   const { setTab, handleChange, setData, data } = useContext(requestContext);
   const isValid = () => {
     const isEmpty = [
-      "img",
       "fname",
       "lname",
-      "adminAddress",
       "adminEmail",
       "adminPhone",
       "adminCNIC",
@@ -17,6 +15,64 @@ export default function Wizard2() {
 
     return !isEmpty;
   };
+
+  function validateDonor(bank) {
+
+    const validationRules = {
+      fname: {
+        required: true,
+      },
+      lname: {
+        required: true,
+      },
+      adminEmail: {
+        required: true,
+        unique: true,
+        validate: (value) => {
+          const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return regex.test(value);
+        },
+      },
+      adminPhone: {
+        required: true,
+        validate: (value) => {
+          const regex = /^\d{11}$/;
+          return regex.test(value);
+        },
+      },
+      adminCNIC: {
+        required: true,
+        validate: (value) => {
+          const regex = /^\d{13}$/;
+          return regex.test(value);
+        },
+      },
+    };
+  
+    for (const field in validationRules) {
+      if (validationRules.hasOwnProperty(field)) {
+        const rules = validationRules[field];
+        const value = bank[field];
+        console.log(value);
+  
+        if (rules.required && (!value || value.trim() === '')) {
+          alert(`${field} is required.`);
+          return false;
+        }
+  
+        if (rules.validate && !rules.validate(value)) {
+          alert(`Invalid ${field}.`);
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  function handleClick(data) {
+    const isDataValid = validateDonor(data);
+    if (isDataValid) setTab(3);
+  }
 
   async function uploadImg(e) {
     const file = e.target.files[0];
@@ -78,7 +134,7 @@ export default function Wizard2() {
           </div>
           <div className="fieldsDiv">
             <div className="fieldCon">
-              <div className="field">First Name</div>
+              <div className="field">First Name <span style={{color: 'red'}}>*</span></div>
               <input
                 className="input"
                 onChange={(e) => handleChange(e)}
@@ -88,7 +144,7 @@ export default function Wizard2() {
               />
             </div>
             <div className="fieldCon">
-              <div className="field">Last Name</div>
+              <div className="field">Last Name <span style={{color: 'red'}}>*</span></div>
               <input
                 className="input"
                 onChange={(e) => handleChange(e)}
@@ -110,7 +166,7 @@ export default function Wizard2() {
               />
             </div>
             <div className="fieldCon">
-              <div className="field">Email (personal email)</div>
+              <div className="field">Email (personal email) <span style={{color: 'red'}}>*</span></div>
               <input
                 className="input"
                 onChange={(e) => handleChange(e)}
@@ -122,7 +178,7 @@ export default function Wizard2() {
           </div>
           <div className="fieldsDiv">
             <div className="fieldCon">
-              <div className="field">Phone Number</div>
+              <div className="field">Phone Number <span style={{color: 'red'}}>* (without dashes)</span></div>
               <input
                 className="input"
                 onChange={(e) => handleChange(e)}
@@ -132,7 +188,7 @@ export default function Wizard2() {
               />
             </div>
             <div className="fieldCon">
-              <div className="field">CNIC</div>
+              <div className="field">CNIC <span style={{color: 'red'}}>* (without dashes)</span></div>
               <input
                 className="input"
                 onChange={(e) => handleChange(e)}
@@ -148,7 +204,7 @@ export default function Wizard2() {
             </button>
             <button 
               className="Btn" 
-              onClick={() => setTab(3)}
+              onClick={() => handleClick(data)}
               disabled={isValid()}
               style={{ opacity: isValid() ? "0.8" : "1" }} 
             >

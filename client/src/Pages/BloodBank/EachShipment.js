@@ -15,7 +15,6 @@ export default function EachShipment() {
   useEffect(() => {
     axios(`http://localhost:5000/bankNotification/${id}`)
       .then((data) => {
-        console.log(data);
         setShipment(data.data);
       })
       .catch((err) => console.log(err));
