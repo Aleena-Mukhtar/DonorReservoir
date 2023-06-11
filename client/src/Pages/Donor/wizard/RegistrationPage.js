@@ -39,7 +39,6 @@ export default function RegistrationPage() {
 
   const isValid = () => {
     const isEmpty = [
-      "img",
       "fname",
       "lname",
       "address",
@@ -53,6 +52,72 @@ export default function RegistrationPage() {
     return !isEmpty;
   };
 
+  function validateDonor(donor) {
+
+    const validationRules = {
+      fname: {
+        required: true,
+      },
+      email: {
+        required: true,
+        unique: true,
+        validate: (value) => {
+          const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return regex.test(value);
+        },
+      },
+      bloodType: {
+        required: true,
+        validate: (value) => {
+          const validBloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+          return validBloodTypes.includes(value);
+        },
+      },
+      phone: {
+        required: true,
+        validate: (value) => {
+          const regex = /^\d{10}$/;
+          return regex.test(value);
+        },
+      },
+      phone2: {
+        required: true,
+        validate: (value) => {
+          const regex = /^\d{10}$/;
+          return regex.test(value);
+        },
+      },
+      CNIC: {
+        required: true,
+        validate: (value) => {
+          const regex = /^\d{13}$/;
+          return regex.test(value);
+        },
+      },
+    };
+  
+    for (const field in validationRules) {
+      if (validationRules.hasOwnProperty(field)) {
+        const rules = validationRules[field];
+        const value = donor[field];
+  
+        // Check if the field is required and empty
+        if (rules.required && (!value || value.trim() === '')) {
+          alert(`${field} is required.`);
+          return false;
+        }
+  
+        // Perform additional validations
+        if (rules.validate && !rules.validate(value)) {
+          alert(`Invalid ${field}.`);
+          return false;
+        }
+
+      }
+    }
+    return true;
+  }
+  
   // function handleChangeImg(e) {
   //   console.log(e.target.files);
   //   setData({ ...data, img: URL.createObjectURL(e.target.files[0]) });
@@ -61,27 +126,32 @@ export default function RegistrationPage() {
   const handleRegistration = (e) => {
     e.preventDefault();
 
-    const config = {
-      url: "http://localhost:5000/donor/donor",
-      method: "POST",
-      data: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-        if (response.data.error) {
-          alert(response.data.message);
-        } else {
-          setTab(2);
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    const isDataValid = validateDonor(data);
+    if (isDataValid) {
+      const config = {
+        url: "http://localhost:5000/donor/",
+        method: "POST",
+        data: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+  
+      axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+          if (response.data.error) {
+            alert(response.data.message);
+          } else {
+            setTab(2);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      console.log('invalid data');
+    }
   };
   return (
     <div className="donorRegistration">
@@ -119,7 +189,7 @@ export default function RegistrationPage() {
         </div>
         <div className="fieldsDiv">
           <div className="fieldCon">
-            <div className="field">First Name</div>
+            <div className="field">First Name <span style={{color: 'red'}}>*</span></div>
             <input
               className="input"
               onChange={(e) => handleChange(e)}
@@ -129,7 +199,7 @@ export default function RegistrationPage() {
             />
           </div>
           <div className="fieldCon">
-            <div className="field">Last Name</div>
+            <div className="field">Last Name <span style={{color: 'red'}}>*</span></div>
             <input
               className="input"
               onChange={(e) => handleChange(e)}
@@ -141,7 +211,7 @@ export default function RegistrationPage() {
         </div>
         <div className="fieldsDiv">
           <div className="fieldCon">
-            <div className="field">Address</div>
+            <div className="field">Address <span style={{color: 'red'}}>*</span></div>
             <input
               className="input"
               onChange={(e) => handleChange(e)}
@@ -151,7 +221,7 @@ export default function RegistrationPage() {
             />
           </div>
           <div className="fieldCon">
-            <div className="field">Email</div>
+            <div className="field">Email <span style={{color: 'red'}}>*</span></div>
             <input
               className="input"
               onChange={(e) => handleChange(e)}
@@ -163,7 +233,7 @@ export default function RegistrationPage() {
         </div>
         <div className="fieldsDiv">
           <div className="fieldCon">
-            <div className="field">Phone Number</div>
+            <div className="field">Phone Number <span style={{color: 'red'}}>* (without dashes)</span></div>
             <input
               className="input"
               onChange={(e) => handleChange(e)}
@@ -173,7 +243,7 @@ export default function RegistrationPage() {
             />
           </div>
           <div className="fieldCon">
-            <div className="field">Another Phone Number</div>
+            <div className="field">Another Phone Number <span style={{color: 'red'}}>* (without dashes)</span></div>
             <input
               className="input"
               onChange={(e) => handleChange(e)}
@@ -185,7 +255,7 @@ export default function RegistrationPage() {
         </div>
         <div className="fieldsDiv">
           <div className="fieldCon">
-            <div className="field">Your Blood Type</div>
+            <div className="field">Your Blood Type <span style={{color: 'red'}}>*</span></div>
             <select
               className="select input"
               onChange={(e) => handleChange(e)}
@@ -206,7 +276,7 @@ export default function RegistrationPage() {
             </select>
           </div>
           <div className="fieldCon">
-            <div className="field">CNIC</div>
+            <div className="field">CNIC <span style={{color: 'red'}}>* (without dashes)</span></div>
             <input
               className="input"
               onChange={(e) => handleChange(e)}

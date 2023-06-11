@@ -6,6 +6,7 @@ import { IoSend } from 'react-icons/io5';
 import LoggedInNavbar from "../Auth/LoggedInNavbar";
 
 const initialObj = {
+    bank_id: "",
     bankName: "",
     hospitalName: "",
     count: "",
@@ -26,8 +27,6 @@ export default function FilterBanks() {
   const [data, setData] = useState(initialObj);
   const navigate = useNavigate();
   const { type, ID } = useParams();
-  console.log(type);
-  console.log(ID);
   useEffect(() => {
     axios(`http://localhost:5000/bloodBank/`)
       .then((data) => {
@@ -36,10 +35,10 @@ export default function FilterBanks() {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleEmail = (name) => {
+  const handleEmail = (name, ID) => {
     setBankName(name);
     setShowModal(true);
-    setData({ ...data, hospitalName: 'Blood Management Hospital', bloodType: type, bankName: name });
+    setData({ ...data, hospitalName: 'Blood Reservoir Management Hospital', bloodType: type, bankName: name, bank_id: ID });
   }
 
   const handleChange = (e) => {
@@ -47,33 +46,70 @@ export default function FilterBanks() {
     setData({ ...data, [name]: value });
   }
 
+  function validateDonor(patient) {
+
+        const validationRules = {
+            hospitalName: {
+                required: true,
+            },
+            bankName: {
+                required: true,
+            },
+            bloodType: {
+                required: true,
+            },
+            count: {
+                required: true,
+            },
+            days: {
+                required: true,
+            },
+        };
+    
+        for (const field in validationRules) {
+        if (validationRules.hasOwnProperty(field)) {
+            const rules = validationRules[field];
+            const value = patient[field];
+    
+            if (rules.required && (!value || value.trim() === '')) {
+            alert(`${field} is required.`);
+            return false;
+            }
+        }
+        }
+        return true;
+    }
+
+
   const handleSendEmail = (e) => {
     e.preventDefault();
 
-    const config = {
-      url: "http://localhost:5000/bankNotification/",
-      method: "POST",
-      data: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-        if (response.data.error) {
-          alert(response.data.message);
-        } else {
-          alert('Email Send Successfully!');
-          setShowModal(false);
-          handleNotificationDelete();
-          navigate('/adminDashboard');
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    const isDataValid = validateDonor(data);
+    if(isDataValid){
+        const config = {
+            url: "http://localhost:5000/bankNotification/",
+            method: "POST",
+            data: JSON.stringify(data),
+            headers: {
+              "Content-Type": "application/json",
+            },
+        };
+    
+        axios(config)
+        .then(function (response) {
+            if (response.data.error) {
+            alert(response.data.message);
+            } else {
+            alert('Email Send Successfully!');
+            setShowModal(false);
+            handleNotificationDelete();
+            navigate('/adminDashboard');
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
   }
 
     const handleNotificationDelete = () => {
@@ -87,10 +123,10 @@ export default function FilterBanks() {
 
         axios(config)
         .then(response => {
-            console.log(response.data); // handle success response
+            console.log(response.data);
         })
         .catch(error => {
-            console.log(error); // handle error response
+            console.log(error);
         });
     }
 
@@ -143,7 +179,7 @@ export default function FilterBanks() {
                                 {el.city}
                             </td>
                             <td className="rowText" align="center">
-                                <button className="sendBtn" onClick={() => handleEmail(el.bankName)}>
+                                <button className="sendBtn" onClick={() => handleEmail(el.bankName, el._id)}>
                                     <IoSend className="icon"/>
                                 </button>
                             </td>
@@ -160,19 +196,19 @@ export default function FilterBanks() {
                 <div className="modalHeading">Blood Request Integration</div>
                 <div className="innerHeading">Fill some data for blood request Please:</div>
                 <div className="fieldCon">
-                    <div className="header">Bank Name: </div>
+                    <div className="header">Bank Name: <span style={{color: 'red'}}>*</span></div>
                     <input type="text" className="input" disabled={true} value={bankName}/>
                 </div>
                 <div className="fieldCon">
-                    <div className="header">Blood Type: </div>
+                    <div className="header">Blood Type: <span style={{color: 'red'}}>*</span></div>
                     <input type="text" className="input" disabled={true} value={type}/>
                 </div>
                 <div className="fieldCon">
-                    <div className="header">Bottle Count: </div>
+                    <div className="header">Bottle Count: <span style={{color: 'red'}}>*</span></div>
                     <input type="number" className="input" name="count" onChange={(e) => handleChange(e)} value={data.count}/>
                 </div>
                 <div className="fieldCon">
-                    <div className="header">Need Stock (In days): </div>
+                    <div className="header">Need Stock (In days): <span style={{color: 'red'}}>*</span></div>
                     <input type="number" className="input" name="days" onChange={(e) => handleChange(e)} value={data.days}/>
                 </div>
                 <div className="btnCon">

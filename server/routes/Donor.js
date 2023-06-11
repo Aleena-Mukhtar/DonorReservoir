@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Donor = require("./../models/Donor");
 const upload = require("./upload");
 
-router.post("/donor", async (req, res) => {
+router.post("/", async (req, res) => {
   const newitem = new Donor(req.body);
   const _email = req.body.email
   const isDonorExist = await Donor.findOne({ email: _email });

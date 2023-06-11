@@ -19,7 +19,6 @@ export default function EachDonor() {
   useEffect(() => {
     axios(`http://localhost:5000/donor/get/${id}`)
       .then((data) => {
-        console.log(data);
         setDonor(data.data.data[0]);
         setStar(data.data.data[0]?.star);
         DisplayCurrentTime(new Date(data.data.data[0]?.createdAt.toString()));
@@ -42,7 +41,6 @@ export default function EachDonor() {
     axios(config)
       .then((data) => {
         if (data.data.success) {
-          console.log(data.data.message);
           navigate(`/adminDashboard`);
         } else {
           console.log(data.data.message);
@@ -65,9 +63,6 @@ export default function EachDonor() {
     })
       .then((res) => {
         if (res.data.success) {
-          console.log(res.data.data.star);
-          console.log("Starred Successfully");
-          // setStarred(res.data.data.star);
           setStar(res.data.data.star);
           setDonor(data.data.data);
         } else {

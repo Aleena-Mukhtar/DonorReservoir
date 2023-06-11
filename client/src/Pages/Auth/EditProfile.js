@@ -51,9 +51,6 @@ export default function EditProfile() {
     const navigate = useNavigate();
 
     useEffect(() => {}, [showModal]);
-    useEffect(() => {
-        // window.location.reload();
-    }, []);
 
     async function uploadImg(e) {
         const file = e.target.files[0];
@@ -61,7 +58,6 @@ export default function EditProfile() {
         formdata.append("file", file);
         let res = await Singleupload(formdata);
         if (res.success) {
-          console.log(res.url);
           data.img = res.url;
           setShowModal(true);
         } else {}
@@ -86,11 +82,6 @@ export default function EditProfile() {
     const handleRemove = () => {
         data.img = "";
     }
-    // function handleChange(e) {
-    //     setShowModal(true);
-    //     console.log(e.target.files);
-    //     setFile(URL.createObjectURL(e.target.files[0]));
-    // }
     const handleFieldChange = (e) => {
         const { value, name } = e.target;
         setData({ ...data, [name]: value });
@@ -111,7 +102,6 @@ export default function EditProfile() {
         })
         .then(res => {
             if (res.data.success) {
-                console.log(res);
                 alert("Account Updated Successfully");
                 sessionStorage.setItem("userData",JSON.stringify(data));
                 if(role === "Admin") navigate(`/adminDashboard`);

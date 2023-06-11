@@ -155,25 +155,5 @@ router.put("/:id",(req,res)=>{
         });
     });
 });
-// router.put("/starDonor/:id", (req, res) => {
-//   Donor.findByIdAndUpdate(
-//     { _id: req.params.id },
-//     { star: req.body.star },
-//     { new: true },
-//     (err, obj) => {
-//       if (err) {
-//         console.log(err);
-//         return res
-//           .status(400)
-//           .json({ message: "Failed to update ", success: false });
-//       }
-//       res.status(200).json({
-//         success: true,
-//         message: "Donor starred successfully!",
-//         data: obj,
-//       });
-//     }
-//   );
-// });
 
 module.exports = router;

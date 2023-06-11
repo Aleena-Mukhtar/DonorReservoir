@@ -18,6 +18,75 @@ export default function Wizard1() {
     return !isEmpty;
   };
 
+  function validateDonor(bank) {
+
+    const validationRules = {
+      bankName: {
+        required: true,
+      },
+      city: {
+        required: true,
+      },
+      address: {
+        required: true,
+      },
+      email: {
+        required: true,
+        unique: true,
+        validate: (value) => {
+          const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return regex.test(value);
+        },
+      },
+      phone: {
+        required: true,
+        validate: (value) => {
+          const regex = /^\d{11}$/;
+          return regex.test(value);
+        },
+      },
+      mobile: {
+        validate: (value) => {
+          const regex = /^\d{11}$/;
+          return regex.test(value);
+        },
+      },
+      password: {
+        required: true,
+      },
+      password2: {
+        required: true,
+      },
+    };
+  
+    for (const field in validationRules) {
+      if (validationRules.hasOwnProperty(field)) {
+        const rules = validationRules[field];
+        const value = bank[field];
+  
+        if (rules.required && (!value || value.trim() === '')) {
+          alert(`${field} is required.`);
+          return false;
+        }
+  
+        if (rules.validate && !rules.validate(value)) {
+          alert(`Invalid ${field}.`);
+          return false;
+        }
+      }
+    }
+    if (bank['password'] !== bank['password2']) {
+      alert("Password and confirm password must match.");
+      return false;
+    }
+    return true;
+  }
+
+  function handleClick(data) {
+    const isDataValid = validateDonor(data);
+    if (isDataValid) setTab(2);
+  }
+
   return (
     <div className="wizard1">
       <div className="MainContent">
@@ -27,7 +96,7 @@ export default function Wizard1() {
         <div className="Formfields">
           <div className="fieldsDiv">
             <div className="fieldCon">
-              <div className="field">Bank Name</div>
+              <div className="field">Bank Name <span style={{color: 'red'}}>*</span></div>
               <input
                 className="input"
                 onChange={(e) => handleChange(e)}
@@ -37,7 +106,7 @@ export default function Wizard1() {
               />
             </div>
             <div className="fieldCon">
-              <div className="field">City</div>
+              <div className="field">City <span style={{color: 'red'}}>*</span></div>
               <input
                 className="input"
                 onChange={(e) => handleChange(e)}
@@ -49,7 +118,7 @@ export default function Wizard1() {
           </div>
           <div className="fieldsDiv">
             <div className="fieldCon">
-              <div className="field">Address</div>
+              <div className="field">Address <span style={{color: 'red'}}>*</span></div>
               <input
                 className="input"
                 onChange={(e) => handleChange(e)}
@@ -59,7 +128,7 @@ export default function Wizard1() {
               />
             </div>
             <div className="fieldCon">
-              <div className="field">Email (official email)</div>
+              <div className="field">Email (official email) <span style={{color: 'red'}}>*</span></div>
               <input
                 className="input"
                 onChange={(e) => handleChange(e)}
@@ -71,7 +140,7 @@ export default function Wizard1() {
           </div>
           <div className="fieldsDiv">
             <div className="fieldCon">
-              <div className="field">Phone Number</div>
+              <div className="field">Phone Number <span style={{color: 'red'}}>* (without dashes)</span></div>
               <input
                 className="input"
                 onChange={(e) => handleChange(e)}
@@ -81,7 +150,7 @@ export default function Wizard1() {
               />
             </div>
             <div className="fieldCon">
-              <div className="field">Mobile Number</div>
+              <div className="field">Mobile Number <span style={{color: 'red'}}>* (without dashes)</span></div>
               <input
                 className="input"
                 onChange={(e) => handleChange(e)}
@@ -93,7 +162,7 @@ export default function Wizard1() {
           </div>
           <div className="fieldsDiv">
             <div className="fieldCon">
-              <div className="field">Password</div>
+              <div className="field">Password <span style={{color: 'red'}}>*</span></div>
               <input
                 className="input"
                 onChange={(e) => handleChange(e)}
@@ -103,7 +172,7 @@ export default function Wizard1() {
               />
             </div>
             <div className="fieldCon">
-              <div className="field">Confirm Password</div>
+              <div className="field">Confirm Password <span style={{color: 'red'}}>*</span></div>
               <input
                 className="input"
                 onChange={(e) => handleChange(e)}
@@ -119,7 +188,7 @@ export default function Wizard1() {
             </button>
             <button 
               className="Btn" 
-              onClick={() => setTab(2)}
+              onClick={() => handleClick(data)}
               disabled={isValid()}
               style={{ opacity: isValid() ? "0.8" : "1" }} 
             >

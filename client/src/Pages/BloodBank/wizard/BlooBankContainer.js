@@ -29,9 +29,7 @@ export default function BlooBankContainer() {
   const [tab, setTab] = useState(0);
   const [data, setData] = useState(initialObj);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  useEffect(() => {}, [data]);
   const handleChange = (e) => {
     const { value, name } = e.target;
     setData({ ...data, [name]: value });

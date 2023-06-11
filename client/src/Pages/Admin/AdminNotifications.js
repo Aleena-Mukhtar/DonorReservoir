@@ -11,20 +11,17 @@ export default function AdminNotifications() {
   const [read, setread] = useState(false);
   const navigate = useNavigate();
   const navigateToFilterBankPage = (type, ID) => {
-    console.log(type);
     navigate(`/filterBank/${type}/${ID}`);
   };
   
   useEffect(() => {
     axios(`http://localhost:5000/adminNotification/`)
       .then((data) => {
-        console.log(data);
         setNotifications(data.data);
       })
     .catch((err) => console.log(err));
     axios(`http://localhost:5000/bloodRequest/`)
       .then((data) => {
-        console.log(data);
         setPatientNotifications(data.data.filter((el) => (!el.read)));
       })
     .catch((err) => console.log(err));
@@ -32,7 +29,6 @@ export default function AdminNotifications() {
 
   const readRequest = (Type, ID) => {
     setread(true);
-    console.log(read);
     const data = {
       read: true,
     };
@@ -46,8 +42,6 @@ export default function AdminNotifications() {
     })
     .then((res) => {
       if (res.data.success) {
-        console.log(res.data.data.read);
-        console.log("mark as read Successfully");
         navigateToFilterBankPage(Type, ID);
       } else {
         console.log(res);
@@ -71,8 +65,6 @@ export default function AdminNotifications() {
     })
     .then((res) => {
       if (res.data.success) {
-        console.log(res.data.data.read);
-        console.log("mark as read Successfully");
         navigate(`/eachRequest/${ID}`);
       } else {
         console.log(res);

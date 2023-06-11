@@ -14,7 +14,6 @@ export default function PatientRequests({ check, filters }) {
   useEffect(() => {
     axios(`http://localhost:5000/bloodRequest/`)
       .then((data) => {
-        console.log(data);
         setRequests(data.data);
       })
       .catch((err) => console.log(err));
@@ -22,7 +21,6 @@ export default function PatientRequests({ check, filters }) {
   useEffect(() => {
     if (requests) {
       let _filteredData = requests;
-      console.log(_filteredData);
       requests.forEach(ele => {
         ele.time = DisplayCurrentTime(new Date(ele.createdAt.toString()));
       });
@@ -35,7 +33,6 @@ export default function PatientRequests({ check, filters }) {
   }, [check, filters, requests]);
 
   function DisplayCurrentTime(date) {
-    console.log(date);
     let hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
     let am_pm = date.getHours() >= 12 ? "PM" : "AM";
     hours = hours < 10 ? "0" + hours : hours;

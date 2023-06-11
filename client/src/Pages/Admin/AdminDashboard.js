@@ -19,7 +19,6 @@ export default function AdminDashboard() {
   useEffect(() => {
     axios(`http://localhost:5000/adminNotification/`)
       .then((data) => {
-        console.log(data);
         setFilterNotifications(data.data.filter((el) => el.read));
       })
       .catch((err) => console.log(err));

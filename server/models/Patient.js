@@ -3,7 +3,7 @@ const PatientSchema = mongoose.Schema(
   {
     img: {
       type: String,
-      required: true,
+      default: "",
     },
     fname: {
       type: String,

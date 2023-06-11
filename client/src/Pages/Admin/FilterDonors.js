@@ -27,7 +27,6 @@ export default function FilterDonors() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { type } = useParams();
-  console.log(type);
   useEffect(() => {
     axios(`http://localhost:5000/donor/`)
       .then((data) => {
@@ -50,7 +49,6 @@ export default function FilterDonors() {
         })
         .then((res) => {
             if (res.data.success) {
-                console.log("Status Changed Successfully");
                 readRequest();
             } else {
                 console.log(res);
@@ -73,7 +71,6 @@ export default function FilterDonors() {
         })
         .then((res) => {
             if (res.data.success) {
-                console.log("Mark as read Successfully");
             } else {
                 console.log(res);
             }
@@ -95,7 +92,6 @@ export default function FilterDonors() {
         })
         .then((res) => {
             if (res.data.success) {
-                console.log("Donor sent Successfully");
                 changeStatus('Approved');
                 navigate(`/eachRequest/${id}`);
             } else {
@@ -104,12 +100,6 @@ export default function FilterDonors() {
         })
         .catch((err) => console.log(err));
     };
-
-  const handleEmail = (name) => {
-    setBankName(name);
-    setShowModal(true);
-    setData({ ...data, hospitalName: 'Blood Management Hospital', bloodType: type, bankName: name });
-  }
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -130,13 +120,11 @@ export default function FilterDonors() {
 
     axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
         if (response.data.error) {
           alert(response.data.message);
         } else {
           alert('Email Send Successfully!');
           setShowModal(false);
-        //   handleNotificationDelete();
           navigate('/adminDashboard');
         }
       })
