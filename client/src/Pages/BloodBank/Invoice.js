@@ -12,7 +12,6 @@ export default function Invoice() {
     useEffect(() => {
         axios(`http://localhost:5000/bankNotification/${id}`)
         .then((data) => {
-          console.log(data);
           setReply(data.data);
         })
         .catch((err) => console.log(err));

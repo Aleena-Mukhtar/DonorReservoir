@@ -14,29 +14,63 @@ export default function LoginPage() {
     setData({ ...data, [name]: value });
   };
 
-  const handleSubmit = () => {
-    let url = "";
-    if (role === "Admin") url = "/admin/login";
-    else if (role === "Patient") url = "/Patient/login";
-    else if (role === "Blood Bank") url = "/bloodBank/login";
-    else if (role === "Patient") url = "/patient/login";
-    axios.post(url, data).then((res) => {
-      console.log(res.data);
-      if (res.data.error) {
-        alert(res.data.message)
-      } else {
-        console.log("success");
-        // sessionStorage.setItem("id",res.data.userData._id);
-        // sessionStorage.setItem("role",role);
-        sessionStorage.setItem("id",res.data.userData._id);
-        sessionStorage.setItem("role",role);
-        sessionStorage.setItem("userData",JSON.stringify(res.data.userData));
-        sessionStorage.setItem("isLoggedIn",true);
-        if(role === "Admin") navigate(`/adminDashboard`);
-        else if(role === "Blood Bank") navigate(`/bloodBankDashboard`);
-        else if(role === "Patient") navigate(`/patientDashboard`);
+  function validateDonor(patient) {
+
+    const validationRules = {
+      email: {
+        required: true,
+        unique: true,
+        validate: (value) => {
+          const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return regex.test(value);
+        },
+      },
+      password: {
+        required: true,
+      },
+    };
+  
+    for (const field in validationRules) {
+      if (validationRules.hasOwnProperty(field)) {
+        const rules = validationRules[field];
+        const value = patient[field];
+  
+        if (rules.required && (!value || value.trim() === '')) {
+          alert(`${field} is required.`);
+          return false;
+        }
+  
+        if (rules.validate && !rules.validate(value)) {
+          alert(`Invalid ${field}.`);
+          return false;
+        }
       }
-    });
+    }
+    return true;
+  }
+
+  const handleSubmit = () => {
+    const isDataValid = validateDonor(data);
+    if(isDataValid){
+      let url = "";
+      if (role === "Admin") url = "/admin/login";
+      else if (role === "Patient") url = "/Patient/login";
+      else if (role === "Blood Bank") url = "/bloodBank/login";
+      else if (role === "Patient") url = "/patient/login";
+      axios.post(url, data).then((res) => {
+        if (res.data.error) {
+          alert(res.data.message)
+        } else {
+          sessionStorage.setItem("id",res.data.userData._id);
+          sessionStorage.setItem("role",role);
+          sessionStorage.setItem("userData",JSON.stringify(res.data.userData));
+          sessionStorage.setItem("isLoggedIn",true);
+          if(role === "Admin") navigate(`/adminDashboard`);
+          else if(role === "Blood Bank") navigate(`/bloodBankDashboard`);
+          else if(role === "Patient") navigate(`/patientDashboard`);
+        }
+      });
+    }
   };
   return (
     <div className="login">
@@ -75,12 +109,13 @@ export default function LoginPage() {
           className="select"
         >
           {OPTIONS.map((el) => (
-            <option value={el}>{el}</option>
+            <option value={el} key={el}>{el}</option>
           ))}
         </select>
         <button
           className="Btn"
           disabled={role === "Role"}
+          style={{ opacity: role === "Role" ? "0.8" : "1" }}
           onClick={handleSubmit}
         >
           LOG IN

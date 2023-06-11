@@ -30,8 +30,8 @@ export default function Register() {
                 <RiAdminLine className='icon'/>
                 Login as an Admin
             </button>
-            <button className='signinBtn'>
-                <RiUserLocationLine className='icon' onClick={navigateToPatientTermsPage}/>
+            <button className='signinBtn' onClick={navigateToPatientTermsPage}>
+                <RiUserLocationLine className='icon'/>
                 Sign up as Patient
             </button>
             

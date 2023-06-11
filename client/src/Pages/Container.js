@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminDashboard from "./Admin/AdminDashboard";
 import BottleDetails from "./Admin/BottleDetails";
@@ -27,8 +27,12 @@ import EachPatient from "./Admin/EachPatient";
 import FilterDonors from "./Admin/FilterDonors";
 import About from "./Auth/About";
 import Policy from "./Auth/Policy";
+import Help from "./Auth/Help";
+import ErrorPage from "./Auth/ErrorPage";
 
 export default function Container() {
+  const[login, setLogin] = useState(sessionStorage.getItem("isLoggedIn") === "true" ? true : false);
+  console.log(sessionStorage.getItem("isLoggedIn"));
   return (
     <div className="container">
       <Router>
@@ -61,82 +65,82 @@ export default function Container() {
           <Route 
             exact 
             path="/editProfile" 
-            element={<EditProfile />} 
+            element={login ? <EditProfile /> : <ErrorPage/>} 
           />
           <Route 
             exact 
             path="/adminDashboard" 
-            element={<AdminDashboard />} 
+            element={login ? <AdminDashboard /> : <ErrorPage/>} 
           />
           <Route 
             exact 
             path="/eachRequest/:id" 
-            element={<EachPatientRequest />} 
+            element={login ? <EachPatientRequest /> : <ErrorPage/>} 
           />
           <Route 
             exact 
             path="/bottlesStock" 
-            element={<BottleDetails />} 
+            element={login ? <BottleDetails /> : <ErrorPage/>} 
           />
           <Route
             exact
             path="/bloodBankDashboard"
-            element={<BloodBankDashboard />}
+            element={login ? <BloodBankDashboard /> : <ErrorPage/>}
           />
           <Route
             exact
             path="/eachDonor/:id"
-            element={<EachDonor />}
+            element={login ? <EachDonor /> : <ErrorPage/>}
           />
           <Route
             exact
             path="/eachPatient/:id"
-            element={<EachPatient />}
+            element={login ? <EachPatient /> : <ErrorPage/>}
           />
           <Route
             exact
             path="/eachBank/:id"
-            element={<EachBloodBank />}
+            element={login ? <EachBloodBank /> : <ErrorPage/>}
           />
           <Route
             exact
             path="/filterBank/:type/:ID"
-            element={<FilterBanks />}
+            element={login ? <FilterBanks /> : <ErrorPage/>}
           />
           <Route
             exact
             path="/bankNotifications"
-            element={<BankNotifications />}
+            element={login ? <BankNotifications /> : <ErrorPage/>}
           />
           <Route
             exact
             path="/adminNotifications"
-            element={<AdminNotifications />}
+            element={login ? <AdminNotifications /> : <ErrorPage/>}
           />
           <Route
             exact
             path="/inbox"
-            element={<Inbox/>}
+            element={login ? <Inbox/> : <ErrorPage/>}
           />
           <Route
             exact
             path="/inbox/:id"
-            element={<Notification/>}
+            element={login ? <Notification/> : <ErrorPage/>}
           />
           <Route
             exact
             path="/reply/:id"
-            element={<Reply/>}
+            element={login ? <Reply/> : <ErrorPage/>}
           />
           <Route
             exact
             path="/invoice/:id"
-            element={<Invoice/>}
+            element={login ? <Invoice/> : <ErrorPage/>}
           />
           <Route
             exact
             path="/shipment/:id"
-            element={<EachShipment/>}
+            element={login ? <EachShipment/> : <ErrorPage/>}
           />
           <Route 
             exact 
@@ -146,12 +150,12 @@ export default function Container() {
           <Route
             exact
             path="/patientDashboard"
-            element={<PatientDashboard />}
+            element={login ? <PatientDashboard /> : <ErrorPage/>}
           />
           <Route
             exact
             path="/filterDonor/:id/:type"
-            element={<FilterDonors />}
+            element={login ? <FilterDonors /> : <ErrorPage/>}
           />
           <Route
             exact
@@ -162,6 +166,11 @@ export default function Container() {
             exact
             path="/PrivacyPolicy"
             element={<Policy />}
+          />
+          <Route
+            exact
+            path="/help"
+            element={<Help />}
           />
         </Routes>
         <Footer />

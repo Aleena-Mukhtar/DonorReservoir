@@ -11,12 +11,12 @@ export default function PatientDashboard() {
   const navigate = useNavigate();
   const [btnClick, setBtnClick] = useState(1);
   const [showModal, setShowModal] = useState(false);
+  const userData = JSON.parse(sessionStorage.getItem("userData"));
   const [history, setHistory] = useState([]);
   useEffect(() => {
     axios(`http://localhost:5000/bloodRequest/`)
       .then((data) => {
-        console.log(data);
-        setHistory(data.data);
+        setHistory(data.data.filter(el => (el.patient_id === userData._id)));
       })
       .catch((err) => console.log(err));
   }, []);
@@ -33,7 +33,7 @@ export default function PatientDashboard() {
     <>
     <LoggedInNavabr/>
     <div className="adminDashboard bloodBankDashboard patientDashboard">
-      <div className="heading">Blood Bank Dashboard</div>
+      <div className="heading">Patient Dashboard</div>
       <div className="mainContent">
         <div className="leftPanel">
           <div className="BtnDiv">

@@ -8,6 +8,7 @@ import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 export default function BankNotifications() {
   const [notifications, setNotifications] = useState(null);
   const [notification, setNotification] = useState({});
+  const userData = JSON.parse(sessionStorage.getItem("userData"));
   const [read, setRead] = useState(false);
   const [id, setId] = useState(null);
   const [data, setData] = useState({
@@ -21,8 +22,7 @@ export default function BankNotifications() {
   useEffect(() => {
     axios(`http://localhost:5000/bankNotification/`)
       .then((data) => {
-        console.log(data);
-        setNotifications(data.data.filter(el => !el.read));
+        setNotifications(data.data.filter(el => !el.read && el.bank_id === userData._id));
       })
       .catch((err) => console.log(err));
   }, [read]);
@@ -46,8 +46,6 @@ export default function BankNotifications() {
     })
     .then((res) => {
       if (res.data.success) {
-        console.log(res.data.data.read);
-        console.log("mark as read Successfully");
         setRead(true);
       } else {
         console.log(res);
@@ -56,39 +54,68 @@ export default function BankNotifications() {
     .catch((err) => console.log(err));
   };
 
+  function validateDonor(donor) {
+
+    const validationRules = {
+      unitPrice: {
+        required: true,
+      },
+      discount: {
+        required: true,
+      },
+      shipping: {
+        required: true,
+      },
+    };
+  
+    for (const field in validationRules) {
+      if (validationRules.hasOwnProperty(field)) {
+        const rules = validationRules[field];
+        const value = donor[field];
+  
+        if (rules.required && (!value || value.trim() === '')) {
+          alert(`${field} is required.`);
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   const handleReply = (ID) => {
     setShowModal(true);
     setId(ID);
     axios(`http://localhost:5000/bankNotification/${ID}`)
     .then((data) => {
-      console.log(data);
       setNotification(data.data);
     })
     .catch((err) => console.log(err));
   }
 
   const handleSendEmail = () => {
-    const data1 = {
-      reply: data,
-    };
-    axios({
-      url: `http://localhost:5000/bankNotification/sendReply/${id}`,
-      method: "PUT",
-      data: data1,
-      headers: {
-        "content-type": "application/json"
-      }
-    })
-    .then(res => {
-      if (res.data.success) {
-        console.log(res);
-        readRequest(id);
-        navigate(`/invoice/${id}`);
-      }
-      else {
-        console.log(res);
-      }
-    })
+    const isDataValid = validateDonor(data);
+    if(isDataValid){
+      const data1 = {
+        reply: data,
+      };
+      axios({
+        url: `http://localhost:5000/bankNotification/sendReply/${id}`,
+        method: "PUT",
+        data: data1,
+        headers: {
+          "content-type": "application/json"
+        }
+      })
+      .then(res => {
+        if (res.data.success) {
+          readRequest(id);
+          navigate(`/invoice/${id}`);
+        }
+        else {
+          console.log(res);
+        }
+      })
+    }
   }
 
   return (
@@ -130,36 +157,36 @@ export default function BankNotifications() {
           <div className="innerHeading">Fill some data for reply Please:</div>
           <div className="OuterField">
             <div className="fieldCon">
-              <div className="header">Hospital Name: </div>
+              <div className="header">Hospital Name: <span style={{color: 'red'}}>*</span></div>
               <input type="text" className="input" disabled={true} value={notification?.hospitalName}/>
             </div>
             <div className="fieldCon">
-              <div className="header">Blood Type: </div>
+              <div className="header">Blood Type: <span style={{color: 'red'}}>*</span></div>
               <input type="text" className="input" disabled={true} value={notification?.bloodType}/>
             </div>
           </div>
           <div className="OuterField">
             <div className="fieldCon">
-              <div className="header">Bottle Count: </div>
+              <div className="header">Bottle Count: <span style={{color: 'red'}}>*</span></div>
               <input type="number" className="input" name="count" onChange={(e) => handleChange(e)} disabled={true} value={notification?.count}/>
             </div>
             <div className="fieldCon">
-              <div className="header">Need Stock (In days): </div>
+              <div className="header">Need Stock (In days): <span style={{color: 'red'}}>*</span></div>
               <input type="number" className="input" name="days" onChange={(e) => handleChange(e)} disabled={true} value={notification?.days}/>
             </div>
           </div>
           <div className="OuterField">
             <div className="fieldCon">
-              <div className="header">Price Per Unit (PKR): </div>
+              <div className="header">Price Per Unit (PKR): <span style={{color: 'red'}}>*</span></div>
               <input type="number" className="input" name="unitPrice" onChange={(e) => handleChange(e)} value={data.unitPrice}/>
             </div>
             <div className="fieldCon">
-              <div className="header">discount (%): </div>
+              <div className="header">discount (%): <span style={{color: 'red'}}>*</span></div>
               <input type="number" className="input" name="discount" onChange={(e) => handleChange(e)} value={data.discount}/>
             </div>
           </div>
           <div className="fieldCon">
-            <div className="header">shipping (PKR): </div>
+            <div className="header">shipping (PKR): <span style={{color: 'red'}}>*</span></div>
             <input type="number" className="input ship" name="shipping" onChange={(e) => handleChange(e)} value={data.shipping}/>
           </div>
           <div className="btnCon">

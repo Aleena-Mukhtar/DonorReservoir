@@ -13,7 +13,6 @@ export default function Notification() {
     useEffect(() => {
         axios(`http://localhost:5000/bankNotification/${id}`)
           .then((data) => {
-            console.log(data);
             setNotification(data.data);
           })
           .catch((err) => console.log(err));

@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 const BankNotificationsSchema = new mongoose.Schema({
+  bank_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "BloodBank",
+    default: null,
+  },
   bankName: {
     type: String,
     required: true,

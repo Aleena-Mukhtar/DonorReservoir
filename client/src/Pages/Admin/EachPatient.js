@@ -19,7 +19,6 @@ export default function EachPatient() {
   useEffect(() => {
     axios(`http://localhost:5000/patient/${id}`)
         .then((data) => {
-            console.log(data);
             setPatient(data.data.data[0]);
             setStar(data.data.data[0]?.star);
             DisplayCurrentTime(new Date(data.data.data[0]?.createdAt.toString()));
@@ -42,7 +41,6 @@ export default function EachPatient() {
     axios(config)
         .then((data) => {
             if (data.data.success) {
-                console.log(data.data.message);
                 navigate(`/adminDashboard`);
             } else {
                 console.log(data.data.message);
@@ -65,8 +63,6 @@ export default function EachPatient() {
     })
         .then((res) => {
             if (res.data.success) {
-                console.log(res.data.data.star);
-                console.log("Starred Successfully");
                 setStar(res.data.data.star);
                 setPatient(data.data.data);
             } else {

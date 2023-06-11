@@ -17,8 +17,10 @@ router.post("/", async (req, res) => {
 
 router.post("/login", (req, res) => {
   Bank.findOne({email: req.body.email},(err,admin)=> {
-      if(err) {console.log(err);
-          return res.status(400).json({message:"Failed to Login" ,success : false});}
+      if(err) {
+        console.log(err);
+        return res.status(400).json({message:"Failed to Login" ,success : false});
+      }
       if (!admin) {
           return res.status(201).json({
               message: "Invalid Email",
@@ -106,25 +108,6 @@ router.put("/edit/:id",(req,res)=>{
     });
   });
 });
-// router.patch("/:id", getBank, async (req, res) => {
-//   if (req.body.bankName != null) {
-//     res.bank.bankName = req.body.bankName;
-//   }
-
-//   if (req.body.city != null) {
-//     res.bank.city = req.body.city;
-//   }
-
-//   // Update other fields as necessary
-
-//   try {
-//     const updatedBank = await res.bank.save();
-//     res.json(updatedBank);
-//   } catch (err) {
-//     res.status(400).json({ message: err.message });
-//   }
-// });
-
 // Middleware function to get a bank by ID
 async function getBank(req, res, next) {
   try {
