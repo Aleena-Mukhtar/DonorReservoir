@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineLogout } from "react-icons/ai";
-import { HiOutlineMail, HiOutlineMailOpen } from "react-icons/hi";
 import { BsCheck2All } from 'react-icons/bs';
 import LoggedInNavabr from '../Auth/LoggedInNavbar';
 import axios from "axios";
