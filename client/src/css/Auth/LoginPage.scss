@@ -1,6 +1,4 @@
-$navbar-color: #b81d1d;
-$font-color: #FFFFFF;
-$icon-color: #A6A3A3;
+@import "../theme";
 .login{
     display: flex;
     align-items: center;
@@ -13,49 +11,68 @@ $icon-color: #A6A3A3;
         justify-content: space-between;
         flex-direction: column;
         height: 60vh;
-        width: 28%;
+        width: 30%;
+        background-color: $font-color;
+        border-radius: $radius-xl;
+        box-shadow: $shadow-xl;
+        border-top: 5px solid $navbar-color;
+        padding: 3rem 2.5rem;
+        box-sizing: border-box;
         .headingCon{
             margin-bottom: 2rem;
         }
         .header{
             text-align: center;
-            font-size: 18px;
-            margin-bottom: 1rem;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+            color: $navbar-color;
         }
         .mainHeading{
             text-align: center;
-            font-size: 30px;
+            font-size: 32px;
             font-weight: bold;
+            color: $text-dark;
         }
         .fieldCon{
             width: 100%;
             .field{
                 font-size: 15px;
+                font-weight: 500;
             }
             .input{
                 width: 100%;
-                border: none;
+                border: 1px solid $border-soft;
                 padding: 0.8rem 0;
                 padding-left: 0.8rem;
-                border-radius: 5px;
-                background-color: $font-color;
+                border-radius: $radius-md;
+                background-color: $page-bg;
+                box-sizing: border-box;
+                transition: $transition;
             }
             .input:focus{
                 outline: none;
+                border-color: $navbar-color;
+                box-shadow: 0 0 0 3px rgba($navbar-color, 0.12);
             }
         }
         .select{
             width: 100%;
-            border: none;
+            border: 1px solid $border-soft;
             padding: 0.8rem;
-            border-radius: 5px;
-            background-color: $font-color;
+            border-radius: $radius-md;
+            background-color: $page-bg;
             font-size: 15px;
             margin-top: 1rem;
             cursor: pointer;
+            box-sizing: border-box;
+            transition: $transition;
         }
         .select:focus{
             outline: none;
+            border-color: $navbar-color;
         }
         .Btn{
             font-size: 15px;
@@ -90,38 +107,54 @@ $icon-color: #A6A3A3;
         justify-content: space-between;
         flex-direction: column;
         height: 70vh;
-        width: 35%;
+        width: 36%;
+        background-color: $font-color;
+        border-radius: $radius-xl;
+        box-shadow: $shadow-xl;
+        border-top: 5px solid $navbar-color;
+        padding: 3rem 2.5rem;
+        box-sizing: border-box;
         .headingCon{
             margin-bottom: 2rem;
             .header{
                 text-align: center;
-                font-size: 18px;
-                margin-bottom: 1rem;
+                font-size: 13px;
+                font-weight: 700;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                margin-bottom: 0.6rem;
+                color: $navbar-color;
             }
             .mainHeading{
                 text-align: center;
-                font-size: 30px;
+                font-size: 32px;
                 font-weight: bold;
+                color: $text-dark;
             }
         }
         .signinBtn{
             background-color: transparent;
-            border-radius: 10px;
+            border: 1px solid $border-soft;
+            border-radius: $radius-pill;
             width: 100%;
             font-size: 20px;
-            padding: 0.5rem 0;
+            padding: 0.6rem 0;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: $transition;
             .icon{
                 font-size: 35px;
                 margin-right: 1rem;
             }
         }
         .signinBtn:hover{
-            background-color: black;
+            background-color: $navbar-color;
+            border-color: $navbar-color;
             color: $font-color;
+            transform: translateY(-2px);
+            box-shadow: $shadow-brand;
         }
     }
     @media(max-width: 870px){

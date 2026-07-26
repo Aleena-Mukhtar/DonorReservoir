@@ -1,22 +1,21 @@
-$navbar-color: #b81d1d;
-$font-color: #FFFFFF;
-$icon-color: #A6A3A3;
-$check-color: #077861;
-$header-color: #D6D5D5;
+@import "../theme";
 .adminDashboard{
     width: 100%;
     position: relative;
-    .heading{       
+    .heading{
         text-align: center;
-        font-size: 28px;
+        font-size: 30px;
         font-weight: bold;
-        padding: 1rem 0;
+        padding: 1.6rem 0;
+        color: $text-dark;
+        letter-spacing: $letter-wide;
     }
     .mainContent{
         display: flex;
         align-items: flex-start;
         justify-content: center;
         width: 100%;
+        gap: 1.5rem;
         .leftPanel{
             width: 20%;
             display: flex;
@@ -24,6 +23,11 @@ $header-color: #D6D5D5;
             align-items: flex-start;
             justify-content: space-between;
             height: 90vh;
+            background-color: $font-color;
+            border-radius: $radius-xl;
+            box-shadow: $shadow-lg;
+            padding: 1.8rem 0;
+            box-sizing: border-box;
             .BtnDiv{
                 display: flex;
                 flex-direction: column;
@@ -48,14 +52,20 @@ $header-color: #D6D5D5;
                     border: 1px solid $navbar-color;
                     color: $navbar-color;
                     font-size: 18px;
-                    border-radius: 10px;
+                    border-radius: $radius-pill;
                     cursor: pointer;
                     margin: 1rem 0;
                     background-color: $font-color;
+                    transition: $transition;
+                }
+                .btn:hover{
+                    box-shadow: $shadow-sm;
+                    transform: translateY(-1px);
                 }
                 .click{
                     color: $font-color;
                     background-color: $navbar-color;
+                    box-shadow: $shadow-brand;
                 }
             }
             .logoutBtn{
@@ -69,11 +79,17 @@ $header-color: #D6D5D5;
                 justify-content: center;
                 cursor: pointer;
                 font-weight: bold;
+                border-radius: $radius-pill;
+                padding: 0.6rem 0;
+                transition: $transition;
                 .icon{
                     font-size: 25px;
                     color: $navbar-color;
                     margin-right: 1rem;
                 }
+            }
+            .logoutBtn:hover{
+                background-color: rgba($navbar-color, 0.08);
             }
         }
         .rightPanel{
@@ -95,24 +111,30 @@ $header-color: #D6D5D5;
                     border: 1px solid $navbar-color;
                     color: $navbar-color;
                     font-size: 18px;
-                    border-radius: 8px;
+                    border-radius: $radius-pill;
                     background-color: $font-color;
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
                     width: 15%;
+                    box-shadow: $shadow-sm;
+                    transition: $transition;
                     .checkbox{
                         margin: 0;
                     }
+                }
+                .starBtn:hover{
+                    box-shadow: $shadow-md;
                 }
                 .select{
                     padding: 0.7rem;
                     font-size: 16px;
                     background-color: $font-color;
-                    border: none;
-                    border-radius: 8px;
+                    border: 1px solid $border-soft;
+                    border-radius: $radius-pill;
                     cursor: pointer;
                     width: 20%;
+                    box-shadow: $shadow-sm;
                 }
             }
             .tableCon{
@@ -120,24 +142,29 @@ $header-color: #D6D5D5;
                 overflow-y: scroll;
                 overflow-x: hidden;
                 height: 80vh;
-                border-radius: 8px;
+                border-radius: $radius-xl;
+                background-color: $font-color;
+                box-shadow: $shadow-lg;
                 .table{
                     width: 100%;
-                    border-radius: 8px;
+                    border-radius: $radius-xl;
                     .tableHeader{
                         width: 100%;
                         background-color: $header-color;
-                        border-radius: 8px;
+                        border-top-left-radius: $radius-xl;
+                        border-top-right-radius: $radius-xl;
                         .headText{
-                            padding: 0.9rem 0;
+                            padding: 1.1rem 0;
                             font-size: 17px;
                             padding-left: 1rem;
+                            font-weight: 600;
                         }
                     }
                     .tableBody{
                         background-color: $font-color;
                         .eachRow{
                             cursor: pointer;
+                            transition: $transition;
                             .rowText{
                                 padding: 0.8rem;
                                 font-size: 16px;
@@ -155,6 +182,7 @@ $header-color: #D6D5D5;
                         }
                         .eachRow1{
                             cursor: pointer;
+                            transition: $transition;
                             .rowText{
                                 padding: 0.8rem;
                                 font-size: 16px;

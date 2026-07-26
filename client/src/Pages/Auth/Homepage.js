@@ -1,5 +1,5 @@
 import React from 'react';
-import { BsArrowRight } from 'react-icons/bs';
+import { BsChevronRight, BsDropletFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import LoggedInNavbar from './LoggedInNavbar';
@@ -31,11 +31,12 @@ export default function Homepage() {
           <div className='detail'>Every other day people are in rare need of blood in emergencies. We provide you ease as much as possible so you don’t have to worry at that already stressful time.</div>
           <button className='learnBtn' onClick={() => navigate(`/aboutUs`)}>
             LEARN MORE
-            <BsArrowRight className='icon'/>
+            <BsChevronRight className='icon'/>
           </button>
         </div>
       </div>
       <div className='BankCon'>
+        <div className='bankIcon'><BsDropletFill/></div>
         <div className='heading'>BECOME A PART OF US</div>
         <div className='detail'>Join us as Blood Bank for providing blood and become the part of our community </div>
         <button className='Btn' onClick={navigateToBankTermsPage}>Coordinate as Blood Bank</button>

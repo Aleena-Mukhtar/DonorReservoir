@@ -8,10 +8,12 @@ export default function Footer() {
   return (
     <div className='Footer'>
       <div className='footerContent'>
-        <div className='detail'>
-          Our goal is to provide as much ease as possible so when do to you this that patient 
+        <div className='detail brandCol'>
+          <div className='footerBrand'>Blood Reservoir</div>
+          Our goal is to provide as much ease as possible so when do to you this that patient
         </div>
-        <div className='detail'>
+        <div className='detail linksCol'>
+          <div className='linksHeading'>Quick Links</div>
           <Link className='link' to='/aboutUs'>Contact</Link>
           <Link className='link' to='/help'>Help Center</Link>
           <Link className='link' to='/aboutUs'>About Us</Link>

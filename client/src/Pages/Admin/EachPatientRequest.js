@@ -4,7 +4,7 @@ import { AiOutlineLogout } from 'react-icons/ai';
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import LoggedInNavbar from '../Auth/LoggedInNavbar';
-import { GoRequestChanges } from 'react-icons/go';
+import { GoInfo } from 'react-icons/go';
 
 export default function EachPatientRequest() {
     const { id } = useParams();
@@ -216,7 +216,7 @@ export default function EachPatientRequest() {
                     <div className='label'>Patient Info</div>
                 </div>
                 <div className='userContent' onClick={() => scrollDown(bankSection)}>
-                    <GoRequestChanges className='icon'/>
+                    <GoInfo className='icon'/>
                     <div className='label'>Request Info</div>
                 </div>
             </div>

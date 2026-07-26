@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BiSearch, BiBell } from 'react-icons/bi';
 import { MdOutlineMailOutline } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
-import { GoPrimitiveDot } from 'react-icons/go';
+import { GoDotFill } from 'react-icons/go';
 import axios from "axios";
 
 export default function LoggedInNavbar() {
@@ -93,11 +93,11 @@ export default function LoggedInNavbar() {
               <>
                 <button className='notificationBtn' onClick={navigateToInbox}>
                   <MdOutlineMailOutline className='icon'/>
-                  {filterInbox.length === 0 ? null : <GoPrimitiveDot className="dotIcon"/>}
+                  {filterInbox.length === 0 ? null : <GoDotFill className="dotIcon"/>}
                 </button>
                 <button className='notificationBtn' onClick={handleClick}>
                   <BiBell className='icon'/>
-                  {filterNotifications.length === 0 && filterPatientNotifications.length === 0 ? null : <GoPrimitiveDot className="dotIcon"/>}
+                  {filterNotifications.length === 0 && filterPatientNotifications.length === 0 ? null : <GoDotFill className="dotIcon"/>}
                 </button>
               </>
             }

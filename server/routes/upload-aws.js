@@ -3,15 +3,15 @@ const multer = require("multer");
 const multerS3 = require("multer-s3");
 var fs = require('fs');
 var path = require('path');
-const spacesEndpoint = new aws.Endpoint('fra1.digitaloceanspaces.com');
+const spacesEndpoint = new aws.Endpoint(process.env.DO_SPACES_ENDPOINT);
 const s3 = new aws.S3({
   endpoint: spacesEndpoint
 });
 
 aws.config.update({
-    secretAccessKey: 'hAVx/gR83loFjGfNLL/ZUIrcjurrohCg9+E9eRxcPpM',
-    accessKeyId: 'RM3G37LGW64VQWHMREQ7',
-    region: "us-east-2",
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    region: process.env.DO_SPACES_REGION,
   });
 
 
@@ -20,7 +20,7 @@ const upload = multer({
 
   storage: multerS3({
     s3: s3,
-    bucket: 'jealla',
+    bucket: process.env.DO_SPACES_BUCKET,
     acl: 'public-read',
     metadata: function (req, file, cb) {
       cb(null, { fieldName: "TESTING_METADATA" });

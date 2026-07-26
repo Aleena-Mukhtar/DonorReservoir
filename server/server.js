@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 var path = require("path");
@@ -31,7 +32,7 @@ app.use(
   session({
     resave: false,
     saveUninitialized: true,
-    secret: "SECRET",
+    secret: process.env.SESSION_SECRET,
   })
 );
 app.use(passport.initialize());
@@ -50,15 +51,10 @@ app.use("/bloodBottle", bloodBottles);
 app.use("/patient", patient);
 app.use("/bloodRequest", bloodRequest);
 
-mongoose.Promise = global.Promise;
-mongoose.connect(
-    db.DATABASE,
-    { useNewUrlParser: true, useUnifiedTopology: true },
-    function (err) {
-      if (err) console.log(err);
-      console.log("database is connected");
-    }
-);
+mongoose
+  .connect(db.DATABASE)
+  .then(() => console.log("database is connected"))
+  .catch((err) => console.log(err));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));

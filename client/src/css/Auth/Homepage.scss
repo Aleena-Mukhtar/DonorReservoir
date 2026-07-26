@@ -1,8 +1,7 @@
-$navbar-color: #b81d1d;
-$font-color: #FFFFFF;
-$icon-color: #A6A3A3;
+@import "../theme";
 .homepage{
     .MainCon{
+        position: relative;
         .MainPicture{
             position: relative;
             width: 100%;
@@ -10,37 +9,78 @@ $icon-color: #A6A3A3;
             object-fit: cover;
             opacity: 0.9;
         }
+        &::after{
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 92vh;
+            background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.55) 100%);
+            pointer-events: none;
+        }
         .DetailDiv{
             position: absolute;
-            top: 35%;
-            left: 5%;
+            top: 10%;
+            left: 4%;
             color: $font-color;
+            background-color: rgba(0, 0, 0, 0.28);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: $radius-lg;
+            box-shadow: $shadow-lg;
+            padding: 1rem 2.5rem;
+            max-width: 48%;
             .heading{
                 font-weight: bolder;
-                font-size: 40px;
-                letter-spacing: 5px;
+                font-size: 32px;
+                letter-spacing: 3px;
+                text-shadow: 0 4px 18px rgba(0,0,0,0.35);
+                position: relative;
+                padding-bottom: 0.8rem;
+            }
+            .heading::after{
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 60px;
+                height: 4px;
+                background-color: $navbar-color;
+                border-radius: $radius-pill;
             }
             .detail{
-                width: 55%;
-                font-size: 22px;
-                margin: 1.5rem 0;
-                line-height: 35px;
+                width: 100%;
+                font-size: 16px;
+                margin: 1rem 0;
+                line-height: 26px;
+                text-shadow: 0 2px 10px rgba(0,0,0,0.3);
             }
             .learnBtn{
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                padding: 1rem;
+                width: fit-content;
+                padding: 0.8rem 1.6rem;
                 background-color: $navbar-color;
                 border: none;
-                border-radius: 5px;
+                border-radius: $radius-pill;
                 color: $font-color;
-                font-size: 18px;
+                font-size: 15px;
+                font-weight: 600;
+                letter-spacing: $letter-wide;
                 cursor: pointer;
+                box-shadow: $shadow-md;
+                transition: $transition;
                 .icon{
-                    font-size: 25px;
+                    font-size: 20px;
                     margin-left: 0.5rem;
                 }
+            }
+            .learnBtn:hover{
+                transform: translateY(-3px);
+                box-shadow: $shadow-xl;
             }
         }
     }
@@ -48,68 +88,165 @@ $icon-color: #A6A3A3;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 100%;
         flex-direction: column;
-        height: 40vh;
+        gap: 1.1rem;
+        margin: 3.5rem 4%;
+        padding: 3.5rem 2rem;
+        background: linear-gradient(180deg, rgba($navbar-color, 0.05) 0%, rgba($navbar-color, 0.02) 100%);
+        border: 1px solid rgba($navbar-color, 0.12);
+        border-radius: $radius-xl;
+        box-shadow: $shadow-md;
+        box-sizing: border-box;
+        .bankIcon{
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background-color: $navbar-color;
+            color: $font-color;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            box-shadow: $shadow-brand;
+            margin-bottom: 0.4rem;
+        }
         .heading{
-            font-size: 25px;
+            font-size: 28px;
             font-weight: bolder;
             text-align: center;
+            position: relative;
+            padding-bottom: 1.1rem;
+            color: $text-dark;
+        }
+        .heading::after{
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 4px;
+            background-color: $navbar-color;
+            border-radius: $radius-pill;
         }
         .detail{
             font-size: 20px;
-            margin: 1rem 0;
+            margin: 0;
             font-weight: normal;
             text-align: center;
+            color: $icon-color;
         }
     }
     .adminCon{
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding: 2.5rem 4%;
+        box-sizing: border-box;
         .AdminPicture{
-            width: 50%;
-            height: 85vh;
+            width: 48%;
+            height: 60vh;
             object-fit: cover;
+            border-radius: $radius-xl;
+            box-shadow: $shadow-lg;
         }
         .DetailCon{
-            width: 48%;
+            width: 44%;
+            position: relative;
+            padding-left: 1.6rem;
+            &::before{
+                content: "FOR HOSPITALS";
+                display: inline-block;
+                font-size: 13px;
+                font-weight: 800;
+                letter-spacing: 1.5px;
+                color: $navbar-color;
+                background-color: rgba($navbar-color, 0.08);
+                padding: 0.4rem 0.9rem;
+                border-radius: $radius-pill;
+                margin-bottom: 1.2rem;
+            }
+            &::after{
+                content: "";
+                position: absolute;
+                top: 0.3rem;
+                left: 0;
+                width: 4px;
+                height: calc(100% - 0.6rem);
+                background-color: rgba($navbar-color, 0.15);
+                border-radius: $radius-pill;
+            }
             .text{
-                font-size: 19px;
-                width: 75%;
-                margin-bottom: 3rem;
+                font-size: 17px;
+                width: 90%;
+                margin-bottom: 2rem;
+                color: $text-dark;
                 ul{
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
                     li{
-                        margin-bottom: 1rem;
+                        position: relative;
+                        margin-bottom: 1.3rem;
+                        padding-left: 2rem;
+                        line-height: 1.6;
+                    }
+                    li::before{
+                        content: "✓";
+                        position: absolute;
+                        left: 0;
+                        top: -1px;
+                        width: 22px;
+                        height: 22px;
+                        border-radius: 50%;
+                        background-color: $navbar-color;
+                        color: $font-color;
+                        font-size: 12px;
+                        font-weight: 700;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                     }
                 }
             }
             .AdminBtnCon{
                 display: flex;
                 align-items: center;
-                justify-content: center;
-                width: 75%;
+                justify-content: flex-start;
+                width: 100%;
             }
         }
     }
     .donorCon{
         .DetailCon{
             margin-left: 2rem;
+            &::before{
+                content: "BECOME A DONOR";
+            }
+        }
+    }
+    .patientCon{
+        .DetailCon{
+            &::before{
+                content: "NEED BLOOD?";
+            }
         }
     }
     @media(max-width: 700px){
         .MainCon{
             .DetailDiv{
+                max-width: 75%;
+                padding: 1.3rem 1.5rem;
                 .heading{
-                    font-size: 25px;
+                    font-size: 22px;
                 }
                 .detail{
-                    width: 80%;
+                    width: 100%;
                 }
                 .learnBtn{
-                    font-size: 16px;
+                    font-size: 14px;
                     .icon{
-                        font-size: 20px;
+                        font-size: 18px;
                     }
                 }
             }
@@ -120,16 +257,21 @@ $icon-color: #A6A3A3;
             .MainPicture{
                 height: 80vh;
             }
+            &::after{
+                height: 80vh;
+            }
             .DetailDiv{
-                top: 25%;
+                max-width: 82%;
+                padding: 1.1rem 1.3rem;
                 .heading{
-                    font-size: 25px;
+                    font-size: 20px;
                 }
                 .detail{
-                    font-size: 18px;
+                    font-size: 15px;
+                    width: 100%;
                 }
                 .learnBtn{
-                    font-size: 16px;
+                    font-size: 14px;
                     .icon{
                         font-size: 20px;
                     }
@@ -137,7 +279,8 @@ $icon-color: #A6A3A3;
             }
         }
         .BankCon{
-            height: 30vh;
+            margin: 2rem 5%;
+            padding: 2.2rem 1.2rem;
             .heading{
                 font-size: 22px;
             }
