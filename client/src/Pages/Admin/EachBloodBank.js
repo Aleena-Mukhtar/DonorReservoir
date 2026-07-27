@@ -18,7 +18,7 @@ export default function EachBloodBank() {
   const { id } = useParams();
 
   useEffect(() => {
-    axios(`http://localhost:5000/bloodBank/${id}`)
+    axios(`${process.env.REACT_APP_API_URL}/bloodBank/${id}`)
       .then((data) => {
         setbank(data.data);
         DisplayCurrentTime(new Date(data.data?.createdAt.toString()));
@@ -37,7 +37,7 @@ export default function EachBloodBank() {
 
   function handleDelete() {
     var config = {
-      url: `http://localhost:5000/bloodBank/${id}`,
+      url: `${process.env.REACT_APP_API_URL}/bloodBank/${id}`,
       method: "DELETE",
     };
     axios(config)
@@ -57,7 +57,7 @@ export default function EachBloodBank() {
       star: !bank?.star,
     };
     axios({
-      url: `http://localhost:5000/bloodBank/starBank/${id}`,
+      url: `${process.env.REACT_APP_API_URL}/bloodBank/starBank/${id}`,
       method: "PUT",
       data: data,
       headers: {

@@ -11,7 +11,7 @@ export default function Notification() {
     const userData = JSON.parse(sessionStorage.getItem("userData"));
     const navigate = useNavigate();
     useEffect(() => {
-        axios(`http://localhost:5000/bankNotification/${id}`)
+        axios(`${process.env.REACT_APP_API_URL}/bankNotification/${id}`)
           .then((data) => {
             setNotification(data.data);
           })

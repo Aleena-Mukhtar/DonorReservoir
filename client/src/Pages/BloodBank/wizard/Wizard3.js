@@ -35,7 +35,7 @@ export default function Wizard3() {
     data.bloodTypes = types;
     if(data.bloodTypes.length === 0) alert('Please Select bloodTypes');
     const config = {
-      url: "http://localhost:5000/bloodBank/",
+      url: `${process.env.REACT_APP_API_URL}/bloodBank/`,
       method: "POST",
       data: JSON.stringify(data),
       headers: {

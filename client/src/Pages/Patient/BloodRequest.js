@@ -55,7 +55,7 @@ export default function BloodRequest() {
         const isDataValid = validateDonor(data);
         if(isDataValid){
             const config = {
-                url: "http://localhost:5000/bloodRequest/",
+                url: `${process.env.REACT_APP_API_URL}/bloodRequest/`,
                 method: "POST",
                 data: JSON.stringify(data),
                 headers: {

@@ -10,7 +10,7 @@ export default function Invoice() {
     const [reply, setReply] = useState({});
 
     useEffect(() => {
-        axios(`http://localhost:5000/bankNotification/${id}`)
+        axios(`${process.env.REACT_APP_API_URL}/bankNotification/${id}`)
         .then((data) => {
           setReply(data.data);
         })

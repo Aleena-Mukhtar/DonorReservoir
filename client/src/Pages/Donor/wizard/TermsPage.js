@@ -16,40 +16,40 @@ export default function TermsPage() {
   };
   return (
     <div className="terms">
-      <button className="backBtn" onClick={() => navigate(-1)}>
-        <HiOutlineArrowNarrowLeft className="icon" />
-      </button>
       <div className="termsContent">
+        <button className="backBtn" onClick={() => navigate(-1)}>
+          <HiOutlineArrowNarrowLeft className="icon" />
+        </button>
         <div className="conditions">
           <div className="heading">
             To continue, you need to agree to certain terms and conditions.
           </div>
           <div className="options">
             <div className="fieldCon">
-              <AiOutlineUser className="icon" />
+              <span className="fieldIcon"><AiOutlineUser className="icon" /></span>
               <div className="detail">Provide us your correct profile info</div>
             </div>
             <div className="fieldCon">
-              <TfiEmail className="icon" />
+              <span className="fieldIcon"><TfiEmail className="icon" /></span>
               <div className="detail">
                 You have to generate response of our email within 2 days,
                 otherwise complaint can be filed
               </div>
             </div>
             <div className="fieldCon">
-              <BsBookmarks className="icon" />
+              <span className="fieldIcon"><BsBookmarks className="icon" /></span>
               <div className="detail">
                 We store these details and your previous data in our files
               </div>
             </div>
             <div className="fieldCon">
-              <RxCrossCircled className="icon" />
+              <span className="fieldIcon"><RxCrossCircled className="icon" /></span>
               <div className="detail">
                 In case of any suspicious and wrong information, legal action
                 will be taken
               </div>
             </div>
-            <div className="fieldCon">
+            <div className="fieldCon agreeRow">
               <input
                 className="checkbox"
                 type="checkbox"

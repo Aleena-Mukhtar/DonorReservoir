@@ -3,6 +3,7 @@ import LoggedInNavbar from './LoggedInNavbar';
 import Navbar from './Navbar';
 import { useNavigate } from 'react-router-dom';
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
+import { MdLocationOn, MdPhone, MdEmail } from "react-icons/md";
 
 export default function About() {
     const navigate = useNavigate();
@@ -26,10 +27,10 @@ export default function About() {
         <div className='heading'>Contact Us:</div>
         <div className='detail'>If you have any questions, inquiries, or would like to learn more about our Blood Management System, please don't hesitate to get in touch. We value your feedback and are here to assist you in any way we can.</div>
         <div className='infoCon'>
-            <div className='info'>Blood Reservoir Management Hospital</div>
-            <div className='info'>Address: <span>Street # 123, Block A phase 2 Gulberg III Lahore</span></div>
-            <div className='info'>Phone: <span>042-2233377</span>042-2233377</div>
-            <div className='info'>Email: <span>bloodReservoir@gmail.com</span></div>
+            <div className='infoTitle'>Blood Reservoir Management Hospital</div>
+            <div className='info'><MdLocationOn className='infoIcon'/> Address: <span>Street # 123, Block A phase 2 Gulberg III Lahore</span></div>
+            <div className='info'><MdPhone className='infoIcon'/> Phone: <span>042-2233377</span></div>
+            <div className='info'><MdEmail className='infoIcon'/> Email: <span>bloodReservoir@gmail.com</span></div>
         </div>
         <div className='detail'>Our friendly and knowledgeable staff is available to answer your queries and provide you with the information you need. Whether you are a patient, a healthcare professional, or someone interested in supporting our cause, we are eager to hear from you. Together, let's make a difference in blood management and healthcare.</div>
     </div>

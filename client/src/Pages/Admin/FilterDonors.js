@@ -28,7 +28,7 @@ export default function FilterDonors() {
   const { id } = useParams();
   const { type } = useParams();
   useEffect(() => {
-    axios(`http://localhost:5000/donor/`)
+    axios(`${process.env.REACT_APP_API_URL}/donor/`)
       .then((data) => {
         setDonors(data.data.data.filter((el) => (el.bloodType === type)));
       })
@@ -40,7 +40,7 @@ export default function FilterDonors() {
             status: Status,
         };
         axios({
-            url: `http://localhost:5000/bloodRequest/changeStatus/${id}`,
+            url: `${process.env.REACT_APP_API_URL}/bloodRequest/changeStatus/${id}`,
             method: "PUT",
             data: data,
             headers: {
@@ -62,7 +62,7 @@ export default function FilterDonors() {
             read: true,
         };
         axios({
-            url: `http://localhost:5000/bloodRequest/markAsRead/${id}`,
+            url: `${process.env.REACT_APP_API_URL}/bloodRequest/markAsRead/${id}`,
             method: "PUT",
             data: data,
             headers: {
@@ -83,7 +83,7 @@ export default function FilterDonors() {
             donorId: ID,
         };
         axios({
-            url: `http://localhost:5000/bloodRequest/${id}`,
+            url: `${process.env.REACT_APP_API_URL}/bloodRequest/${id}`,
             method: "PUT",
             data: data,
             headers: {
@@ -110,7 +110,7 @@ export default function FilterDonors() {
     e.preventDefault();
 
     const config = {
-      url: "http://localhost:5000/bankNotification/",
+      url: `${process.env.REACT_APP_API_URL}/bankNotification/`,
       method: "POST",
       data: JSON.stringify(data),
       headers: {

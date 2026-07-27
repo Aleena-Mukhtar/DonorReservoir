@@ -28,7 +28,7 @@ export default function FilterBanks() {
   const navigate = useNavigate();
   const { type, ID } = useParams();
   useEffect(() => {
-    axios(`http://localhost:5000/bloodBank/`)
+    axios(`${process.env.REACT_APP_API_URL}/bloodBank/`)
       .then((data) => {
         setBanks(data.data.filter((el) => el.bloodTypes.includes(type)));
       })
@@ -87,7 +87,7 @@ export default function FilterBanks() {
     const isDataValid = validateDonor(data);
     if(isDataValid){
         const config = {
-            url: "http://localhost:5000/bankNotification/",
+            url: `${process.env.REACT_APP_API_URL}/bankNotification/`,
             method: "POST",
             data: JSON.stringify(data),
             headers: {
@@ -114,7 +114,7 @@ export default function FilterBanks() {
 
     const handleNotificationDelete = () => {
         const config = {
-        url: `http://localhost:5000/adminNotification/${ID}`,
+        url: `${process.env.REACT_APP_API_URL}/adminNotification/${ID}`,
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",

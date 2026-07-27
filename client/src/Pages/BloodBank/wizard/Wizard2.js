@@ -98,7 +98,7 @@ export default function Wizard2() {
       body: formdata,
       headers: myHeaders,
     };
-    const response = await fetch("/donor/upload", requestOptions);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/donor/upload`, requestOptions);
     const data = await response.json();
     return data;
   };

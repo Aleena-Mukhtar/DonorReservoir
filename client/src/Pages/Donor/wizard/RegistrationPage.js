@@ -32,7 +32,7 @@ export default function RegistrationPage() {
       body: formdata,
       headers: myHeaders,
     };
-    const response = await fetch("/donor/upload", requestOptions);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/donor/upload`, requestOptions);
     const data = await response.json();
     return data;
   };
@@ -76,14 +76,14 @@ export default function RegistrationPage() {
       phone: {
         required: true,
         validate: (value) => {
-          const regex = /^\d{10}$/;
+          const regex = /^\d{11}$/;
           return regex.test(value);
         },
       },
       phone2: {
         required: true,
         validate: (value) => {
-          const regex = /^\d{10}$/;
+          const regex = /^\d{11}$/;
           return regex.test(value);
         },
       },
@@ -129,7 +129,7 @@ export default function RegistrationPage() {
     const isDataValid = validateDonor(data);
     if (isDataValid) {
       const config = {
-        url: "http://localhost:5000/donor/",
+        url: `${process.env.REACT_APP_API_URL}/donor/`,
         method: "POST",
         data: JSON.stringify(data),
         headers: {

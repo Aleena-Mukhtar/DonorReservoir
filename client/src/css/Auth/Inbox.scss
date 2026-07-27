@@ -1,68 +1,91 @@
-$navbar-color: #b81d1d;
-$font-color: #FFFFFF;
-$icon-color: #A6A3A3;
-$check-color: #077861;
-$header-color: #D6D5D5;
+@import "../theme";
 .SharedInbox{
-    height: 100vh;
-    width: 100%;
+    width: 92%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding-bottom: 3.5rem;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     .backBtn{
-        background-color: transparent;
-        font-size: 30px;
-        width: 95%;
-        text-align: left;
-        border: none;
+        align-self: flex-start;
+        margin-top: 2rem;
+        width: 46px;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $font-color;
+        border: 1px solid $border-soft;
+        border-radius: 50%;
+        box-shadow: $shadow-sm;
         cursor: pointer;
-        margin-top: 1rem;
-        margin-left: 0.5rem;
+        transition: $transition;
+        .icon{
+            font-size: 22px;
+            color: $navbar-color;
+        }
     }
-    .heading {
-        margin-top: 3rem;
-        font-size: 25px;
-        font-weight: bold;
+    .backBtn:hover{
+        border-color: $navbar-color;
+        box-shadow: $shadow-md;
+        transform: translateY(-1px);
     }
-    .subHeading {
-        margin: 0.5rem 0;
-        font-size: 18px;
-        color: #b81d1d;
+    .heading{
         text-align: center;
+        padding: 1.6rem 0 2rem;
+        .mainTitle{
+            font-size: 28px;
+            font-weight: 800;
+            color: $text-dark;
+            letter-spacing: $letter-wide;
+        }
+        .subTitle{
+            margin-top: 0.4rem;
+            font-size: 15px;
+            color: $icon-color;
+        }
     }
     .mainContainer{
-        width: 90%;
-        height: 90vh;
-        overflow-y: scroll;
+        width: 100%;
+        max-height: 65vh;
+        overflow-y: auto;
         overflow-x: hidden;
         background-color: $font-color;
-        border: 1px solid $navbar-color;
-        border-radius: 10px;
-        margin: 3rem 0;
+        border-radius: $radius-xl;
+        box-shadow: $shadow-lg;
+        box-sizing: border-box;
+        .emptyInbox{
+            padding: 4rem 1rem;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 600;
+            color: $icon-color;
+        }
         .innerCon{
-            border-bottom: 1px solid $icon-color;
-            box-shadow: 0 2px #cac9c9;
+            border-bottom: 1px solid $border-soft;
             .con1{
-                margin: 0 1rem;
-                width: 97%;
+                margin: 0 1.3rem;
+                width: calc(100% - 2.6rem);
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                border-bottom: 1px solid $icon-color;
-                box-shadow: 0 2px #cac9c9;
                 .inner1{
                     display: flex;
-                    padding: 0.8rem 0.2rem;
+                    padding: 1rem 0.2rem;
                     align-items: center;
                     justify-content: space-between;
                     width: 95%;
                     cursor: pointer;
+                    border-radius: $radius-md;
+                    transition: $transition;
                     .header{
                         display: flex;
                         align-items: center;
                         .mailIcon{
-                            font-size: 30px;
+                            font-size: 26px;
                             margin-right: 1rem;
                             color: $navbar-color;
                         }
@@ -74,6 +97,8 @@ $header-color: #D6D5D5;
                 .inner2{
                     background-color: transparent;
                     border: none;
+                    border-radius: 50%;
+                    transition: $transition;
                     .icon{
                         font-size: 20px;
                         font-weight: bold;
@@ -87,13 +112,15 @@ $header-color: #D6D5D5;
             }
             .con2{
                 padding: 0.8rem 0;
-                margin: 0 1rem;
-                width: 97%;
+                margin: 0 1.3rem;
+                width: calc(100% - 2.6rem);
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                box-shadow: 0 2px #cac9c9;
+                background-color: rgba($color: $header-color, $alpha: 0.2);
+                border-radius: $radius-md;
                 cursor: pointer;
+                transition: $transition;
                 .inner1{
                     display: flex;
                     align-items: center;
@@ -103,7 +130,7 @@ $header-color: #D6D5D5;
                         display: flex;
                         align-items: center;
                         .mailIcon{
-                            font-size: 30px;
+                            font-size: 26px;
                             margin-right: 1rem;
                             color: $navbar-color;
                         }
@@ -111,31 +138,29 @@ $header-color: #D6D5D5;
                 }
             }
             .con2:hover{
-                background-color: rgba($color: $header-color, $alpha: 0.3);
+                background-color: rgba($color: $header-color, $alpha: 0.4);
             }
+        }
+        .innerCon:last-child{
+            border-bottom: none;
         }
     }
     .mainContainer::-webkit-scrollbar-track
     {
         background-color: $font-color;
-        border-radius: 5px;
     }
     .mainContainer::-webkit-scrollbar
     {
         width: 8px;
-        background-color: $navbar-color;
-        border-radius: 5px;
+        background-color: transparent;
     }
     .mainContainer::-webkit-scrollbar-thumb
     {
-        background-color: $navbar-color;
-        border-radius: 5px;
+        background-color: $border-soft;
+        border-radius: $radius-sm;
     }
     @media(max-width: 500px){
-        .subHeading{
-            font-size: 17px;
-            width: 85%;
-        }
+        width: 96%;
         .mainContainer{
             overflow: scroll;
             .innerCon{

@@ -1,7 +1,4 @@
-$navbar-color: #b81d1d;
-$font-color: #FFFFFF;
-$icon-color: #A6A3A3;
-$check-color: #077861;
+@import "../theme";
 .BloodBankContainer{
     width: 100%;
     .BankMainHeading{
@@ -9,49 +6,83 @@ $check-color: #077861;
         text-align: center;
         font-size: 26px;
         font-weight: 600;
-        margin: 2rem 0;
-        margin-bottom: 3rem;
+        margin: 2rem 0 1rem;
         color: $navbar-color;
     }
     .BarCon{
         display: flex;
         align-items: center;
-        justify-content: space-around;
-        width: 60%;
-        margin: 2rem;
+        justify-content: center;
+        gap: 3.5rem;
+        max-width: 700px;
+        margin: 0 auto 1.5rem;
         .con{
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            width: 18%;
+            justify-content: flex-start;
+            gap: 0.7rem;
+            color: $icon-color;
+            transition: $transition;
             .number{
-                width: 20px;
-                height: 20px;
+                width: 34px;
+                height: 34px;
+                min-width: 34px;
                 border-radius: 50%;
-                padding: 0.5rem;
+                border: 1px solid $border-soft;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                font-weight: 700;
+                transition: $transition;
+            }
+            .detail{
+                font-size: 15px;
+                font-weight: 600;
+                white-space: nowrap;
+            }
+        }
+        .con.active{
+            color: $text-dark;
+            .number{
+                background-color: $navbar-color;
+                border-color: $navbar-color;
+                color: $font-color;
+                box-shadow: $shadow-brand;
+            }
+        }
+        .con.done{
+            color: $navbar-color;
+            .number{
+                border-color: $navbar-color;
+                color: $navbar-color;
             }
         }
     }
     .wizard1{
         width: 100%;
         .MainContent{
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            background-color: $font-color;
+            border-radius: $radius-xl;
+            box-shadow: $shadow-lg;
+            padding: 2rem 3rem 2.5rem;
+            box-sizing: border-box;
             .MainCon{
-                width: 85%;
-                border-bottom: 2px solid $icon-color;
-                margin-left: 6rem;
+                width: 100%;
+                border-bottom: 1px solid $border-soft;
+                padding-bottom: 1.2rem;
+                margin-bottom: 1.6rem;
                 .MainHeading{
-                    font-size: 26px;
-                    font-weight: bold;
-                    margin-bottom: 1rem;
+                    font-size: 22px;
+                    font-weight: 800;
+                    margin-bottom: 0;
+                    color: $text-dark;
                 }
             }
             .Formfields{
-                width: 84%;
-                margin: 3rem 0;
-                margin-left: 6rem;
+                width: 100%;
+                margin: 0;
                 display: flex;
                 align-items: center;
                 flex-direction: column;
@@ -60,28 +91,33 @@ $check-color: #077861;
                     margin-bottom: 1rem;
                 }
                 .BtnCon{
-                    width: 102%;
+                    width: 100%;
                     display: flex;
                     align-items: center;
                     justify-content: flex-end;
-                    margin-top: 4rem;
+                    margin-top: 2.5rem;
                     .BackBtn{
                         background-color: $font-color;
                         color: $navbar-color;
-                        border: 2px solid $navbar-color;
-                        border-radius: 6px;
-                        padding: 0.7rem 1.5rem;
-                        font-size: 18px;
+                        border: 1px solid $navbar-color;
+                        border-radius: $radius-pill;
+                        padding: 0.75rem 1.7rem;
+                        font-size: 16px;
+                        font-weight: 600;
                         cursor: pointer;
-                        margin-right: 2rem;
+                        margin-right: 1rem;
+                        transition: $transition;
+                    }
+                    .BackBtn:hover{
+                        background-color: rgba($navbar-color, 0.06);
                     }
                     .Btn{
-                        padding: 0.7rem 1.5rem;
+                        padding: 0.75rem 1.8rem;
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
                         .icon{
-                            font-size: 25px;
+                            font-size: 20px;
                             margin-left: 0.5rem;
                         }
                     }
@@ -105,60 +141,41 @@ $check-color: #077861;
             }
         }
     }
-    @media(max-width: 1240px){
+    @media(max-width: 1000px){
         .BarCon{
-            .con{
-                width: 25%;
-            }
-        }
-    }
-    @media(max-width: 900px){
-        .BarCon{
-            width: 80%;
-            .con{
-                width: 30%;
-            }
+            gap: 1.8rem;
+            width: 90%;
         }
         .wizard1{
             .MainContent{
-                .MainCon{
-                    margin-left: 3rem;
-                }
-                .Formfields{
-                    margin-left: 3rem;
-                }
+                margin: 0 3% 3rem;
+                padding: 1.6rem 1.8rem 2.2rem;
             }
         }
     }
     @media(max-width: 550px){
         .BarCon{
-            width: 90%;
             flex-direction: column;
             align-items: flex-start;
+            gap: 0.8rem;
             .con{
-                width: 100%;
-                justify-content: flex-start;
-                margin-bottom: 0.7rem;
-                .number{
-                    margin-right: 1rem;
+                .detail{
+                    white-space: normal;
                 }
             }
         }
         .wizard1{
             .MainContent{
                 .MainCon{
-                    margin-left: 1rem;
                     .MainHeading{
-                        font-size: 20px;
+                        font-size: 19px;
                     }
                 }
                 .Formfields{
-                    margin-left: 1rem;
-                    width: 80%;
                     .fieldsDiv{
                         flex-direction: column;
                         .fieldCon{
-                            width: 90%;
+                            width: 100%;
                         }
                     }
                 }

@@ -15,12 +15,12 @@ export default function AdminNotifications() {
   };
   
   useEffect(() => {
-    axios(`http://localhost:5000/adminNotification/`)
+    axios(`${process.env.REACT_APP_API_URL}/adminNotification/`)
       .then((data) => {
         setNotifications(data.data);
       })
     .catch((err) => console.log(err));
-    axios(`http://localhost:5000/bloodRequest/`)
+    axios(`${process.env.REACT_APP_API_URL}/bloodRequest/`)
       .then((data) => {
         setPatientNotifications(data.data.filter((el) => (!el.read)));
       })
@@ -33,7 +33,7 @@ export default function AdminNotifications() {
       read: true,
     };
     axios({
-      url: `http://localhost:5000/adminNotification/markAsRead/${ID}`,
+      url: `${process.env.REACT_APP_API_URL}/adminNotification/markAsRead/${ID}`,
       method: "PUT",
       data: data,
       headers: {
@@ -56,7 +56,7 @@ export default function AdminNotifications() {
       read: true,
     };
     axios({
-      url: `http://localhost:5000/bloodRequest/markAsRead/${ID}`,
+      url: `${process.env.REACT_APP_API_URL}/bloodRequest/markAsRead/${ID}`,
       method: "PUT",
       data: data,
       headers: {
@@ -80,8 +80,10 @@ export default function AdminNotifications() {
       <button className="backBtn" onClick={() => navigate(-1)}>
         <HiOutlineArrowNarrowLeft className="icon" />
       </button>
-      <div className="heading">Urgent Blood Notifications</div>
-      <div className="subHeading">These notifications must handle on urgent bases</div>
+      <div className="heading">
+        <div className="mainTitle">Urgent Blood Notifications</div>
+        <div className="subTitle">These notifications must be handled on an urgent basis</div>
+      </div>
       <div className="tableCon">
         <table className="table">
           <thead className="tableHeader">
@@ -90,13 +92,19 @@ export default function AdminNotifications() {
             </th>
           </thead>
           <tbody className="tableBody">
-            {patientNotifications?.map((el) => (
-              <tr className="eachRow eachRow1" key={el._id} onClick={() => readPatientRequest(el._id)}>
-                <td className="rowText" align="center">
-                  <div style={{fontWeight: el.read ? 'lighter' : 'bold'}}>The Patient Needs {el.bloodType} Blood Bottles Urgently!!</div>
-                </td>
+            {patientNotifications?.length === 0 ? (
+              <tr className="emptyRow">
+                <td className="emptyText">No patient blood requests right now</td>
               </tr>
-            ))}
+            ) : (
+              patientNotifications?.map((el) => (
+                <tr className="eachRow eachRow1" key={el._id} onClick={() => readPatientRequest(el._id)}>
+                  <td className="rowText" align="center">
+                    <div style={{fontWeight: el.read ? 'lighter' : 'bold'}}>The Patient Needs {el.bloodType} Blood Bottles Urgently!!</div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
@@ -108,19 +116,25 @@ export default function AdminNotifications() {
             </th>
           </thead>
           <tbody className="tableBody">
-            {notifications?.map((el) => (
-              <tr className="eachRow" key={el._id}>
-                <td className="rowText" align="center">
-                  <div style={{fontWeight: el.read ? 'lighter' : 'bold'}}>We Need {el.bloodType} Blood Bottles Urgently!!</div>
-                  <div className="detailsCon">
-                    <button className="emailBtn" onClick={() => readRequest(el.bloodType, el._id)}>Send Email</button>
-                  </div>
-                </td>
+            {notifications?.length === 0 ? (
+              <tr className="emptyRow">
+                <td className="emptyText">No blood shortage notifications right now</td>
               </tr>
-            ))}
+            ) : (
+              notifications?.map((el) => (
+                <tr className="eachRow" key={el._id}>
+                  <td className="rowText" align="center">
+                    <div style={{fontWeight: el.read ? 'lighter' : 'bold'}}>We Need {el.bloodType} Blood Bottles Urgently!!</div>
+                    <div className="detailsCon">
+                      <button className="emailBtn" onClick={() => readRequest(el.bloodType, el._id)}>Send Email</button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
-      </div>    
+      </div>
     </div>
     </>
   );

@@ -1,13 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { BiChevronDown } from "react-icons/bi";
 
 const OPTIONS = ["Role", "Admin", "Patient", "Blood Bank"];
 
 export default function LoginPage() {
   const [data, setData] = useState({ email: "", password: "" });
   const [role, setRole] = useState("Role");
+  const [isRoleOpen, setIsRoleOpen] = useState(false);
+  const roleRef = useRef(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (roleRef.current && !roleRef.current.contains(e.target)) {
+        setIsRoleOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -102,16 +115,32 @@ export default function LoginPage() {
           />
         </div>
 
-        <select
-          name="role"
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-          className="select"
-        >
-          {OPTIONS.map((el) => (
-            <option value={el} key={el}>{el}</option>
-          ))}
-        </select>
+        <div className="customSelect" ref={roleRef}>
+          <button
+            type="button"
+            className={`selectToggle ${role !== "Role" ? "hasValue" : ""}`}
+            onClick={() => setIsRoleOpen(!isRoleOpen)}
+          >
+            {role}
+            <BiChevronDown className={`selectIcon ${isRoleOpen ? "open" : ""}`} />
+          </button>
+          {isRoleOpen && (
+            <div className="selectMenu">
+              {OPTIONS.map((el) => (
+                <div
+                  key={el}
+                  className={`selectOption ${role === el ? "active" : ""}`}
+                  onClick={() => {
+                    setRole(el);
+                    setIsRoleOpen(false);
+                  }}
+                >
+                  {el}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         <button
           className="Btn"
           disabled={role === "Role"}

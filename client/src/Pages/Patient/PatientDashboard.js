@@ -13,7 +13,7 @@ export default function PatientDashboard() {
   const userData = JSON.parse(sessionStorage.getItem("userData"));
   const [history, setHistory] = useState([]);
   useEffect(() => {
-    axios(`http://localhost:5000/bloodRequest/`)
+    axios(`${process.env.REACT_APP_API_URL}/bloodRequest/`)
       .then((data) => {
         setHistory(data.data.filter(el => (el.patient_id === userData._id)));
       })

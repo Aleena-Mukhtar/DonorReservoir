@@ -21,7 +21,7 @@ export default function Inbox() {
         }
     };
     useEffect(() => {
-        axios(`http://localhost:5000/bankNotification/`)
+        axios(`${process.env.REACT_APP_API_URL}/bankNotification/`)
           .then((data) => {
             if(role === 'Blood Bank') setNotifications(data.data.filter(el => (el.bank_id === userData._id)));
             else setNotifications(data.data);
@@ -35,8 +35,8 @@ export default function Inbox() {
           read: true,
         };
         let url;
-        if(role === 'Admin') url = `http://localhost:5000/bankNotification/markAdminAsRead/${ID}`;
-        else if(role === 'Blood Bank') url = `http://localhost:5000/bankNotification/markBankAsRead/${ID}`;
+        if(role === 'Admin') url = `${process.env.REACT_APP_API_URL}/bankNotification/markAdminAsRead/${ID}`;
+        else if(role === 'Blood Bank') url = `${process.env.REACT_APP_API_URL}/bankNotification/markBankAsRead/${ID}`;
         axios({
           url: url,
           method: "PUT",
@@ -61,8 +61,8 @@ export default function Inbox() {
         read: true,
       };
       let url;
-      if(role === 'Admin') url = `http://localhost:5000/bankNotification/markReplyAdminAsRead/${ID}`;
-      else if(role === 'Blood Bank') url = `http://localhost:5000/bankNotification/markReplyBankAsRead/${ID}`;
+      if(role === 'Admin') url = `${process.env.REACT_APP_API_URL}/bankNotification/markReplyAdminAsRead/${ID}`;
+      else if(role === 'Blood Bank') url = `${process.env.REACT_APP_API_URL}/bankNotification/markReplyBankAsRead/${ID}`;
       axios({
         url: url,
         method: "PUT",
@@ -87,9 +87,14 @@ export default function Inbox() {
         <button className="backBtn" onClick={() => navigate(-1)}>
           <HiOutlineArrowNarrowLeft className="icon" />
         </button>
-        <div className="heading">Inbox</div>
-        <div className="subHeading">Email History between Hospital Admin and Blood Bank</div>
+        <div className="heading">
+          <div className="mainTitle">Inbox</div>
+          <div className="subTitle">Email history between hospital admin and blood bank</div>
+        </div>
         <div className='mainContainer'>
+            {notifications.length === 0 && (
+              <div className="emptyInbox">No messages in your inbox yet</div>
+            )}
             {notifications.map((ele, index) => (
               <div className='innerCon' key={index}>
                 <div className='con1'>

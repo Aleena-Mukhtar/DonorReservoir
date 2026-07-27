@@ -12,7 +12,7 @@ export default function PatientRequests({ check, filters }) {
   };
 
   useEffect(() => {
-    axios(`http://localhost:5000/bloodRequest/`)
+    axios(`${process.env.REACT_APP_API_URL}/bloodRequest/`)
       .then((data) => {
         setRequests(data.data);
       })
@@ -50,17 +50,23 @@ export default function PatientRequests({ check, filters }) {
           </th>
         </thead>
         <tbody className="tableBody">
-          {filterRequests?.map((el) => (
-            <tr className="eachRow" onClick={() => navigateToEachPatientPage(el._id)} key={el._id}>
-              <td className="rowText" align="center" style={{fontWeight: el.read ? 'normal' : 'bold'}}>
-                <div>Patient Requested {el.count} Blood Bottles of {el.bloodType}</div>
-                <div className="detailsCon">
-                  <div className="date">{new Date(el.createdAt.toString())?.toDateString()}</div>
-                  <div className="time">{el.time}</div>
-                </div>
-              </td>
+          {filterRequests?.length === 0 ? (
+            <tr className="emptyRow">
+              <td className="emptyText">No blood requests to show yet</td>
             </tr>
-          ))}
+          ) : (
+            filterRequests?.map((el) => (
+              <tr className="eachRow" onClick={() => navigateToEachPatientPage(el._id)} key={el._id}>
+                <td className="rowText" align="center" style={{fontWeight: el.read ? 'normal' : 'bold'}}>
+                  <div>Patient Requested {el.count} Blood Bottles of {el.bloodType}</div>
+                  <div className="detailsCon">
+                    <div className="date">{new Date(el.createdAt.toString())?.toDateString()}</div>
+                    <div className="time">{el.time}</div>
+                  </div>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

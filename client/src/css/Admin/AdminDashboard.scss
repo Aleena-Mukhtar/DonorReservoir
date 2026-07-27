@@ -2,27 +2,39 @@
 .adminDashboard{
     width: 100%;
     position: relative;
+    padding-bottom: 3.5rem;
     .heading{
         text-align: center;
-        font-size: 30px;
-        font-weight: bold;
-        padding: 1.6rem 0;
-        color: $text-dark;
-        letter-spacing: $letter-wide;
+        padding: 2rem 0 1.6rem;
+        .mainTitle{
+            font-size: 30px;
+            font-weight: 800;
+            color: $text-dark;
+            letter-spacing: $letter-wide;
+        }
+        .subTitle{
+            margin-top: 0.4rem;
+            font-size: 15px;
+            color: $icon-color;
+        }
     }
     .mainContent{
-        display: flex;
-        align-items: flex-start;
-        justify-content: center;
-        width: 100%;
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        grid-template-rows: auto 1fr;
+        height: 85vh;
+        width: 92%;
+        max-width: 1400px;
+        margin: 0 auto;
+        box-sizing: border-box;
         gap: 1.5rem;
         .leftPanel{
-            width: 20%;
+            grid-column: 1;
+            grid-row: 2;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
             justify-content: space-between;
-            height: 90vh;
             background-color: $font-color;
             border-radius: $radius-xl;
             box-shadow: $shadow-lg;
@@ -31,7 +43,7 @@
             .BtnDiv{
                 display: flex;
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: center;
                 justify-content: space-between;
                 width: 100%;
                 .NotificationDiv{
@@ -46,118 +58,211 @@
                     }
                 }
                 .btn{
-                    padding: 1rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    gap: 0.9rem;
+                    padding: 0.9rem 1.2rem;
                     width: 80%;
-                    border: none;
-                    border: 1px solid $navbar-color;
-                    color: $navbar-color;
-                    font-size: 18px;
+                    border: 1px solid $border-soft;
+                    color: $text-dark;
+                    font-size: 16px;
+                    font-weight: 600;
                     border-radius: $radius-pill;
                     cursor: pointer;
-                    margin: 1rem 0;
+                    margin: 0.5rem 0;
                     background-color: $font-color;
                     transition: $transition;
+                    .btnIcon{
+                        font-size: 17px;
+                        color: $navbar-color;
+                        flex-shrink: 0;
+                        transition: $transition;
+                    }
                 }
                 .btn:hover{
+                    border-color: $navbar-color;
                     box-shadow: $shadow-sm;
                     transform: translateY(-1px);
                 }
                 .click{
                     color: $font-color;
                     background-color: $navbar-color;
+                    border-color: $navbar-color;
                     box-shadow: $shadow-brand;
+                    .btnIcon{
+                        color: $font-color;
+                    }
                 }
             }
             .logoutBtn{
                 width: 70%;
+                margin-top: 1rem;
+                padding-top: 1.2rem;
                 border: none;
-                font-size: 20px;
+                border-top: 1px solid $border-soft;
+                font-size: 16px;
                 color: $navbar-color;
                 background-color: transparent;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 cursor: pointer;
-                font-weight: bold;
-                border-radius: $radius-pill;
-                padding: 0.6rem 0;
+                font-weight: 700;
+                border-radius: 0;
+                padding-bottom: 0.2rem;
                 transition: $transition;
                 .icon{
-                    font-size: 25px;
+                    font-size: 21px;
                     color: $navbar-color;
-                    margin-right: 1rem;
+                    margin-right: 0.7rem;
                 }
             }
             .logoutBtn:hover{
-                background-color: rgba($navbar-color, 0.08);
+                color: $navbar-color-dark;
+                .icon{
+                    color: $navbar-color-dark;
+                }
             }
         }
         .rightPanel{
-            width: 75%;
-            display: flex;
-            align-items: flex-start;
-            justify-content: flex-start;
-            flex-direction: column;
-            height: 100vh;
+            display: contents;
             .upperCon{
+                grid-column: 2;
+                grid-row: 1;
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
-                width: 95%;
-                margin-bottom: 1.5rem;
+                justify-content: flex-start;
+                gap: 1rem;
+                width: 100%;
+                margin-bottom: 0;
                 .starBtn{
-                    padding: 0.7rem;
-                    border: none;
-                    border: 1px solid $navbar-color;
-                    color: $navbar-color;
-                    font-size: 18px;
+                    padding: 0.65rem 1.2rem;
+                    border: 1px solid $border-soft;
+                    color: $icon-color;
+                    font-size: 15px;
+                    font-weight: 600;
                     border-radius: $radius-pill;
                     background-color: $font-color;
                     display: flex;
                     align-items: center;
-                    justify-content: space-between;
-                    width: 15%;
+                    gap: 0.5rem;
                     box-shadow: $shadow-sm;
+                    cursor: pointer;
                     transition: $transition;
-                    .checkbox{
-                        margin: 0;
+                    .starIcon{
+                        font-size: 14px;
+                        color: $icon-color;
+                        transition: $transition;
                     }
                 }
                 .starBtn:hover{
-                    box-shadow: $shadow-md;
+                    border-color: $navbar-color;
+                    color: $navbar-color;
+                    .starIcon{
+                        color: $navbar-color;
+                    }
                 }
-                .select{
-                    padding: 0.7rem;
-                    font-size: 16px;
-                    background-color: $font-color;
-                    border: 1px solid $border-soft;
-                    border-radius: $radius-pill;
-                    cursor: pointer;
-                    width: 20%;
-                    box-shadow: $shadow-sm;
+                .starBtn.active{
+                    color: $font-color;
+                    background-color: $navbar-color;
+                    border-color: $navbar-color;
+                    box-shadow: $shadow-brand;
+                    .starIcon{
+                        color: $font-color;
+                    }
+                }
+                .filterSelect{
+                    position: relative;
+                    .filterToggle{
+                        display: flex;
+                        align-items: center;
+                        gap: 0.6rem;
+                        padding: 0.65rem 1.2rem;
+                        font-size: 15px;
+                        font-weight: 600;
+                        font-family: inherit;
+                        color: $text-dark;
+                        background-color: $font-color;
+                        border: 1px solid $border-soft;
+                        border-radius: $radius-pill;
+                        cursor: pointer;
+                        box-shadow: $shadow-sm;
+                        transition: $transition;
+                    }
+                    .filterToggle:hover{
+                        border-color: $navbar-color;
+                    }
+                    .filterIcon{
+                        font-size: 18px;
+                        color: $icon-color;
+                        transition: $transition;
+                    }
+                    .filterIcon.open{
+                        transform: rotate(180deg);
+                        color: $navbar-color;
+                    }
+                    .filterMenu{
+                        position: absolute;
+                        top: calc(100% + 0.6rem);
+                        right: 0;
+                        min-width: 160px;
+                        background-color: $font-color;
+                        border: 1px solid $border-soft;
+                        border-radius: $radius-md;
+                        box-shadow: $shadow-lg;
+                        padding: 0.4rem;
+                        z-index: 15;
+                        box-sizing: border-box;
+                    }
+                    .filterOption{
+                        padding: 0.65rem 0.9rem;
+                        border-radius: $radius-sm;
+                        font-size: 15px;
+                        font-weight: 500;
+                        color: $text-dark;
+                        cursor: pointer;
+                        transition: $transition;
+                    }
+                    .filterOption:hover{
+                        background-color: rgba($navbar-color, 0.08);
+                    }
+                    .filterOption.active{
+                        background-color: $navbar-color;
+                        color: $font-color;
+                        font-weight: 600;
+                    }
                 }
             }
             .tableCon{
-                width: 95%;
+                grid-column: 2;
+                grid-row: 2;
+                width: 100%;
                 overflow-y: scroll;
                 overflow-x: hidden;
-                height: 80vh;
+                min-height: 0;
                 border-radius: $radius-xl;
                 background-color: $font-color;
                 box-shadow: $shadow-lg;
                 .table{
                     width: 100%;
                     border-radius: $radius-xl;
+                    border-collapse: collapse;
+                    border-spacing: 0;
                     .tableHeader{
                         width: 100%;
                         background-color: $header-color;
                         border-top-left-radius: $radius-xl;
                         border-top-right-radius: $radius-xl;
                         .headText{
-                            padding: 1.1rem 0;
-                            font-size: 17px;
-                            padding-left: 1rem;
-                            font-weight: 600;
+                            padding: 1.2rem 1rem;
+                            font-size: 16px;
+                            font-weight: 700;
+                            color: $text-dark;
+                            letter-spacing: 0.3px;
+                        }
+                        .headText[align="left"]{
+                            padding-left: 1.5rem;
                         }
                     }
                     .tableBody{
@@ -166,11 +271,12 @@
                             cursor: pointer;
                             transition: $transition;
                             .rowText{
-                                padding: 0.8rem;
+                                padding: 1rem;
                                 font-size: 16px;
                                 display: flex;
                                 align-items: center;
                                 justify-content: space-between;
+                                border-bottom: 1px solid $border-soft;
                                 .detailsCon{
                                     display: flex;
                                     align-items: center;
@@ -184,12 +290,31 @@
                             cursor: pointer;
                             transition: $transition;
                             .rowText{
-                                padding: 0.8rem;
+                                padding: 1rem;
                                 font-size: 16px;
+                                border-bottom: 1px solid $border-soft;
                             }
+                        }
+                        .eachRow:last-child .rowText, .eachRow1:last-child .rowText{
+                            border-bottom: none;
                         }
                         .eachRow:hover, .eachRow1:hover{
                             background-color: rgba($color: $header-color, $alpha: 0.3);
+                        }
+                        .emptyRow{
+                            cursor: default;
+                            .emptyText{
+                                height: 55vh;
+                                padding: 1rem;
+                                text-align: center;
+                                vertical-align: middle;
+                                font-size: 15px;
+                                font-weight: 600;
+                                color: $icon-color;
+                            }
+                        }
+                        .emptyRow:hover{
+                            background-color: transparent;
                         }
                     }
                 }
@@ -214,26 +339,24 @@
     }
     @media(max-width: 1060px){
         .mainContent{
-            .leftPanel{
-                width: 25%;
-            }
-            .rightPanel{
-                width: 70%;
-            }
+            width: 96%;
+            grid-template-columns: 220px 1fr;
         }
     }
     @media(max-width: 850px){
         .mainContent{
+            display: flex;
             flex-direction: column;
+            height: auto;
             .leftPanel{
                 width: 100%;
-                height: unset;
                 margin-bottom: 1rem;
                 flex-direction: row;
                 align-items: center;
                 .BtnDiv{
                     flex-direction: row;
                     flex-wrap: wrap;
+                    justify-content: center;
                     .btn{
                         width: 45%;
                         margin: 0.5rem;
@@ -243,12 +366,23 @@
                 }
                 .logoutBtn{
                     width: 40%;
+                    margin-top: 0;
+                    padding-top: 0;
+                    border-top: none;
                 }
             }
             .rightPanel{
+                display: flex;
+                flex-direction: column;
                 width: 100%;
                 align-items: center;
+                .upperCon{
+                    width: 95%;
+                    margin-bottom: 1.5rem;
+                }
                 .tableCon{
+                    width: 95%;
+                    height: 70vh;
                     .table{
                         .tableBody{
                             .eachRow{
@@ -266,7 +400,6 @@
     }
     @media(max-width: 530px){
         .mainContent{
-            flex-direction: column;
             .leftPanel{
                 flex-wrap: wrap;
             }
@@ -274,12 +407,7 @@
                 align-items: flex-start;
                 .upperCon{
                     margin: 1.3rem 0.7rem;
-                    .starBtn{
-                        width: 40%;
-                    }
-                    .select{
-                        width: 40%;
-                    }
+                    flex-wrap: wrap;
                 }
                 .tableCon{
                     margin: 0 0.7rem;

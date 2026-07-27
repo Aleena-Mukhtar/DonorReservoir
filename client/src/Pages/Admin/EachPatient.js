@@ -17,7 +17,7 @@ export default function EachPatient() {
   const [patient, setPatient] = useState({});
   const { id } = useParams();
   useEffect(() => {
-    axios(`http://localhost:5000/patient/${id}`)
+    axios(`${process.env.REACT_APP_API_URL}/patient/${id}`)
         .then((data) => {
             setPatient(data.data.data[0]);
             setStar(data.data.data[0]?.star);
@@ -35,7 +35,7 @@ export default function EachPatient() {
   }
   function handleDelete() {
     var config = {
-        url: `http://localhost:5000/patient/${id}`,
+        url: `${process.env.REACT_APP_API_URL}/patient/${id}`,
         method: "DELETE",
     };
     axios(config)
@@ -54,7 +54,7 @@ export default function EachPatient() {
         star: !star,
     };
     axios({
-        url: `http://localhost:5000/patient/starPatient/${id}`,
+        url: `${process.env.REACT_APP_API_URL}/patient/starPatient/${id}`,
         method: "PUT",
         data: data,
         headers: {

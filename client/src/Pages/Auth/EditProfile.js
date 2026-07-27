@@ -75,7 +75,7 @@ export default function EditProfile() {
           body: formdata,
           headers: myHeaders,
         };
-        const response = await fetch("/donor/upload", requestOptions);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/donor/upload`, requestOptions);
         const data = await response.json();
         return data;
     };
@@ -89,9 +89,9 @@ export default function EditProfile() {
     const editUser=(e)=>{
         e.preventDefault(); 
         var _url = "";
-        if (role === "Admin") _url = `http://localhost:5000/admin/edit/${id}`
-        else if (role === "Blood Bank") _url = `http://localhost:5000/bloodBank/edit/${id}`
-        else if (role === "Patient") _url = `http://localhost:5000/patient/${id}`
+        if (role === "Admin") _url = `${process.env.REACT_APP_API_URL}/admin/edit/${id}`
+        else if (role === "Blood Bank") _url = `${process.env.REACT_APP_API_URL}/bloodBank/edit/${id}`
+        else if (role === "Patient") _url = `${process.env.REACT_APP_API_URL}/patient/${id}`
         axios({
             url: _url,
             method: "PUT",

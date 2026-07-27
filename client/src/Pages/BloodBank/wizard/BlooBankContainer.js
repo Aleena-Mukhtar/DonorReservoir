@@ -60,43 +60,25 @@ export default function BlooBankContainer() {
       {tab !== 0 && (
         <div className="BarCon">
           <div
-            className="con"
-            style={{ color: tab === 1 ? "black" : "#A6A3A3" }}
+            className={`con ${tab === 1 ? "active" : tab > 1 ? "done" : ""}`}
           >
-            <div
-              className="number"
-              style={{
-                border: tab === 1 ? "1px solid black" : "1px solid #A6A3A3",
-              }}
-            >
+            <div className="number">
               <div>1</div>
             </div>
             <div className="detail">Personal Info</div>
           </div>
           <div
-            className="con"
-            style={{ color: tab === 2 ? "black" : "#A6A3A3" }}
+            className={`con ${tab === 2 ? "active" : tab > 2 ? "done" : ""}`}
           >
-            <div
-              className="number"
-              style={{
-                border: tab === 2 ? "1px solid black" : "1px solid #A6A3A3",
-              }}
-            >
+            <div className="number">
               <div>2</div>
             </div>
             <div className="detail">Admin Info</div>
           </div>
           <div
-            className="con"
-            style={{ color: tab === 3 ? "black" : "#A6A3A3" }}
+            className={`con ${tab === 3 ? "active" : tab > 3 ? "done" : ""}`}
           >
-            <div
-              className="number"
-              style={{
-                border: tab === 3 ? "1px solid black" : "1px solid #A6A3A3",
-              }}
-            >
+            <div className="number">
               <div>3</div>
             </div>
             <div className="detail">Blood Info</div>

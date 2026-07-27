@@ -10,7 +10,7 @@ export default function AllDonors({ check }) {
     navigate(`/eachDonor/${ID}`);
   };
   useEffect(() => {
-    axios(`http://localhost:5000/donor/`)
+    axios(`${process.env.REACT_APP_API_URL}/donor/`)
       .then((data) => {
         setDonors(data.data.data);
       })
@@ -42,26 +42,32 @@ export default function AllDonors({ check }) {
           </th>
         </thead>
         <tbody className="tableBody">
-          {filterDonors?.map((el) => (
-            <tr
-              className="eachRow1"
-              onClick={() => navigateToEachDonorPage(el._id)}
-              key={el._id}
-            >
-              <td className="rowText" align="center">
-                {el.fname}
-              </td>
-              <td className="rowText" align="center">
-                {el.email}
-              </td>
-              <td className="rowText" align="center">
-                {el.phone}
-              </td>
-              <td className="rowText" align="center">
-                {el.bloodType}
-              </td>
+          {filterDonors?.length === 0 ? (
+            <tr className="emptyRow">
+              <td className="emptyText" colSpan={4}>No donors to show yet</td>
             </tr>
-          ))}
+          ) : (
+            filterDonors?.map((el) => (
+              <tr
+                className="eachRow1"
+                onClick={() => navigateToEachDonorPage(el._id)}
+                key={el._id}
+              >
+                <td className="rowText" align="center">
+                  {el.fname}
+                </td>
+                <td className="rowText" align="center">
+                  {el.email}
+                </td>
+                <td className="rowText" align="center">
+                  {el.phone}
+                </td>
+                <td className="rowText" align="center">
+                  {el.bloodType}
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

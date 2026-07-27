@@ -20,7 +20,7 @@ export default function Reply() {
     const navigate = useNavigate();
 
     useEffect(() => {
-      axios(`http://localhost:5000/bankNotification/${id}`)
+      axios(`${process.env.REACT_APP_API_URL}/bankNotification/${id}`)
         .then((data) => {
           setNotification(data.data);
           if(data.data.status === 'Pending') setStatus(false);
@@ -34,7 +34,7 @@ export default function Reply() {
         status: Status,
       };
       axios({
-        url: `http://localhost:5000/bankNotification/updateStatus/${id}`,
+        url: `${process.env.REACT_APP_API_URL}/bankNotification/updateStatus/${id}`,
         method: "PUT",
         data: data,
         headers: {
@@ -55,7 +55,7 @@ export default function Reply() {
     const handleBloodBottles = () => {
   
       const config = {
-        url: "http://localhost:5000/bloodBottle/",
+        url: `${process.env.REACT_APP_API_URL}/bloodBottle/`,
         method: "POST",
         data: JSON.stringify({
           bloodType: notification?.bloodType,

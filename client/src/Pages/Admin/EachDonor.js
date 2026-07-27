@@ -17,7 +17,7 @@ export default function EachDonor() {
   const [donor, setDonor] = useState({});
   const { id } = useParams();
   useEffect(() => {
-    axios(`http://localhost:5000/donor/get/${id}`)
+    axios(`${process.env.REACT_APP_API_URL}/donor/get/${id}`)
       .then((data) => {
         setDonor(data.data.data[0]);
         setStar(data.data.data[0]?.star);
@@ -35,7 +35,7 @@ export default function EachDonor() {
   }
   function handleDelete() {
     var config = {
-      url: `http://localhost:5000/donor/delete/${id}`,
+      url: `${process.env.REACT_APP_API_URL}/donor/delete/${id}`,
       method: "DELETE",
     };
     axios(config)
@@ -54,7 +54,7 @@ export default function EachDonor() {
       star: !star,
     };
     axios({
-      url: `http://localhost:5000/donor/starDonor/${id}`,
+      url: `${process.env.REACT_APP_API_URL}/donor/starDonor/${id}`,
       method: "PUT",
       data: data,
       headers: {

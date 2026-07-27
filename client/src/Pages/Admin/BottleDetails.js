@@ -8,7 +8,7 @@ export default function BottleDetails() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   useEffect(() => {
-    axios(`http://localhost:5000/bloodBottle/`)
+    axios(`${process.env.REACT_APP_API_URL}/bloodBottle/`)
       .then((data) => {
         setData(data.data);
       })
@@ -22,7 +22,10 @@ export default function BottleDetails() {
       <button className="backBtn" onClick={(e) => navigate(-1)}>
         <HiOutlineArrowNarrowLeft className="icon" />
       </button>
-      <div className="heading">Available Blood Bottles Stock</div>
+      <div className="heading">
+        <div className="mainTitle">Available Blood Bottles Stock</div>
+        <div className="subTitle">Current inventory across all blood types</div>
+      </div>
       <div className="tableCon">
         <table className="table">
           <thead className="tableHeader">
@@ -40,22 +43,28 @@ export default function BottleDetails() {
             </th>
           </thead>
           <tbody className="tableBody">
-            {data.map((el) => (
-              <tr className="eachRow">
-                <td className="rowText" align="center">
-                  {el?.bloodType}
-                </td>
-                <td className="rowText" align="center">
-                  {el?.count}
-                </td>
-                <td className="rowText" align="center">
-                  {el.unitPrice}
-                </td>
-                <td className="rowText" align="center">
-                  {(parseInt(el?.unitPrice) * parseInt(el?.count))}
-                </td>
+            {data.length === 0 ? (
+              <tr className="emptyRow">
+                <td className="emptyText" colSpan={4}>No blood bottles in stock yet</td>
               </tr>
-            ))}
+            ) : (
+              data.map((el) => (
+                <tr className="eachRow" key={el._id}>
+                  <td className="rowText" align="center">
+                    {el?.bloodType}
+                  </td>
+                  <td className="rowText" align="center">
+                    {el?.count}
+                  </td>
+                  <td className="rowText" align="center">
+                    {el.unitPrice}
+                  </td>
+                  <td className="rowText" align="center">
+                    {(parseInt(el?.unitPrice) * parseInt(el?.count))}
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

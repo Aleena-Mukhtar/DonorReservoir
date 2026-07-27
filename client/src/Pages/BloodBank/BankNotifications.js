@@ -20,7 +20,7 @@ export default function BankNotifications() {
   const navigate = useNavigate();
   
   useEffect(() => {
-    axios(`http://localhost:5000/bankNotification/`)
+    axios(`${process.env.REACT_APP_API_URL}/bankNotification/`)
       .then((data) => {
         setNotifications(data.data.filter(el => !el.read && el.bank_id === userData._id));
       })
@@ -37,7 +37,7 @@ export default function BankNotifications() {
       read: true,
     };
     axios({
-      url: `http://localhost:5000/bankNotification/markAsRead/${ID}`,
+      url: `${process.env.REACT_APP_API_URL}/bankNotification/markAsRead/${ID}`,
       method: "PUT",
       data: data,
       headers: {
@@ -85,7 +85,7 @@ export default function BankNotifications() {
   const handleReply = (ID) => {
     setShowModal(true);
     setId(ID);
-    axios(`http://localhost:5000/bankNotification/${ID}`)
+    axios(`${process.env.REACT_APP_API_URL}/bankNotification/${ID}`)
     .then((data) => {
       setNotification(data.data);
     })
@@ -99,7 +99,7 @@ export default function BankNotifications() {
         reply: data,
       };
       axios({
-        url: `http://localhost:5000/bankNotification/sendReply/${id}`,
+        url: `${process.env.REACT_APP_API_URL}/bankNotification/sendReply/${id}`,
         method: "PUT",
         data: data1,
         headers: {
@@ -125,8 +125,10 @@ export default function BankNotifications() {
       <button className="backBtn" onClick={() => navigate(-1)}>
         <HiOutlineArrowNarrowLeft className="icon" />
       </button>
-      <div className="heading">Urgent Blood Notifications</div>
-      <div className="subHeading">These notifications must handle on urgent bases</div>
+      <div className="heading">
+        <div className="mainTitle">Urgent Blood Notifications</div>
+        <div className="subTitle">These notifications must be handled on an urgent basis</div>
+      </div>
       <div className="tableCon">
         <table className="table">
           <thead className="tableHeader">
@@ -135,16 +137,22 @@ export default function BankNotifications() {
             </th>
           </thead>
           <tbody className="tableBody">
-            {notifications?.map((el) => (
-              <tr className="eachRow" key={el._id}>
-                <td className="rowText" align="center">
-                  <div style={{fontWeight: el.read ? 'lighter' : 'bold'}}>The {el.hospitalName} Needs {el.bloodType} Blood Bottles Urgently!!</div>
-                  <div className="detailsCon">
-                    <button className="emailBtn" onClick={() => handleReply(el._id)}>Send Reply</button>
-                  </div>
-                </td>
+            {notifications?.length === 0 ? (
+              <tr className="emptyRow">
+                <td className="emptyText">No urgent notifications right now</td>
               </tr>
-            ))}
+            ) : (
+              notifications?.map((el) => (
+                <tr className="eachRow" key={el._id}>
+                  <td className="rowText" align="center">
+                    <div style={{fontWeight: el.read ? 'lighter' : 'bold'}}>The {el.hospitalName} Needs {el.bloodType} Blood Bottles Urgently!!</div>
+                    <div className="detailsCon">
+                      <button className="emailBtn" onClick={() => handleReply(el._id)}>Send Reply</button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

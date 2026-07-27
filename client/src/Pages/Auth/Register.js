@@ -27,25 +27,23 @@ export default function Register() {
                 <div className='mainHeading'>Blood Reservoir</div>
             </div>
             <button className='signinBtn' onClick={navigateToLoginPage}>
-                <RiAdminLine className='icon'/>
+                <span className='iconBadge'><RiAdminLine className='icon'/></span>
                 Login as an Admin
             </button>
             <button className='signinBtn' onClick={navigateToPatientTermsPage}>
-                <RiUserLocationLine className='icon'/>
+                <span className='iconBadge'><RiUserLocationLine className='icon'/></span>
                 Sign up as Patient
             </button>
-            
+
             <button className='signinBtn' onClick={navigateToBankTermsPage}>
-                <MdOutlineBloodtype className='icon'/>
+                <span className='iconBadge'><MdOutlineBloodtype className='icon'/></span>
                 Sign up as Blood Bank
             </button>
             <button className='signinBtn' onClick={navigateToDonorTermsPage}>
-                <BiDonateBlood className='icon'/>
+                <span className='iconBadge'><BiDonateBlood className='icon'/></span>
                 Register Yourself as Donor
             </button>
-            <div className='text'>Already have an account?
-                <Link to='/login' className='link'>Log in</Link>
-            </div>
+            <div className='text'>Already have an account? <Link to='/login' className='link'>Log in</Link></div>
         </div>
     </div>
   )

@@ -10,7 +10,7 @@ export default function AllBloodBanks({ check }) {
     navigate(`/eachBank/${ID}`);
   };
   useEffect(() => {
-    axios(`http://localhost:5000/bloodBank/`)
+    axios(`${process.env.REACT_APP_API_URL}/bloodBank/`)
       .then((data) => {
         setBanks(data.data);
       })
@@ -46,29 +46,35 @@ export default function AllBloodBanks({ check }) {
           </th>
         </thead>
         <tbody className="tableBody">
-          {filterBanks?.map((el) => (
-            <tr
-              className="eachRow1"
-              onClick={() => navigateToEachDonorPage(el._id)}
-              key={el._id}
-            >
-              <td className="rowText" align="center">
-                {el.bankName}
-              </td>
-              <td className="rowText" align="center">
-                {el.email}
-              </td>
-              <td className="rowText" align="center">
-                {el.phone}
-              </td>
-              <td className="rowText" align="center">
-                {el.address}
-              </td>
-              <td className="rowText" align="center">
-                {el.city}
-              </td>
+          {filterBanks?.length === 0 ? (
+            <tr className="emptyRow">
+              <td className="emptyText" colSpan={5}>No blood banks to show yet</td>
             </tr>
-          ))}
+          ) : (
+            filterBanks?.map((el) => (
+              <tr
+                className="eachRow1"
+                onClick={() => navigateToEachDonorPage(el._id)}
+                key={el._id}
+              >
+                <td className="rowText" align="center">
+                  {el.bankName}
+                </td>
+                <td className="rowText" align="center">
+                  {el.email}
+                </td>
+                <td className="rowText" align="center">
+                  {el.phone}
+                </td>
+                <td className="rowText" align="center">
+                  {el.address}
+                </td>
+                <td className="rowText" align="center">
+                  {el.city}
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

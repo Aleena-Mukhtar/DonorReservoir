@@ -13,7 +13,7 @@ export default function EachShipment() {
   const { id } = useParams();
 
   useEffect(() => {
-    axios(`http://localhost:5000/bankNotification/${id}`)
+    axios(`${process.env.REACT_APP_API_URL}/bankNotification/${id}`)
       .then((data) => {
         setShipment(data.data);
       })

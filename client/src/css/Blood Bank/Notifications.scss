@@ -1,67 +1,90 @@
-$navbar-color: #b81d1d;
-$font-color: #FFFFFF;
-$icon-color: #A6A3A3;
-$check-color: #077861;
-$header-color: #D6D5D5;
+@import "../theme";
 .bankNotifications{
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
     position: relative;
-    width: 100%;
-    height: 100vh;
+    width: 92%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding-bottom: 3.5rem;
+    box-sizing: border-box;
     .backBtn{
-        background-color: transparent;
-        font-size: 30px;
-        width: 95%;
-        text-align: left;
-        border: none;
+        align-self: flex-start;
+        margin-top: 2rem;
+        width: 46px;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $font-color;
+        border: 1px solid $border-soft;
+        border-radius: 50%;
+        box-shadow: $shadow-sm;
         cursor: pointer;
-        margin-top: 1rem;
-        margin-left: 0.5rem;
+        transition: $transition;
+        .icon{
+            font-size: 22px;
+            color: $navbar-color;
+        }
+    }
+    .backBtn:hover{
+        border-color: $navbar-color;
+        box-shadow: $shadow-md;
+        transform: translateY(-1px);
     }
     .heading{
-        margin-top: 3rem;
-        font-size: 25px;
-        font-weight: bold;
-    }
-    .subHeading{
-        margin: 0.5rem 0;
-        font-size: 18px;
-        color: $navbar-color;
+        text-align: center;
+        padding: 1.6rem 0 2rem;
+        .mainTitle{
+            font-size: 28px;
+            font-weight: 800;
+            color: $text-dark;
+            letter-spacing: $letter-wide;
+        }
+        .subTitle{
+            margin-top: 0.4rem;
+            font-size: 15px;
+            color: $icon-color;
+        }
     }
     .tableCon{
-        width: 90%;
-        overflow-y: scroll;
+        width: 100%;
+        overflow-y: auto;
         overflow-x: hidden;
-        margin-top: 2rem;
-        height: 70vh;
-        border-radius: 8px;
-        margin-bottom: 3rem;
+        max-height: 45vh;
+        border-radius: $radius-xl;
+        background-color: $font-color;
+        box-shadow: $shadow-lg;
+        margin-bottom: 1.5rem;
+        box-sizing: border-box;
         .table{
             width: 100%;
-            border-radius: 8px;
+            border-collapse: collapse;
             .tableHeader{
                 width: 100%;
                 background-color: $header-color;
-                border-radius: 8px;
                 .headText{
-                    padding: 1rem 0;
-                    font-size: 17px;
-                    padding-left: 1rem;
+                    padding: 1.1rem 1.3rem;
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: $text-dark;
+                    letter-spacing: 0.3px;
                 }
             }
             .tableBody{
                 background-color: $font-color;
                 .eachRow{
                     cursor: pointer;
+                    transition: $transition;
                     .rowText{
-                        padding: 0.6rem;
+                        padding: 1rem;
                         font-size: 16px;
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
+                        border-bottom: 1px solid $border-soft;
                         .detailsCon{
                             display: flex;
                             align-items: center;
@@ -72,24 +95,47 @@ $header-color: #D6D5D5;
                                 border: none;
                                 background-color: $navbar-color;
                                 color: $font-color;
-                                padding: 0.8rem;
-                                border-radius: 8px;
-                                width: 55%;
-                                font-size: 15px;
+                                padding: 0.7rem 1.2rem;
+                                border-radius: $radius-pill;
+                                font-size: 14px;
+                                font-weight: 600;
                                 cursor: pointer;
+                                transition: $transition;
+                            }
+                            .emailBtn:hover{
+                                background-color: $navbar-color-dark;
+                                box-shadow: $shadow-brand;
                             }
                         }
                     }
                 }
                 .eachRow1{
                     cursor: pointer;
+                    transition: $transition;
                     .rowText{
-                        padding: 0.8rem;
+                        padding: 1rem;
                         font-size: 16px;
+                        border-bottom: 1px solid $border-soft;
                     }
+                }
+                .eachRow:last-child .rowText, .eachRow1:last-child .rowText{
+                    border-bottom: none;
                 }
                 .eachRow:hover, .eachRow1:hover{
                     background-color: rgba($color: $header-color, $alpha: 0.3);
+                }
+                .emptyRow{
+                    cursor: default;
+                    .emptyText{
+                        padding: 2.5rem 1rem;
+                        text-align: center;
+                        font-size: 15px;
+                        font-weight: 600;
+                        color: $icon-color;
+                    }
+                }
+                .emptyRow:hover{
+                    background-color: transparent;
                 }
             }
         }
@@ -97,18 +143,16 @@ $header-color: #D6D5D5;
     .tableCon::-webkit-scrollbar-track
     {
         background-color: $font-color;
-        border-radius: 5px;
     }
     .tableCon::-webkit-scrollbar
     {
         width: 8px;
-        background-color: $icon-color;
-        border-radius: 5px;
+        background-color: transparent;
     }
     .tableCon::-webkit-scrollbar-thumb
     {
-        background-color: $icon-color;
-        border-radius: 5px;
+        background-color: $border-soft;
+        border-radius: $radius-sm;
     }
     .logoutModal{
         .logout{
@@ -311,21 +355,7 @@ $header-color: #D6D5D5;
 }
 
 .adminNotifications{
-    height: unset;
-    .heading{
-        margin-top: 1rem;
-    }
     .tableCon{
-        height: 45vh;
-        .table{
-            .tableBody{
-                .eachRow1{
-                    cursor: pointer !important;
-                    .rowText{
-                        padding: 1rem !important;
-                    }
-                }
-            }
-        }
+        max-height: 38vh;
     }
 }

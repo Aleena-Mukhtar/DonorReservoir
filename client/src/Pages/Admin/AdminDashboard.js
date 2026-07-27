@@ -1,6 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
+import { BsDropletFill, BsStarFill } from "react-icons/bs";
+import { BiChevronDown } from "react-icons/bi";
+import { FaClipboardList, FaUsers, FaHospital, FaUserInjured } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+
+const FILTER_OPTIONS = ["All", "Pending", "Rejected", "Approved"];
 import AllDonors from "./AllDonors";
 import PatientRequests from "./PatientRequests";
 import LoggedInNavbar from "../Auth/LoggedInNavbar";
@@ -14,14 +19,26 @@ export default function AdminDashboard() {
   const [check, setCheck] = useState(false);
   const [filterNotifications, setFilterNotifications] = useState([]);
   const [filters, setFilters] = useState("All");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const filterRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios(`http://localhost:5000/adminNotification/`)
+    axios(`${process.env.REACT_APP_API_URL}/adminNotification/`)
       .then((data) => {
         setFilterNotifications(data.data.filter((el) => el.read));
       })
       .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (filterRef.current && !filterRef.current.contains(e.target)) {
+        setIsFilterOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const navigateToBottleStockPage = () => {
@@ -38,7 +55,10 @@ export default function AdminDashboard() {
     <>
     <LoggedInNavbar/>
     <div className="adminDashboard">
-      <div className="heading">Admin Dashboard</div>
+      <div className="heading">
+        <div className="mainTitle">Admin Dashboard</div>
+        <div className="subTitle">Manage requests, donors, blood banks and patients from one place</div>
+      </div>
       <div className="mainContent">
         <div className="leftPanel">
           <div className="BtnDiv">
@@ -46,31 +66,36 @@ export default function AdminDashboard() {
               className={btnClick === 0 ? "btn click" : "btn"}
               onClick={navigateToBottleStockPage}
             >
-              Bottles Stock
+              <BsDropletFill className="btnIcon" />
+              <span>Bottles Stock</span>
             </button>
             <button
               className={btnClick === 1 ? "btn click" : "btn"}
               onClick={(e) => setBtnClick(1)}
             >
-              Blood Requests
+              <FaClipboardList className="btnIcon" />
+              <span>Blood Requests</span>
             </button>
             <button
               className={btnClick === 3 ? "btn click" : "btn"}
               onClick={(e) => setBtnClick(3)}
             >
-              Donors
+              <FaUsers className="btnIcon" />
+              <span>Donors</span>
             </button>
             <button
               className={btnClick === 4 ? "btn click" : "btn"}
               onClick={(e) => setBtnClick(4)}
             >
-              Blood Banks
+              <FaHospital className="btnIcon" />
+              <span>Blood Banks</span>
             </button>
             <button
               className={btnClick === 5 ? "btn click" : "btn"}
               onClick={(e) => setBtnClick(5)}
             >
-              Patients
+              <FaUserInjured className="btnIcon" />
+              <span>Patients</span>
             </button>
           </div>
           <button
@@ -85,27 +110,43 @@ export default function AdminDashboard() {
           {
             btnClick === 6 ? null :
             <div className="upperCon">
-              <div className="starBtn">
-                <div className="text">Starred</div>
-                <input
-                  className="checkbox"
-                  type="checkbox"
-                  onChange={(e) => setCheck(!check)}
-                ></input>
-              </div>
+              <button
+                type="button"
+                className={check ? "starBtn active" : "starBtn"}
+                onClick={() => setCheck(!check)}
+              >
+                <BsStarFill className="starIcon" />
+                <span className="text">Starred</span>
+              </button>
               {btnClick === 3 || btnClick === 4 || btnClick === 5 ? null : (
-                <select
-                  className="select"
-                  value={filters}
-                  onChange={(e) => setFilters(e.target.value)}
-                >
-                  <option value="All">All</option>
-                  <option value="Pending">Pending</option>
-                  <option value="Rejected">Rejected</option>
-                  <option value="Approved">Approved</option>
-                </select>
+                <div className="filterSelect" ref={filterRef}>
+                  <button
+                    type="button"
+                    className="filterToggle"
+                    onClick={() => setIsFilterOpen(!isFilterOpen)}
+                  >
+                    <span>{filters}</span>
+                    <BiChevronDown className={`filterIcon ${isFilterOpen ? "open" : ""}`} />
+                  </button>
+                  {isFilterOpen && (
+                    <div className="filterMenu">
+                      {FILTER_OPTIONS.map((el) => (
+                        <div
+                          key={el}
+                          className={`filterOption ${filters === el ? "active" : ""}`}
+                          onClick={() => {
+                            setFilters(el);
+                            setIsFilterOpen(false);
+                          }}
+                        >
+                          {el}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               )}
-            </div> 
+            </div>
           }
           <div className="tableCon">
             {btnClick === 1 ? (

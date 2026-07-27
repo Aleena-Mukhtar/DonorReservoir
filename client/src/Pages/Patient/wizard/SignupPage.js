@@ -32,7 +32,7 @@ export default function SignupPage() {
       body: formdata,
       headers: myHeaders,
     };
-    const response = await fetch("http://localhost:5000/patient/upload", requestOptions);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/patient/upload`, requestOptions);
     const data = await response.json();
     return data;
   };
@@ -135,7 +135,7 @@ export default function SignupPage() {
     const isDataValid = validateDonor(data);
     if(isDataValid){
       const config = {
-        url: "http://localhost:5000/patient/",
+        url: `${process.env.REACT_APP_API_URL}/patient/`,
         method: "POST",
         data: JSON.stringify(data),
         headers: {

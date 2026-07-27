@@ -18,19 +18,21 @@
 @import "./Auth/About.scss";
 body::-webkit-scrollbar-track
 {
-    background-color: $page-bg;
-    border-radius: $radius-sm;
+    background-color: transparent;
 }
 body::-webkit-scrollbar
 {
     width: 8px;
-    background-color: $icon-color;
-    border-radius: $radius-sm;
+    background-color: transparent;
 }
 body::-webkit-scrollbar-thumb
 {
-    background-color: $navbar-color;
+    background-color: $border-soft;
     border-radius: $radius-sm;
+}
+body::-webkit-scrollbar-thumb:hover
+{
+    background-color: $icon-color;
 }
 body{
     background-color: $page-bg;

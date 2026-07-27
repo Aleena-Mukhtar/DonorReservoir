@@ -1,43 +1,109 @@
-$navbar-color: #b81d1d;
-$font-color: #FFFFFF;
-$icon-color: #A6A3A3;
+@import "../theme";
 .about{
-    margin: 0 4rem;
-    margin-bottom: 4rem;
+    max-width: 900px;
+    margin: 2.5rem auto 4rem;
+    background-color: $font-color;
+    border-radius: $radius-xl;
+    box-shadow: $shadow-lg;
+    padding: 1.5rem 3rem 3rem;
+    box-sizing: border-box;
+    position: relative;
     .backBtn{
-        background-color: transparent;
-        font-size: 30px;
+        background-color: rgba($navbar-color, 0.08);
+        color: $navbar-color;
+        font-size: 20px;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
         border: none;
         cursor: pointer;
         margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: $transition;
+    }
+    .backBtn:hover{
+        background-color: $navbar-color;
+        color: $font-color;
+        transform: translateX(-3px);
     }
     .mainHeading{
         text-align: center;
-        font-size: 25px;
-        font-weight: bold;
-        margin: 2rem 0;
-        color: $navbar-color;
+        font-size: 30px;
+        font-weight: 800;
+        margin: 1.5rem 0 2.5rem;
+        color: $text-dark;
     }
     .heading{
-        font-size: 20px;
-        margin: 2rem 0;
-        font-weight: bold;
-        border-bottom: 2px solid $navbar-color;
+        font-size: 21px;
+        margin: 2.2rem 0 1.2rem;
+        font-weight: 800;
+        color: $text-dark;
+        position: relative;
+        padding-bottom: 0.8rem;
+    }
+    .heading::after{
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 56px;
+        height: 4px;
+        background-color: $navbar-color;
+        border-radius: $radius-pill;
     }
     .detail{
-        width: 95%;
-        margin-bottom: 1rem;
+        width: 100%;
+        margin-bottom: 1.2rem;
+        line-height: 1.75;
+        color: rgba($text-dark, 0.85);
+        font-size: 16px;
     }
     .infoCon{
-        margin: 2rem 0;
-        .info{
-            font-weight: bold;
+        margin: 1.5rem 0;
+        background-color: $page-bg;
+        border-radius: $radius-lg;
+        padding: 1.5rem 1.8rem;
+        .infoTitle{
+            font-weight: 800;
             color: $navbar-color;
             margin-bottom: 1rem;
-            span{
-                color: black;
-                margin-left: 1rem;
+            font-size: 17px;
+        }
+        .info{
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            color: $text-dark;
+            margin-bottom: 0.9rem;
+            font-size: 15px;
+            .infoIcon{
+                font-size: 18px;
+                color: $navbar-color;
+                margin-right: 0.6rem;
+                flex-shrink: 0;
             }
+            span{
+                color: rgba($text-dark, 0.75);
+                font-weight: 400;
+                margin-left: 0.4rem;
+            }
+        }
+        .info:last-child{
+            margin-bottom: 0;
+        }
+    }
+    @media(max-width: 950px){
+        margin: 2rem 3%;
+        padding: 1.2rem 1.8rem 2.2rem;
+    }
+    @media(max-width: 500px){
+        .mainHeading{
+            font-size: 24px;
+        }
+        .heading{
+            font-size: 18px;
         }
     }
 }

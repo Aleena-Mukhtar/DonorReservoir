@@ -24,22 +24,22 @@ export default function EachPatientRequest() {
 
     useEffect(() => {}, [showModal]);
     useEffect(() => {
-        axios(`http://localhost:5000/bloodRequest/${id}`)
+        axios(`${process.env.REACT_APP_API_URL}/bloodRequest/${id}`)
         .then((data) => {
             setRequest(data.data);
             data.data.time = DisplayCurrentTime(new Date(data.data.createdAt.toString()));
-            axios(`http://localhost:5000/bloodBottle/${data.data.bloodType}`)
+            axios(`${process.env.REACT_APP_API_URL}/bloodBottle/${data.data.bloodType}`)
             .then((data) => {
                 setBottle(data.data.data);
             })
             .catch((err) => console.log(err));
-            axios(`http://localhost:5000/patient/${data.data.patient_id}`)
+            axios(`${process.env.REACT_APP_API_URL}/patient/${data.data.patient_id}`)
             .then((data) => {
                 setPatient(data.data.data[0]);
             })
             .catch((err) => console.log(err));
             if(data.data.donor_id){
-                axios(`http://localhost:5000/donor/get/${data.data.donor_id}`)
+                axios(`${process.env.REACT_APP_API_URL}/donor/get/${data.data.donor_id}`)
                 .then((data) => {
                     setDonor(data.data.data[0]);
                 })
@@ -63,7 +63,7 @@ export default function EachPatientRequest() {
             status: Status,
         };
         axios({
-            url: `http://localhost:5000/bloodRequest/changeStatus/${id}`,
+            url: `${process.env.REACT_APP_API_URL}/bloodRequest/changeStatus/${id}`,
             method: "PUT",
             data: data,
             headers: {
@@ -86,7 +86,7 @@ export default function EachPatientRequest() {
             read: true,
         };
         axios({
-            url: `http://localhost:5000/bloodRequest/markAsRead/${id}`,
+            url: `${process.env.REACT_APP_API_URL}/bloodRequest/markAsRead/${id}`,
             method: "PUT",
             data: data,
             headers: {
@@ -103,7 +103,7 @@ export default function EachPatientRequest() {
     };
 
     const AcceptBottle = (Type) => {
-        axios(`http://localhost:5000/bloodBottle/${Type}`)
+        axios(`${process.env.REACT_APP_API_URL}/bloodBottle/${Type}`)
         .then((data) => {
             const count = parseInt(data.data.data.count) - parseInt(request?.count);
             if(count < 5) handleSendAlert(Type);
@@ -125,7 +125,7 @@ export default function EachPatientRequest() {
 
     const handleSendAlert = (type) => {    
         const config = {
-          url: "http://localhost:5000/adminNotification/",
+          url: `${process.env.REACT_APP_API_URL}/adminNotification/`,
           method: "POST",
           data: JSON.stringify({
             bloodType: type
@@ -150,7 +150,7 @@ export default function EachPatientRequest() {
 
     const handleGivenBottle = (Count, ID) => {
         axios({
-            url: `http://localhost:5000/bloodRequest/giveBottles/${ID}`,
+            url: `${process.env.REACT_APP_API_URL}/bloodRequest/giveBottles/${ID}`,
             method: "PUT",
             data: JSON.stringify({ bottles: Count.toString() }),
             headers: {
@@ -172,7 +172,7 @@ export default function EachPatientRequest() {
             count: Count.toString()
         }
         axios({
-            url: `http://localhost:5000/bloodBottle/${type}`,
+            url: `${process.env.REACT_APP_API_URL}/bloodBottle/${type}`,
             method: "PUT",
             data: JSON.stringify(data),
             headers: {

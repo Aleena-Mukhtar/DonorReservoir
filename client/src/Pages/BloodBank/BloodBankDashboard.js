@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineLogout } from "react-icons/ai";
+import { FaHistory } from "react-icons/fa";
 import LoggedInNavabr from '../Auth/LoggedInNavbar';
 import axios from "axios";
 
@@ -11,7 +12,7 @@ export default function BloodBankDashboard() {
   const [history, setHistory] = useState([]);
   const userData = JSON.parse(sessionStorage.getItem("userData"));
   useEffect(() => {
-    axios(`http://localhost:5000/bankNotification/`)
+    axios(`${process.env.REACT_APP_API_URL}/bankNotification/`)
       .then((data) => {
         setHistory(data.data.filter(el => (el.bank_id === userData._id)));
       })
@@ -30,7 +31,10 @@ export default function BloodBankDashboard() {
     <>
     <LoggedInNavabr/>
     <div className="adminDashboard bloodBankDashboard">
-      <div className="heading">Blood Bank Dashboard</div>
+      <div className="heading">
+        <div className="mainTitle">Blood Bank Dashboard</div>
+        <div className="subTitle">Track hospital requests and shipment history</div>
+      </div>
       <div className="mainContent">
         <div className="leftPanel">
           <div className="BtnDiv">
@@ -38,7 +42,8 @@ export default function BloodBankDashboard() {
               className={btnClick === 1 ? "btn click" : "btn"}
               onClick={(e) => setBtnClick(1)}
             >
-              History
+              <FaHistory className="btnIcon" />
+              <span>History</span>
             </button>
           </div>
           <button
@@ -75,28 +80,34 @@ export default function BloodBankDashboard() {
                   </th>
                 </thead>
                 <tbody className="tableBody">
-                  {history?.map((el) => (
-                    <tr className="eachRow1" onClick={(e) => navigate(`/shipment/${el._id}`)}>
-                      <td className="rowText" align="center">
-                        {el?.hospitalName}
-                      </td>
-                      <td className="rowText" align="center">
-                        {el?.bloodType}
-                      </td>
-                      <td className="rowText" align="center">
-                        {el?.count}
-                      </td>
-                      <td className="rowText" align="center" style={{fontWeight: 'bold', color: el?.status === 'Accepted' ? 'green' : 'red'}}>
-                        {el?.status}
-                      </td>
-                      <td className="rowText" align="center">
-                        {new Date(el?.updatedAt.toString()).toDateString()}
-                      </td>
-                      <td className="rowText" align="center">
-                        {((parseInt(el?.count)  * parseInt(el?.reply?.unitPrice)) - ((parseInt(el?.count)  * parseInt(el?.reply?.unitPrice)) * (parseFloat(el?.reply?.discount)/100))) + parseInt(el?.reply?.shipping)}
-                      </td>
+                  {history?.length === 0 ? (
+                    <tr className="emptyRow">
+                      <td className="emptyText" colSpan={6}>No shipment history to show yet</td>
                     </tr>
-                  ))}
+                  ) : (
+                    history?.map((el) => (
+                      <tr className="eachRow1" onClick={(e) => navigate(`/shipment/${el._id}`)} key={el._id}>
+                        <td className="rowText" align="center">
+                          {el?.hospitalName}
+                        </td>
+                        <td className="rowText" align="center">
+                          {el?.bloodType}
+                        </td>
+                        <td className="rowText" align="center">
+                          {el?.count}
+                        </td>
+                        <td className="rowText" align="center" style={{fontWeight: 'bold', color: el?.status === 'Accepted' ? 'green' : 'red'}}>
+                          {el?.status}
+                        </td>
+                        <td className="rowText" align="center">
+                          {new Date(el?.updatedAt.toString()).toDateString()}
+                        </td>
+                        <td className="rowText" align="center">
+                          {((parseInt(el?.count)  * parseInt(el?.reply?.unitPrice)) - ((parseInt(el?.count)  * parseInt(el?.reply?.unitPrice)) * (parseFloat(el?.reply?.discount)/100))) + parseInt(el?.reply?.shipping)}
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             ) : null}

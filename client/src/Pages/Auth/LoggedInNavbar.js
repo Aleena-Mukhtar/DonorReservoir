@@ -19,20 +19,20 @@ export default function LoggedInNavbar() {
   useEffect(() => {
     let url;
     if(role === "Admin") {
-      url = `http://localhost:5000/adminNotification/`;
+      url = `${process.env.REACT_APP_API_URL}/adminNotification/`;
       axios(url)
       .then((data) => {
         setFilterNotifications(data.data.filter(el => !el.read));
       })
       .catch((err) => console.log(err));
-      url = `http://localhost:5000/bloodRequest/`;
+      url = `${process.env.REACT_APP_API_URL}/bloodRequest/`;
       axios(url)
       .then((data) => {
         setFilterPatientNotifications(data.data.filter(el => !el.read));
       })
       .catch((err) => console.log(err));
     }
-    axios(`http://localhost:5000/bankNotification/`)
+    axios(`${process.env.REACT_APP_API_URL}/bankNotification/`)
       .then((data) => {
         if(role === 'Admin') {
           setFilterInbox(data.data.filter(el => (!el.adminRead || !el.adminReplyRead)));
