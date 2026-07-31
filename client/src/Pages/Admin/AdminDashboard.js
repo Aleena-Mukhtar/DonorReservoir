@@ -8,7 +8,6 @@ import AllDonors from "./AllDonors";
 import PatientRequests from "./PatientRequests";
 import LoggedInNavbar from "../Auth/LoggedInNavbar";
 import AllBloodBanks from "./AllBloodBanks";
-import axios from "axios";
 import AllPatients from "./AllPatients";
 
 const FILTER_OPTIONS = ["All", "Pending", "Rejected", "Approved"];
@@ -17,19 +16,10 @@ export default function AdminDashboard() {
   const [btnClick, setBtnClick] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [check, setCheck] = useState(false);
-  const [filterNotifications, setFilterNotifications] = useState([]);
   const [filters, setFilters] = useState("All");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const filterRef = useRef(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    axios(`${process.env.REACT_APP_API_URL}/adminNotification/`)
-      .then((data) => {
-        setFilterNotifications(data.data.filter((el) => el.read));
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
