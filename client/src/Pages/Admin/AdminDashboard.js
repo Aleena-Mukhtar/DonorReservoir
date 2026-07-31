@@ -4,14 +4,14 @@ import { BsDropletFill, BsStarFill } from "react-icons/bs";
 import { BiChevronDown } from "react-icons/bi";
 import { FaClipboardList, FaUsers, FaHospital, FaUserInjured } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-
-const FILTER_OPTIONS = ["All", "Pending", "Rejected", "Approved"];
 import AllDonors from "./AllDonors";
 import PatientRequests from "./PatientRequests";
 import LoggedInNavbar from "../Auth/LoggedInNavbar";
 import AllBloodBanks from "./AllBloodBanks";
 import axios from "axios";
 import AllPatients from "./AllPatients";
+
+const FILTER_OPTIONS = ["All", "Pending", "Rejected", "Approved"];
 
 export default function AdminDashboard() {
   const [btnClick, setBtnClick] = useState(1);
