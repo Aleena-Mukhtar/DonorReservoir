@@ -102,6 +102,31 @@ body{
                 color: $icon-color;
                 cursor: not-allowed;
             }
+            .passwordField{
+                position: relative;
+                width: 100%;
+                .input{
+                    padding-right: 2.8rem;
+                }
+                .togglePassword{
+                    position: absolute;
+                    top: 50%;
+                    right: 0.9rem;
+                    transform: translateY(-50%);
+                    display: flex;
+                    align-items: center;
+                    background: transparent;
+                    border: none;
+                    padding: 0;
+                    cursor: pointer;
+                    font-size: 19px;
+                    color: $icon-color;
+                    transition: $transition;
+                }
+                .togglePassword:hover{
+                    color: $navbar-color;
+                }
+            }
         }
     }
     .ImageField{

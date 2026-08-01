@@ -95,26 +95,28 @@ export default function LoggedInNavbar() {
                   <MdOutlineMailOutline className='icon'/>
                   {filterInbox.length === 0 ? null : <GoDotFill className="dotIcon"/>}
                 </button>
-                <button className='notificationBtn' onClick={handleClick}>
+                <button className='notificationBtn bellBtn' onClick={handleClick}>
                   <BiBell className='icon'/>
                   {filterNotifications.length === 0 && filterPatientNotifications.length === 0 ? null : <GoDotFill className="dotIcon"/>}
                 </button>
               </>
             }
-            {userData?.img === "" ? (
-              <img
-                src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
-                alt="logo"
-                className="ProfileLogo"
-                onClick={() => setisEdit(!isEdit)}
-              />
-            ) : (
-              <img src={userData?.img} alt="logo" className="ProfileLogo" onClick={() => setisEdit(!isEdit)}/>
-            )}
-            <div className='editMenu' style={{display: isEdit ? 'flex' : 'none'}}>
-              <button className='editBtn' onClick={() => {navigateToEditPage(); setisEdit(false)}}>Edit Profile</button>
-              <button className='editBtn' onClick={() => navigate('/help')}>Help</button>
-              <button className='editBtn' onClick={handleLogout}>Log Out</button>
+            <div className="profileCon">
+              {userData?.img === "" ? (
+                <img
+                  src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
+                  alt="logo"
+                  className="ProfileLogo"
+                  onClick={() => setisEdit(!isEdit)}
+                />
+              ) : (
+                <img src={userData?.img} alt="logo" className="ProfileLogo" onClick={() => setisEdit(!isEdit)}/>
+              )}
+              <div className='editMenu' style={{display: isEdit ? 'flex' : 'none'}}>
+                <button className='editBtn' onClick={() => {navigateToEditPage(); setisEdit(false)}}>Edit Profile</button>
+                <button className='editBtn' onClick={() => navigate('/help')}>Help</button>
+                <button className='editBtn logoutOption' onClick={handleLogout}>Log Out</button>
+              </div>
             </div>
         </div>
       </div>
