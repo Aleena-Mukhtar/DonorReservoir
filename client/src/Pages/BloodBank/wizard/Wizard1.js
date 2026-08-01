@@ -1,9 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { requestContext } from "./BlooBankContainer";
 
 export default function Wizard1() {
   const { setTab, handleChange, data } = useContext(requestContext);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
   const isValid = () => {
     const isEmpty = [
       "bankName",
@@ -163,23 +166,41 @@ export default function Wizard1() {
           <div className="fieldsDiv">
             <div className="fieldCon">
               <div className="field">Password <span style={{color: 'red'}}>*</span></div>
-              <input
-                className="input"
-                onChange={(e) => handleChange(e)}
-                type="password"
-                value={data.password}
-                name={"password"}
-              />
+              <div className="passwordField">
+                <input
+                  className="input"
+                  onChange={(e) => handleChange(e)}
+                  type={showPassword ? "text" : "password"}
+                  value={data.password}
+                  name={"password"}
+                />
+                <button
+                  type="button"
+                  className="togglePassword"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                </button>
+              </div>
             </div>
             <div className="fieldCon">
               <div className="field">Confirm Password <span style={{color: 'red'}}>*</span></div>
-              <input
-                className="input"
-                onChange={(e) => handleChange(e)}
-                type="password"
-                value={data.password2}
-                name={"password2"}
-              />
+              <div className="passwordField">
+                <input
+                  className="input"
+                  onChange={(e) => handleChange(e)}
+                  type={showPassword2 ? "text" : "password"}
+                  value={data.password2}
+                  name={"password2"}
+                />
+                <button
+                  type="button"
+                  className="togglePassword"
+                  onClick={() => setShowPassword2(!showPassword2)}
+                >
+                  {showPassword2 ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                </button>
+              </div>
             </div>
           </div>
           <div className="BtnCon">

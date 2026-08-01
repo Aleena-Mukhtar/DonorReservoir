@@ -1,12 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
-import { requestContext } from "./PatientContainer"; 
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { requestContext } from "./PatientContainer";
 import axios from "axios";
 
 export default function SignupPage() {
   const { handleChange, setData, data } = useContext(requestContext);
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
 
   async function uploadImg(e) {
     const file = e.target.files[0];
@@ -282,23 +285,41 @@ export default function SignupPage() {
         <div className="fieldsDiv">
             <div className="fieldCon">
                 <div className="field">Password <span style={{color: 'red'}}>*</span></div>
-                <input
-                    className="input"
-                    onChange={(e) => handleChange(e)}
-                    value={data.password}
-                    name="password"
-                    type="password"
-                />
+                <div className="passwordField">
+                    <input
+                        className="input"
+                        onChange={(e) => handleChange(e)}
+                        value={data.password}
+                        name="password"
+                        type={showPassword ? "text" : "password"}
+                    />
+                    <button
+                        type="button"
+                        className="togglePassword"
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                    </button>
+                </div>
             </div>
             <div className="fieldCon">
                 <div className="field">Confirm Password <span style={{color: 'red'}}>*</span></div>
-                <input
-                    className="input"
-                    onChange={(e) => handleChange(e)}
-                    value={data.password2}
-                    name="password2"
-                    type="password"
-                />
+                <div className="passwordField">
+                    <input
+                        className="input"
+                        onChange={(e) => handleChange(e)}
+                        value={data.password2}
+                        name="password2"
+                        type={showPassword2 ? "text" : "password"}
+                    />
+                    <button
+                        type="button"
+                        className="togglePassword"
+                        onClick={() => setShowPassword2(!showPassword2)}
+                    >
+                        {showPassword2 ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                    </button>
+                </div>
             </div>
         </div>
         <button

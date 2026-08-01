@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { BiChevronDown } from "react-icons/bi";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const OPTIONS = ["Role", "Admin", "Patient", "Blood Bank"];
 
@@ -9,6 +10,7 @@ export default function LoginPage() {
   const [data, setData] = useState({ email: "", password: "" });
   const [role, setRole] = useState("Role");
   const [isRoleOpen, setIsRoleOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const roleRef = useRef(null);
   const navigate = useNavigate();
 
@@ -105,14 +107,23 @@ export default function LoginPage() {
         </div>
         <div className="fieldCon">
           <div className="field">Password</div>
-          <input
-            className="input"
-            name="password"
-            placeholder=""
-            type="password"
-            value={data.password}
-            onChange={(e) => handleChange(e)}
-          />
+          <div className="passwordField">
+            <input
+              className="input"
+              name="password"
+              placeholder=""
+              type={showPassword ? "text" : "password"}
+              value={data.password}
+              onChange={(e) => handleChange(e)}
+            />
+            <button
+              type="button"
+              className="togglePassword"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+            </button>
+          </div>
         </div>
 
         <div className="customSelect" ref={roleRef}>

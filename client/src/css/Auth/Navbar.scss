@@ -225,12 +225,32 @@
                 background-color: rgba(255, 255, 255, 0.2);
                 transform: translateY(-1px);
             }
+            .notificationBtn.bellBtn{
+                background-color: $font-color;
+                box-shadow: $shadow-sm;
+                .icon{
+                    color: $navbar-color;
+                }
+                .dotIcon{
+                    box-shadow: 0 0 0 2px $font-color;
+                }
+            }
+            .notificationBtn.bellBtn:hover{
+                background-color: $font-color;
+                box-shadow: $shadow-md;
+                transform: translateY(-1px);
+            }
+            .profileCon{
+                position: relative;
+                display: flex;
+                align-items: center;
+            }
             .ProfileLogo{
                 height: 45px;
                 width: 45px;
                 object-fit: cover;
                 border-radius: 50%;
-                margin-right: 2rem;
+                margin-right: 0.4rem;
                 cursor: pointer;
                 border: 2px solid rgba(255, 255, 255, 0.6);
                 transition: $transition;
@@ -243,47 +263,44 @@
                 position: absolute;
                 display: flex;
                 flex-direction: column;
-                align-items: center;
+                align-items: stretch;
                 justify-content: flex-start;
                 background-color: $font-color;
                 z-index: 5;
                 border-radius: $radius-md;
                 box-shadow: $shadow-lg;
-                padding: 0.4rem;
-                gap: 0.3rem;
-                top: 10%;
-                width: 14%;
-                right: 1%;
+                padding: 0.5rem;
+                gap: 0.2rem;
+                top: calc(100% + 12px);
+                right: 0;
+                width: 170px;
+                box-sizing: border-box;
                 .editBtn{
-                    padding: 0.7rem 0;
+                    padding: 0.7rem 0.8rem;
                     width: 100%;
+                    text-align: left;
                     border-radius: $radius-sm;
                     background-color: transparent;
+                    color: $text-dark;
                     border: none;
-                    font-size: 16px;
+                    font-size: 15px;
                     font-weight: 500;
                     cursor: pointer;
                     transition: $transition;
                 }
                 .editBtn:hover{
-                    background-color: rgba($navbar-color, 0.1);
+                    background-color: rgba($navbar-color, 0.08);
                     color: $navbar-color;
                 }
-            }
-            @media(max-width: 700px){
-                .editMenu{
-                    width: 20%;
+                .editBtn.logoutOption{
+                    color: $navbar-color;
+                    border-top: 1px solid $border-soft;
+                    border-radius: 0 0 $radius-sm $radius-sm;
+                    margin-top: 0.2rem;
+                    padding-top: 0.9rem;
                 }
-            }
-            @media(max-width: 500px){
-                .editMenu{
-                    top: 8%;
-                    width: 30%;
-                }
-            }
-            @media(max-width: 400px){
-                .editMenu{
-                    width: 35%;
+                .editBtn.logoutOption:hover{
+                    background-color: rgba($navbar-color, 0.08);
                 }
             }
         }

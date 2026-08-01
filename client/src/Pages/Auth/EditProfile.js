@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { BiUser } from 'react-icons/bi';
-import { AiOutlineLogout } from 'react-icons/ai';
+import { AiOutlineLogout, AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { MdDelete, MdModeEditOutline } from 'react-icons/md';
 import LoggedInNavbar from './LoggedInNavbar';
 import { RiEditCircleFill } from 'react-icons/ri';
@@ -47,10 +47,12 @@ export default function EditProfile() {
             CNIC: userData?.CNIC,
         }
     );
+    const [activeTab, setActiveTab] = useState("user");
+    const [showPassword, setShowPassword] = useState(false);
+    const [showBankPassword, setShowBankPassword] = useState(false);
+    const userSection = useRef(null);
     const bankSection = useRef(null);
     const navigate = useNavigate();
-
-    useEffect(() => {}, [showModal]);
 
     async function uploadImg(e) {
         const file = e.target.files[0];
@@ -136,13 +138,25 @@ export default function EditProfile() {
         <div className='con1'>
             <div className='innerCon'>
                 <div className='mainHeading'>User Profile</div>
-                <div className='userContent'>
+                <div
+                    className={`userContent ${activeTab === "user" ? "active" : ""}`}
+                    onClick={() => {
+                        setActiveTab("user");
+                        scrollDown(userSection);
+                    }}
+                >
                     <BiUser className='icon'/>
                     <div className='label'>User Info</div>
                 </div>
                 {
-                    role === "Blood Bank" ? 
-                    <div className='userContent' onClick={() => scrollDown(bankSection)}>
+                    role === "Blood Bank" ?
+                    <div
+                        className={`userContent ${activeTab === "bank" ? "active" : ""}`}
+                        onClick={() => {
+                            setActiveTab("bank");
+                            scrollDown(bankSection);
+                        }}
+                    >
                         <BiUser className='icon'/>
                         <div className='label'>Bank Info</div>
                     </div> : null
@@ -154,7 +168,7 @@ export default function EditProfile() {
             </button>
         </div>
         <div className='editProfileContent'>
-            <div className='pictureCon'>
+            <div className='pictureCon' ref={userSection}>
                 {data?.img === "" ? (
                     <img
                         src={process.env.PUBLIC_URL + "/ProfileLogo.PNG"}
@@ -276,13 +290,22 @@ export default function EditProfile() {
                         </div>
                         <div className='fieldCon'>
                             <div className='field'>Password</div>
-                            <input 
-                                className='input' 
-                                type='password'
-                                onChange={(e) => handleFieldChange(e)}
-                                value={data.password}
-                                name="password"
-                            />
+                            <div className='passwordField'>
+                                <input
+                                    className='input'
+                                    type={showPassword ? 'text' : 'password'}
+                                    onChange={(e) => handleFieldChange(e)}
+                                    value={data.password}
+                                    name="password"
+                                />
+                                <button
+                                    type="button"
+                                    className='togglePassword'
+                                    onClick={() => setShowPassword(!showPassword)}
+                                >
+                                    {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 }
@@ -371,13 +394,22 @@ export default function EditProfile() {
                         </div>
                         <div className='fieldCon'>
                             <div className='field'>Password</div>
-                            <input 
-                                className='input' 
-                                type='text' 
-                                onChange={(e) => handleFieldChange(e)}
-                                value={data.password}
-                                name="password"
-                            />
+                            <div className='passwordField'>
+                                <input
+                                    className='input'
+                                    type={showBankPassword ? 'text' : 'password'}
+                                    onChange={(e) => handleFieldChange(e)}
+                                    value={data.password}
+                                    name="password"
+                                />
+                                <button
+                                    type="button"
+                                    className='togglePassword'
+                                    onClick={() => setShowBankPassword(!showBankPassword)}
+                                >
+                                    {showBankPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div> </>: null
