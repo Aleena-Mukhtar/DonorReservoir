@@ -1,7 +1,4 @@
-$navbar-color: #b81d1d;
-$font-color: #FFFFFF;
-$icon-color: #A6A3A3;
-$check-color: #077861;
+@use "../theme" as *;
 .patientDashboard{
     .mainContainer{
         width: 90%;

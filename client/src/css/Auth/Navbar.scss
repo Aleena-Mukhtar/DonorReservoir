@@ -1,4 +1,4 @@
-@import "../theme";
+@use "../theme" as *;
 .navbar{
     background-color: $navbar-color;
     color: $font-color;

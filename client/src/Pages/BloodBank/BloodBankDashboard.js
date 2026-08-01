@@ -17,7 +17,7 @@ export default function BloodBankDashboard() {
         setHistory(data.data.filter(el => (el.bank_id === userData._id)));
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [userData._id]);
 
   const handleLogout = () => {
     sessionStorage.removeItem('userData');

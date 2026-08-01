@@ -11,9 +11,9 @@ export default function EachBloodBank() {
   const navigate = useNavigate();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const [starred, setStarred] = useState(false);
-  const [time, setTime] = useState("");
   const [bank, setbank] = useState({});
+  const [activeTab, setActiveTab] = useState("admin");
+  const adminSection = useRef(null);
   const bankSection = useRef(null);
   const { id } = useParams();
 
@@ -21,19 +21,9 @@ export default function EachBloodBank() {
     axios(`${process.env.REACT_APP_API_URL}/bloodBank/${id}`)
       .then((data) => {
         setbank(data.data);
-        DisplayCurrentTime(new Date(data.data?.createdAt.toString()));
       })
       .catch((err) => console.log(err));
-  }, []);
-
-  function DisplayCurrentTime(date) {
-    let hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
-    let am_pm = date.getHours() >= 12 ? "PM" : "AM";
-    hours = hours < 10 ? "0" + hours : hours;
-    let minutes =
-      date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-    setTime(hours + ":" + minutes + " " + am_pm);
-  }
+  }, [id]);
 
   function handleDelete() {
     var config = {
@@ -67,7 +57,6 @@ export default function EachBloodBank() {
       .then((res) => {
         if (res.data.success) {
           setbank(res.data.data);
-          setStarred(res.data.data.star);
         } else {
           console.log(res);
         }
@@ -100,13 +89,22 @@ export default function EachBloodBank() {
           <div className="con1">
             <div className="innerCon">
               <div className="mainHeading">Bank Profile</div>
-              <div className="userContent">
+              <div
+                className={`userContent ${activeTab === "admin" ? "active" : ""}`}
+                onClick={() => {
+                  setActiveTab("admin");
+                  scrollDown(adminSection);
+                }}
+              >
                 <BiUser className="icon" />
                 <div className="label">Admin Info</div>
               </div>
               <div
-                className="userContent"
-                onClick={() => scrollDown(bankSection)}
+                className={`userContent ${activeTab === "bank" ? "active" : ""}`}
+                onClick={() => {
+                  setActiveTab("bank");
+                  scrollDown(bankSection);
+                }}
               >
                 <BiUser className="icon" />
                 <div className="label">Bank Info</div>
@@ -160,7 +158,9 @@ export default function EachBloodBank() {
               </div>
             </div>
             <div className="formFields">
-              <div className="heading">Admin Information :</div>
+              <div className="heading" ref={adminSection}>
+                Admin Information :
+              </div>
               <div className="fieldsDiv">
                 <div className="fieldCon">
                   <div className="field">First Name</div>

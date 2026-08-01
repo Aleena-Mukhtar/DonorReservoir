@@ -31,7 +31,7 @@ import Help from "./Auth/Help";
 import ErrorPage from "./Auth/ErrorPage";
 
 export default function Container() {
-  const[login, setLogin] = useState(sessionStorage.getItem("isLoggedIn") === "true" ? true : false);
+  const[login] = useState(sessionStorage.getItem("isLoggedIn") === "true" ? true : false);
   console.log(sessionStorage.getItem("isLoggedIn"));
   return (
     <div className="container">

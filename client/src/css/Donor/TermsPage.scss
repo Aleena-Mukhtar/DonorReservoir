@@ -1,4 +1,4 @@
-@import "../theme";
+@use "../theme" as *;
 .terms{
     width: 100%;
     box-sizing: border-box;

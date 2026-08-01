@@ -1,4 +1,4 @@
-@import "../theme";
+@use "../theme" as *;
 .Footer{
     background-color: $navbar-color;
     width: 100%;

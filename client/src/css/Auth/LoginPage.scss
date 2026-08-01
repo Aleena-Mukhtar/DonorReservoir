@@ -1,4 +1,4 @@
-@import "../theme";
+@use "../theme" as *;
 .login{
     display: flex;
     align-items: center;

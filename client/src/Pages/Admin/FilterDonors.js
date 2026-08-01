@@ -22,7 +22,7 @@ const initialObj = {
 export default function FilterDonors() {
   const [donors, setDonors] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [bankName, setBankName] = useState('');
+  const [bankName] = useState('');
   const [data, setData] = useState(initialObj);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -33,7 +33,7 @@ export default function FilterDonors() {
         setDonors(data.data.data.filter((el) => (el.bloodType === type)));
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [type]);
 
     const changeStatus = (Status) => {
         const data = {
