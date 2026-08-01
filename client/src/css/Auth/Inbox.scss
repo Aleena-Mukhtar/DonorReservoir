@@ -1,4 +1,4 @@
-@import "../theme";
+@use "../theme" as *;
 .SharedInbox{
     width: 92%;
     max-width: 1300px;

@@ -15,7 +15,7 @@ export default function Invoice() {
           setReply(data.data);
         })
         .catch((err) => console.log(err));
-    }, []);
+    }, [id]);
 
   return (
     <>

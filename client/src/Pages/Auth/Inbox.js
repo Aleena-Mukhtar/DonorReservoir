@@ -7,7 +7,7 @@ import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from 'react-icon
 
 export default function Inbox() {
     const [notifications, setNotifications] = useState([]);
-    const [read, setread] = useState(false);
+    const [, setread] = useState(false);
     const [active, setActive] = useState(null);
     const role = sessionStorage.getItem("role");
     const userData = JSON.parse(sessionStorage.getItem("userData"));
@@ -27,7 +27,7 @@ export default function Inbox() {
             else setNotifications(data.data);
           })
           .catch((err) => console.log(err));
-    }, []);
+    }, [role, userData._id]);
 
     const readRequest = (ID) => {
         setread(true);

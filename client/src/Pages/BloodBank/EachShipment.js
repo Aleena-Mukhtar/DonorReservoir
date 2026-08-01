@@ -18,7 +18,7 @@ export default function EachShipment() {
         setShipment(data.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
   const handleLogout = () => {
     sessionStorage.removeItem("userData");
     sessionStorage.setItem("isLoggedIn", false);

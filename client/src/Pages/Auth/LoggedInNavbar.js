@@ -43,7 +43,7 @@ export default function LoggedInNavbar() {
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [role, userData._id]);
   const navigateToHomePage = () => {
     if(login === 'true'){
       if(role === 'Admin') navigate('/adminDashboard');

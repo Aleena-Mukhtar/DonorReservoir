@@ -1,20 +1,37 @@
-$navbar-color: #b81d1d;
-$font-color: #FFFFFF;
-$icon-color: #A6A3A3;
-$check-color: #077861;
-$header-color: #D6D5D5;
+@use "../theme" as *;
 .eachDonor{
     position: relative;
     .backBtn{
-        background-color: transparent;
-        font-size: 30px;
-        border: none;
+        width: 46px;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $font-color;
+        border: 1px solid $border-soft;
+        border-radius: 50%;
+        box-shadow: $shadow-sm;
         cursor: pointer;
-        margin-top: 0.5rem;
-        margin-left: 0.5rem;
+        margin-top: 1.5rem;
+        margin-left: 1.5rem;
+        transition: $transition;
+        .icon{
+            font-size: 22px;
+            color: $navbar-color;
+        }
+    }
+    .backBtn:hover{
+        border-color: $navbar-color;
+        box-shadow: $shadow-md;
+        transform: translateY(-1px);
     }
     .editProfile{
         position: unset;
+    }
+    &:not(.eachBank) .con1 .innerCon .userContent{
+        background-color: $navbar-color;
+        color: $font-color;
+        box-shadow: $shadow-brand;
     }
     .editProfileContent{
         .upperProfileCon{
@@ -31,18 +48,45 @@ $header-color: #D6D5D5;
                     flex-wrap: wrap;
                     .BtnCon{
                         width: unset;
+                        display: flex;
+                        align-items: center;
                         .btn{
-                            margin: 0 0.5rem;
-                            background-color: transparent;
-                            border: none;
+                            width: 40px;
+                            height: 40px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin: 0 0.4rem;
+                            background-color: $font-color;
+                            border: 1px solid $border-soft;
+                            border-radius: 50%;
                             cursor: pointer;
+                            transition: $transition;
                             .icon{
-                                font-size: 25px;
+                                font-size: 19px;
                             }
+                        }
+                        .btn:hover{
+                            box-shadow: $shadow-sm;
+                            transform: translateY(-1px);
                         }
                         .starBtn{
                             .icon{
                                 color: $navbar-color;
+                            }
+                        }
+                        .starBtn:hover{
+                            border-color: $navbar-color;
+                        }
+                        .deleteBtn{
+                            .icon{
+                                color: $icon-color;
+                            }
+                        }
+                        .deleteBtn:hover{
+                            border-color: #d33;
+                            .icon{
+                                color: #d33;
                             }
                         }
                     }

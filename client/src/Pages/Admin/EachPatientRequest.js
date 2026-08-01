@@ -8,10 +8,8 @@ import { GoInfo } from 'react-icons/go';
 
 export default function EachPatientRequest() {
     const { id } = useParams();
-    const [showModal, setShowModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showDenyModal, setShowDenyModal] = useState(false);
-    const [starred, setStarred] = useState(false);
     const [status, setStatus] = useState('Pending');
     const role = sessionStorage.getItem("role");
     const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -22,7 +20,6 @@ export default function EachPatientRequest() {
     const bankSection = useRef(null);
     const navigate = useNavigate();
 
-    useEffect(() => {}, [showModal]);
     useEffect(() => {
         axios(`${process.env.REACT_APP_API_URL}/bloodRequest/${id}`)
         .then((data) => {
@@ -47,7 +44,7 @@ export default function EachPatientRequest() {
             }
         })
         .catch((err) => console.log(err));
-    }, [status]);
+    }, [status, id]);
 
     function DisplayCurrentTime(date) {
         let hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();

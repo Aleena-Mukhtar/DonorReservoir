@@ -18,7 +18,7 @@ export default function PatientDashboard() {
         setHistory(data.data.filter(el => (el.patient_id === userData._id)));
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [userData._id]);
 
   const handleLogout = () => {
     sessionStorage.removeItem('userData');

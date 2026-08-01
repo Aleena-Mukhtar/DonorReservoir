@@ -16,7 +16,7 @@ export default function Notification() {
             setNotification(data.data);
           })
           .catch((err) => console.log(err));
-    }, []);
+    }, [id]);
   return (
     <>
     <LoggedInNavbar/>

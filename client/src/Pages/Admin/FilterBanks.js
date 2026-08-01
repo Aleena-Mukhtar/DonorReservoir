@@ -33,7 +33,7 @@ export default function FilterBanks() {
         setBanks(data.data.filter((el) => el.bloodTypes.includes(type)));
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [type]);
 
   const handleEmail = (name, ID) => {
     setBankName(name);

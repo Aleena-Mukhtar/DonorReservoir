@@ -1,21 +1,21 @@
+@use "./theme" as *;
+@use "./Auth/Navbar.scss";
+@use "./Auth/Footer.scss";
+@use "./Auth/Homepage.scss";
+@use "./Auth/LoginPage.scss";
+@use "./Auth/EditProfile.scss";
+@use "./Donor/TermsPage.scss";
+@use "./Blood Bank/BankSignup.scss";
+@use "./Admin/AdminDashboard.scss";
+@use "./Admin/EachPatientRequest.scss";
+@use "./Blood Bank/BloodBankDashboard.scss";
+@use "./Admin/EachDonor.scss";
+@use "./Blood Bank/Notifications.scss";
+@use "./Auth/Inbox.scss";
+@use "./Patient/PatientRequest.scss";
+@use "./Auth/About.scss";
 @import-normalize;
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
-@import "./theme";
-@import "./Auth/Navbar.scss";
-@import "./Auth/Footer.scss";
-@import "./Auth/Homepage.scss";
-@import "./Auth/LoginPage.scss";
-@import "./Auth/EditProfile.scss";
-@import "./Donor/TermsPage.scss";
-@import "./Blood Bank/BankSignup.scss";
-@import "./Admin/AdminDashboard.scss";
-@import "./Admin/EachPatientRequest.scss";
-@import "./Blood Bank/BloodBankDashboard.scss";
-@import "./Admin/EachDonor.scss";
-@import "./Blood Bank/Notifications.scss";
-@import "./Auth/Inbox.scss";
-@import "./Patient/PatientRequest.scss";
-@import "./Auth/About.scss";
 body::-webkit-scrollbar-track
 {
     background-color: transparent;
@@ -96,6 +96,11 @@ body{
                 outline: none;
                 border-color: $navbar-color;
                 box-shadow: 0 0 0 3px rgba($navbar-color, 0.12);
+            }
+            .input:disabled{
+                background-color: $page-bg;
+                color: $icon-color;
+                cursor: not-allowed;
             }
         }
     }

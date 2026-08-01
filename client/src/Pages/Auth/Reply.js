@@ -10,13 +10,7 @@ export default function Reply() {
     const [notification, setNotification] = useState({});
     const [status, setStatus] = useState(false);
     const [showDenyModal, setShowDenyModal] = useState(false);
-    const userData = JSON.parse(sessionStorage.getItem("userData"));
     const role = sessionStorage.getItem("role");
-    const [data, setData] = useState({
-      bloodType: "",
-      count: "",
-      unitPrice: "",
-    });
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,7 +21,7 @@ export default function Reply() {
           else setStatus(true);
         })
         .catch((err) => console.log(err));
-    }, [status]);
+    }, [status, id]);
 
     const updateStatus = (Status) => {
       const data = {

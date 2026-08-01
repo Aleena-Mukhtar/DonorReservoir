@@ -13,7 +13,6 @@ export default function EachPatient() {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const [star, setStar] = useState(true);
-  const [time, setTime] = useState("");
   const [patient, setPatient] = useState({});
   const { id } = useParams();
   useEffect(() => {
@@ -21,18 +20,9 @@ export default function EachPatient() {
         .then((data) => {
             setPatient(data.data.data[0]);
             setStar(data.data.data[0]?.star);
-            DisplayCurrentTime(new Date(data.data.data[0]?.createdAt.toString()));
         })
         .catch((err) => console.log(err));
-  }, []);
-  function DisplayCurrentTime(date) {
-    let hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
-    let am_pm = date.getHours() >= 12 ? "PM" : "AM";
-    hours = hours < 10 ? "0" + hours : hours;
-    let minutes =
-      date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-    setTime(hours + ":" + minutes + " " + am_pm);
-  }
+  }, [id]);
   function handleDelete() {
     var config = {
         url: `${process.env.REACT_APP_API_URL}/patient/${id}`,
